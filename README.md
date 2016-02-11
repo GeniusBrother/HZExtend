@@ -60,7 +60,7 @@
 }<br/>
 @end<br/>
 
-//VC
+//VC<br、>
 @implementation DiscoverPookScene<br/>
 
 - (void)viewDidLoad<br/>
