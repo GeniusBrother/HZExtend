@@ -95,3 +95,44 @@
 }<br/>
 
 @end<br/>
+
+##二.数据模型##
+基本思路:模型的字段与表字段一一对应
+####HZModel
+1.Duty:全局参数配置<br/>
+2.使用:<br/>
+>1.继承HZModel然后初始化以Friend为例:<br/>
+Friend *friend = [Friend modelWithDic:@"name":@"xzh3",@"age":@20,@"email":@"6540"];<br/>
+>2.基本的数据库操作:<br/>
+[Friend open];  //任何数据库操作都应先打开数据库，然后再关闭<br/>
+[Friend close];<br/>
+[Friend excuteUpdate:@"insert into Friend(name,age) values(?,?)" withParams:@[@"xzh",@20]]; //除查询外的任何操作<br/>
+NSArray *select = [Friend excuteQuery:@"select *from Friend" withParams:nil];<br/>
+for (NSDictionary *f in select) {<br/>
+    NSLog(@"%@---%@----%@",[f objectForKey:@"name"],[f objectForKey:@"age"],[f objectForKey:@"email"]);<br/>
+}<br/>
+NSInteger count = [Friend longForQuery:@"select count(*) from Friend"];   //查询整数型的数据如count<br/>
+
+>2.元组数据操作:<br/>
+>2.1增删改:<br/>
+[Friend safeSave];  //safe代表执行之前先open数据库，执行完毕后再close数据库<br/>
+[Friend safeDelete];<br/>
+
+>2.2查询(返回都是该模型)<br/>
++ (instancetype)modelWithSql:(NSString *)sql withParameters:(NSArray *)parameters;<br/>
++ (NSArray *)findByColumn:(NSString *)column value:(id)value;<br/>
++ (NSArray *)findWithSql:(NSString *)sql withParameters:(NSArray *)parameters;<br/>
++ (NSArray *)findAll;<br/>
+NSArray *select = [Friend findWithSql:@"select *from Friend" withParameters:nil];<br/>
+for (Friend *f in select) {<br/>
+    NSLog(@"%@---%ld----%@",f.name,f.age,f.email);<br/>
+}<br/>
+
+>2.3数据库操作前后的回调，交由子类重写<br/>
+- (void)loadModel;  //初始化配置(成员变量，或数组对象类设置)<br/>
+- (void)beforeSave;<br/>
+- (void)afterSave;<br/>
+- (void)beforeUpdateSelf;<br/>
+- (void)afterUpdateSelf;<br/>
+- (void)beforeDeleteSelf;<br/>
+- (void)afterDeleteSelf;<br/>
