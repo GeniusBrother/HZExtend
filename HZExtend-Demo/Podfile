@@ -1,0 +1,10 @@
+
+pod 'AFNetworking'
+pod 'FMDB'
+pod 'MJExtension'
+pod 'TMCache', '~> 2.1.0'
+pod 'MBProgressHUD'
+pod 'Masonry'
+pod 'SDWebImage'
+pod 'MJRefresh', '~> 3.0.7'
+pod 'FMDBMigrationManager'
