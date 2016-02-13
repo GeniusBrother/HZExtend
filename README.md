@@ -16,7 +16,7 @@
 2.使用:<br/>
 >1.配置接口的共同URL、状态码路径,消息路径以及正确的状态码:<br/>
 [[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
-
+![](https://dn-impluse.qbox.me/24833/A98E9B1750666D91E88D21AFDC5ABFA4.jpg)<br/>
 >2.配置全局请求头<br/>
 [[NetworkConfig sharedConfig] addDefaultHeaderFields:@{@"key":@"value"}];
 
@@ -35,12 +35,12 @@
 @end<br/>
 
 @implementation FrameworkViewModel<br/>
-- (void)loadViewModel //子类重新<br/>
+- (void)loadViewModel //子类重写<br/>
 {<br/>
     [super loadViewModel];<br/>
 
     _recTask = [SessionTask taskWithMethod:@"GET" path:@"/party/pooks-rank" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@1,kNetworkPage,MC_PAGE_SIZE,kNetworkPageSize, nil] delegate:self requestType:@"rank"];<br/>
-    self.recTask.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据快速到达<br/>
+    self.recTask.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取<br/>
     self.recTask.pathkeys = @[kNetworkPage,kNetworkPageSize];   //设置后支持支持http://baseURL/path/value1/value2类型请求<br/>
 }<br/>
 
@@ -136,3 +136,29 @@ for (Friend *f in select) {<br/>
 - (void)afterUpdateSelf;<br/>
 - (void)beforeDeleteSelf;<br/>
 - (void)afterDeleteSelf;<br/>
+
+##三.HUD提示##
+基本思路:分为2种:1.添加到vc.view上,通过创建时key可以获得  2.添加到window.view上
+####UIViewController+HUD
+1.使用
+>1vc.view类型
+>1.1请求场景
+等待:[self showIndicatorWithText:@"请求中" forKey:@"request"];
+请求成功:[self successWithText:@"请求成功" forKey:@"request"];
+请求失败:[self failWithText:@"请求失败" forKey:@"request"];
+
+>1.2提示场景
+成功:[self showSuccessWithText:@"成功"];
+失败:[self showFailWithText:@"失败"];
+仅文字:[self showMessage:@"只显示文字"];
+
+>2window.view类型
+>1.1请求场景
+等待:[self showWindowIndicatorWithText:@"请求中"];
+请求成功:[self successWithText:@"请求成功"];
+请求失败:[self failWithText:@"请求失败"];
+
+>1.2提示场景
+成功:[self showWindowSuccessWithText:@"成功"];
+失败:[self showWindowFailWithText:@"失败"];
+仅文字:[self showWindowMessage:@"只显示文字"];
