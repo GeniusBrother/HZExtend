@@ -495,7 +495,7 @@ static FMDatabase *DATA_BASE;
     
     NSMutableString *collection = [NSMutableString stringWithString:@"("];
     for (HZModel *model in array) {
-        [collection appendFormat:@"%ld,",model.primaryKey];
+        [collection appendFormat:@"%lu,",(unsigned long)model.primaryKey];
     }
     [collection deleteCharactersInRange:NSMakeRange(collection.length-1, 1)];
     [collection appendString:@")"];

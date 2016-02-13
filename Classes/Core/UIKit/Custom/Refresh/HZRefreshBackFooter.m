@@ -98,6 +98,8 @@
             [self.circleView setNeedsDisplay];
 //            HZLog(@"MJRefreshStatePulling");
             break;
+        case MJRefreshStateWillRefresh:
+            break;
         case MJRefreshStateRefreshing:
             //防止直接进入刷新状态
             self.circleView.progress = 1;
