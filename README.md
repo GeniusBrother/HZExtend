@@ -140,25 +140,25 @@ for (Friend *f in select) {<br/>
 ##三.HUD提示##
 基本思路:分为2种:1.添加到vc.view上,通过创建时key可以获得  2.添加到window.view上
 ####UIViewController+HUD
-1.使用
->1vc.view类型
->1.1请求场景
-等待:[self showIndicatorWithText:@"请求中" forKey:@"request"];
-请求成功:[self successWithText:@"请求成功" forKey:@"request"];
-请求失败:[self failWithText:@"请求失败" forKey:@"request"];
+1.使用<br/>
+>1vc.view类型<br/>
+>1.1请求场景<br/>
+等待:[self showIndicatorWithText:@"请求中" forKey:@"request"];<br/>
+请求成功:[self successWithText:@"请求成功" forKey:@"request"];<br/>
+请求失败:[self failWithText:@"请求失败" forKey:@"request"];<br/>
 
->1.2提示场景
-成功:[self showSuccessWithText:@"成功"];
-失败:[self showFailWithText:@"失败"];
-仅文字:[self showMessage:@"只显示文字"];
+>1.2提示场景<br/>
+成功:[self showSuccessWithText:@"成功"];<br/>
+失败:[self showFailWithText:@"失败"];<br/>
+仅文字:[self showMessage:@"只显示文字"];<br/>
 
->2window.view类型
->1.1请求场景
-等待:[self showWindowIndicatorWithText:@"请求中"];
-请求成功:[self successWithText:@"请求成功"];
-请求失败:[self failWithText:@"请求失败"];
+>2window.view类型<br/>
+>1.1请求场景<br/>
+等待:[self showWindowIndicatorWithText:@"请求中"];<br/>
+请求成功:[self successWithText:@"请求成功"];<br/>
+请求失败:[self failWithText:@"请求失败"];<br/>
 
->1.2提示场景
-成功:[self showWindowSuccessWithText:@"成功"];
-失败:[self showWindowFailWithText:@"失败"];
-仅文字:[self showWindowMessage:@"只显示文字"];
+>1.2提示场景<br/>
+成功:[self showWindowSuccessWithText:@"成功"];<br/>
+失败:[self showWindowFailWithText:@"失败"];<br/>
+仅文字:[self showWindowMessage:@"只显示文字"];<br/>
