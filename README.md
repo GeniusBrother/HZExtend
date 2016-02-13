@@ -9,6 +9,10 @@
 4.数据元组:基于FMDB实现了与表元组对应的数据模型.<br/>
 5.一些常用的基础类扩展.<br/>
 
+##添加##
+1.Pod:pod 'HZExtend'<br/>
+2.直接添加:可以下载classes文件直接添加到项目中<br/>
+
 ##一.MVVM&网络请求##
 基本思路:网络请求基于SessionTask、HZNetwork(任务执行器)、NetworkConfig组成
 ####NetworkConfig
