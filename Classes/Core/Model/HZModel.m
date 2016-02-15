@@ -10,7 +10,6 @@
 #import "HZConst.h"
 #import "NSObject+HZExtend.h"
 #import "sqlite3.h"
-
 #import <objc/runtime.h>
 #import "FMDB.h"
 #define DBText  @"text"
