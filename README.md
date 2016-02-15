@@ -22,8 +22,8 @@
 [[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
 ![](https://dn-impluse.qbox.me/24833/A98E9B1750666D91E88D21AFDC5ABFA4.jpg)<br/>
 
->1.2后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)
-[[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];
+>1.2后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)<br/>
+[[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];<br/>
 
 >2.配置全局请求头<br/>
 [[NetworkConfig sharedConfig] addDefaultHeaderFields:@{@"key":@"value"}];
