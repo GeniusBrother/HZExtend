@@ -168,8 +168,7 @@ for (Friend *f in select) {
 
 ##三.HUD提示##
 基本思路:分为2种:1.添加到vc.view上,通过创建时key可以获得  2.添加到window.view上
-####UIViewController+HUD
->1:vc.view类型
+####vc.view类型
 ```objective-c
 //请求场景
 等待:[self showIndicatorWithText:@"请求中" forKey:@"request"];
@@ -181,8 +180,7 @@ for (Friend *f in select) {
 失败:[self showFailWithText:@"失败"];
 仅文字:[self showMessage:@"只显示文字"];
 ```
-
->2:window.view类型
+####window.view类型
 ```objective-c
 //1.1请求场景
 等待:[self showWindowIndicatorWithText:@"请求中"];
