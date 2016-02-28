@@ -13,40 +13,35 @@
 
 ##添加##
 ```ruby
-1.Pod:pod 'HZExtend'
-2.直接添加:可以下载classes文件直接添加到项目中
+1.pod 'HZExtend'
+
+2.可以下载classes文件直接添加到项目中
 ```
 ##一.MVVM&网络请求##
 基本思路:网络请求基于SessionTask、HZNetwork(任务执行器)、NetworkConfig组成
-####NetworkConfig
-1.作用:全局参数配置<br/>
-2.使用:<br/>
->1.1配置接口的共同URL、状态码路径,消息路径以及正确的状态码:
+
+####配置接口的共同URL、状态码路径,消息路径以及正确的状态码:
 ```objective-c
 [[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
 ```
 ![](https://dn-impluse.qbox.me/24833/A98E9B1750666D91E88D21AFDC5ABFA4.jpg)<br/>
 
->1.2后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)
+####后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)
 ```objective-c
 [[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];<br/>
 ```
 
->2.配置全局请求头
+####配置全局请求头
 ```objective-c
 [[NetworkConfig sharedConfig] addDefaultHeaderFields:@{@"key":@"value"}];
 ```
 
->3.网络状态
+####网络状态
 ```objective-c
 [NetworkConfig sharedConfig].reachable  //程序刚启动时有0.02的网络状态延迟判断。故请求应在0.02s后再发出
 ```
 
 ####SessionTask
-1.`作用:输入参数，输出数据`
-2.使用:<br/>
->1.初始化
-
 ```objective-c
 @interface FrameworkViewModel : HZViewModel
 @property(nonatomic, strong) SessionTask *task;
@@ -119,14 +114,11 @@
 
 ##二.数据模型##
 基本思路:模型的字段与表字段一一对应
-####HZModel
-1.作用:全局参数配置
-2.使用:<br/>
->1.继承HZModel然后初始化以Friend为例:
+####继承HZModel然后初始化以Friend为例:
 ```objective-c
 Friend *friend = [Friend modelWithDic:@"name":@"xzh3",@"age":@20,@"email":@"6540"];
 ```
->2.基本的数据库操作:
+####基本的数据库操作:
 ```objective-c
 [Friend open];  //任何数据库操作都应先打开数据库，然后再关闭
 [Friend close];
@@ -137,13 +129,13 @@ for (NSDictionary *f in select) {
 }
 NSInteger count = [Friend longForQuery:@"select count(*) from Friend"];   //查询整数型的数据如count
 ```
->2.元组数据操作:<br/>
->2.1增删改:
+####元组数据操作:
 ```objective-c
+/***************************************************增删改***************************************************/
 [Friend safeSave];  //safe代表执行之前先open数据库，执行完毕后再close数据库
 [Friend safeDelete];
 ```
->2.2查询(返回都是该模型)
+####查询(返回都是该模型)
 ```objective-c
 + (instancetype)modelWithSql:(NSString *)sql withParameters:(NSArray *)parameters;
 + (NSArray *)findByColumn:(NSString *)column value:(id)value;
@@ -155,7 +147,7 @@ for (Friend *f in select) {
 }
 ```
 
->2.3数据库操作前后的回调，交由子类重写:
+####数据库操作前后的回调，交由子类重写:
 ```objective-c
 - (void)loadModel;  //初始化配置(成员变量，或数组对象类设置)
 - (void)beforeSave;<br/>
@@ -170,24 +162,24 @@ for (Friend *f in select) {
 基本思路:分为2种:1.添加到vc.view上,通过创建时key可以获得  2.添加到window.view上
 ####vc.view类型
 ```objective-c
-//请求场景
+/***************************************************请求场景***************************************************/
 等待:[self showIndicatorWithText:@"请求中" forKey:@"request"];
 请求成功:[self successWithText:@"请求成功" forKey:@"request"];
 请求失败:[self failWithText:@"请求失败" forKey:@"request"];
 
-//提示场景
+/***************************************************提示场景***************************************************/
 成功:[self showSuccessWithText:@"成功"];
 失败:[self showFailWithText:@"失败"];
 仅文字:[self showMessage:@"只显示文字"];
 ```
 ####window.view类型
 ```objective-c
-//1.1请求场景
+/***************************************************请求场景***************************************************/
 等待:[self showWindowIndicatorWithText:@"请求中"];
 请求成功:[self successWithText:@"请求成功"];
 请求失败:[self failWithText:@"请求失败"];
 
-//提示场景
+/***************************************************提示场景***************************************************/
 成功:[self showWindowSuccessWithText:@"成功"];
 失败:[self showWindowFailWithText:@"失败"];
 仅文字:[self showWindowMessage:@"只显示文字"];
