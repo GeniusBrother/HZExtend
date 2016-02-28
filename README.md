@@ -28,7 +28,7 @@
 
 ####后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)
 ```objective-c
-[[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];<br/>
+[[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];
 ```
 
 ####配置全局请求头
@@ -131,12 +131,12 @@ NSInteger count = [Friend longForQuery:@"select count(*) from Friend"];   //查�
 ```
 ####元组数据操作:
 ```objective-c
-/***************************************************增删改***************************************************/
+/***************************************增删改***************************************/
 [Friend safeSave];  //safe代表执行之前先open数据库，执行完毕后再close数据库
 [Friend safeDelete];
 ```
-####查询(返回都是该模型)
 ```objective-c
+/*****************************************查询(返回都是该模型)*****************************************/
 + (instancetype)modelWithSql:(NSString *)sql withParameters:(NSArray *)parameters;
 + (NSArray *)findByColumn:(NSString *)column value:(id)value;
 + (NSArray *)findWithSql:(NSString *)sql withParameters:(NSArray *)parameters;
@@ -150,37 +150,205 @@ for (Friend *f in select) {
 ####数据库操作前后的回调，交由子类重写:
 ```objective-c
 - (void)loadModel;  //初始化配置(成员变量，或数组对象类设置)
-- (void)beforeSave;<br/>
-- (void)afterSave;<br/>
-- (void)beforeUpdateSelf;<br/>
-- (void)afterUpdateSelf;<br/>
-- (void)beforeDeleteSelf;<br/>
-- (void)afterDeleteSelf;<br/>
+- (void)beforeSave;
+- (void)afterSave;
+- (void)beforeUpdateSelf;
+- (void)afterUpdateSelf;
+- (void)beforeDeleteSelf;
+- (void)afterDeleteSelf;
+```
+##三.URLManager##
+基本思路:由`UIViewController+HZURLManager`(将URL转化成控制器),`HZURLNavigation`(跳转),`HZURLManageConfig`(参数配置),`HZURLManager`(结合创建和跳转,推荐直接使用这个类)
+
+####参数配置
+```objective-c
+//URL:类名
+[HZURLManageConfig sharedConfig].config = @{
+                                             @"hz://Subject":@"SubjectViewController",
+                                             @"hz://Home":@"HomeViewController"
+                                            };
+                                            
+ //遇到http或者https时应创建的控制器,不写默认为HZWebViewController                                       
+[HZURLManageConfig sharedConfig].classOfWebViewCtrl = @"HZWebViewController";
 ```
 
-##三.HUD提示##
-基本思路:分为2种:1.添加到vc.view上,通过创建时key可以获得  2.添加到window.view上
+####HZURLManager
+```objective-c
+/***************************************push***************************************/
+[HZURLManager pushViewControllerWithString:@"hz://Subject?k=v" animated:YES];
+//最后通过控制器的queryDic属性获取@{@“k”:@"v",@"key":@"value"}
+[HZURLManager pushViewControllerWithString:@"hz://Subject" queryDic:@{@"key":@"value"} animated:YES];
+
+/***************************************present***************************************/
+[HZURLManager presentViewControllerWithString:@"hz://Home?k=v" queryDic:@{@"key":@"value"} animated:YES completion:nil];
+[HZURLManager presentViewControllerWithString:@"hz://Home" animated:YES completion:nil];
+
+/***************************************Dismiss***************************************/
+[HZURLManager dismissCurrentAnimated:YES];
+```
+##四.控制器##
+####HZNavigationController
+自定义侧滑手势,可以从任意位置触发侧滑,而自带的侧滑只能在边缘位置触发.
+```objective-c
+/**
+ *  是否开启侧滑
+ */
+@property(nonatomic, assign) BOOL swipeEnable;
+
+/**
+ *  当子控制器的数量<=改值时不触发侧滑手势,默认为1
+ */
+@property(nonatomic, assign) NSUInteger countOfNoPanChild;
+```
+####HZViewController
+框架的模板控制器,推荐继承该控制器
+```objective-c
+/**
+ *  若导航控制器类型为HZNavigationController则返回,否则返回nil
+ */
+@property(nonatomic, strong, readonly) HZNavigationController *nav;
+```
+####HZWebViewController
+框架的默认网页控制器,加载网页时推荐加载该控制器
+```objective-c
+//初始化
+- (instancetype)initWithURL:(NSURL *)URL;
+
+//获取内部的UIWebView
+@property(nonatomic, strong, readonly) UIWebView *webView;
+
+/***************************************加载状态的回调***************************************/
+//可以重写来自定义处理方式
+-(void)webViewIsloading;    //加载中调用
+-(void)webViewIsSuccess;    //加载成功调用
+-(void)webViewIsFail;       //加载失败调用
+```
+
+##五.HUD提示##
+基本思路:1.添加到vc.view上,通过创建时key可以获得  2.添加到window.view上
 ####vc.view类型
 ```objective-c
-/***************************************************请求场景***************************************************/
-等待:[self showIndicatorWithText:@"请求中" forKey:@"request"];
+/***************************************请求场景***************************************/
+等待:[self showIndicatorWithText:@"请求中" forKey:@"request"];      
 请求成功:[self successWithText:@"请求成功" forKey:@"request"];
 请求失败:[self failWithText:@"请求失败" forKey:@"request"];
 
-/***************************************************提示场景***************************************************/
-成功:[self showSuccessWithText:@"成功"];
-失败:[self showFailWithText:@"失败"];
-仅文字:[self showMessage:@"只显示文字"];
+/***************************************提示场景***************************************/
+[self showSuccessWithText:@"成功"];    //成功时使用
+[self showFailWithText:@"失败"];       //失败时使用
+[self showMessage:@"只显示文字"];      //仅需要文字提示时使用
 ```
 ####window.view类型
 ```objective-c
-/***************************************************请求场景***************************************************/
-等待:[self showWindowIndicatorWithText:@"请求中"];
-请求成功:[self successWithText:@"请求成功"];
-请求失败:[self failWithText:@"请求失败"];
+/***************************************请求场景***************************************/
+[self showWindowIndicatorWithText:@"请求中"];   //等待时使用
+[self successWithText:@"请求成功"];             //请求成功时使用
+[self failWithText:@"请求失败"];                //请求失败时使用
 
-/***************************************************提示场景***************************************************/
+/***************************************提示场景***************************************/
 成功:[self showWindowSuccessWithText:@"成功"];
 失败:[self showWindowFailWithText:@"失败"];
 仅文字:[self showWindowMessage:@"只显示文字"];
+```
+##六.扩展类##
+####UIImageView+HZExtend.h
+```objective-c
+/***************************************快捷设置图片***************************************/
+/*
+ 1.无url则直接设置为image
+ 2.老图片:若本地已经有图片，则直接从本地加载.
+ 3.新图片:设置占位，从远处加载
+ */
+- (void)safeSetImageWithURL:(NSString *)url placeholder:(UIImage *)image;
+```
+####UIColor+HzExtend.h
+```objective-c
+/***************************************快捷设置颜色***************************************/
+UIColor *whiteColor = [UIColor colorForString:@"#FFFFFF"];
+UIColor *alphaBlackColor = [UIColor colorForString:@"#000000 0.5"];  //0.5透明度
+
+UIColor *whiteColor = RGB(255,255,255);
+UIColor *alphaBlackColor = RGBA(0,0,0,0.5);
+```
+####UIView+HZExtend.h
+```objective-c
+/***************************************快捷设置Frame***************************************/
+//左上角长为100的正方形
+UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+view.left = view.top = 0;
+view.width = view.height = 100;
+view.backgroundColor = [UIColor colorForString:@"#000000 0.5"];
+[self.view addSubview:view];
+
+//居中长为100的正方形
+UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+view.width = view.height = 100;
+//view.centerX = (self.view.width-view.width)/2;
+//view.centerY = (self.view.height - view.height)/2;
+view.backgroundColor = [UIColor colorForString:@"#000000 0.5"];
+[self.view addSubview:view];
+[view alignCenter]; //必须有父视图后才可以设置
+
+//alphaBlackView在brownView右边5个像素 
+UIView *brownView = [[UIView alloc] initWithFrame:CGRectMake(10, 200, 100, 100)];
+brownView.backgroundColor = [UIColor brownColor];
+[self.view addSubview:brownView];
+
+UIView *alphaBlackView = [[UIView alloc] initWithFrame:CGRectZero];
+alphaBlackView.width = alphaBlackView.height = 100;
+alphaBlackView.top = brownView.top;
+alphaBlackView.backgroundColor = [UIColor colorForString:@"#000000 0.5"];
+[self.view addSubview:alphaBlackView];
+[alphaBlackView leftBehindView:brownView offset:5]; //必须在同一个视图层次结构后才可以参照brownView
+
+
+//其它更快捷的方法详见UIView+HZExtend.h
+```
+####NSArray+HZExtend.h
+```objective-c
+//若越界则返回nil
+- (id)objectAtSafeIndex:(NSInteger)index;
+```
+
+####NSDictionary+HZExtend.h
+```objective-c
+/**
+ *  @{ @“person”:@{@"name":@"GeniusBrotherHZExtend"}}
+ *  keyPath = @"person/name" 返回@“GeniusBrotherHZExtend”;
+ */
+- (id)objectAtKeyPath:(NSString *)keyPath;
+
+/**
+ *  不存在,则返回other
+ */
+- (id)objectAtKeyPath:(NSString *)path  otherwise:(NSObject *)other;
+```
+
+####NSMutableArray+HZExtend.h
+```objective-c
+/**
+ *  若下标越界时,则什么也不做
+ */
+- (void)safeRemoveObjectAtIndex:(NSInteger)index;
+```
+
+####NSString+HZExtend.h
+```objective-c
+/**
+ *  以md5算法加密
+ */
+- (NSString *)md5;
+
+/************查询字符串************/
+- (NSString *)urlEncode;    //url编码
+- (NSString *)urlDecode;    //url解码
+/**
+ *  以https://github.com/GeniusBrother/HZExtend?author=GeniusBrother为例
+ */
+- (NSString *)scheme;   //https
+- (NSString *)host; //github.com
+- (NSString *)allPath;  //https://github.com/GeniusBrother/HZExtend
+- (NSString *)path; ///GeniusBrother/HZExtend
+- (NSString *)keyValues;    //author=GeniusBrother
+- (NSDictionary *)queryDic; //@{@"author":@"GeniusBrother"}
 ```
