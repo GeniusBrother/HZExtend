@@ -14,7 +14,7 @@
  *  创建HUD
  *  text:标题，detail:解释信息，view:nil则添加到window上，offset:竖直方向的中心距离偏移
  */
-- (MBProgressHUD *)hudWithText:(NSString *)text
++ (MBProgressHUD *)hudWithText:(NSString *)text
                         detail:(NSString *)detail
                         toView:(UIView *)view
                        yOffset:(CGFloat)offset;

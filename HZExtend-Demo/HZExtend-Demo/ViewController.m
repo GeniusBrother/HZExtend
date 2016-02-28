@@ -10,17 +10,60 @@
 #import "SubjectViewModel.h"
 #import "UIViewController+HZHUD.h"
 #import "SubjectDay.h"
+#import "HZExtend.h"
+#import "Masonry.h"
 @interface ViewController () <HZViewModelDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *pageLabel;
+@property (weak, nonatomic) UILabel *pageLabel;
 @property(nonatomic, strong)  SubjectViewModel*viewModel;
 @end
 
 @implementation ViewController
-
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewDidAppear:animated];
+//    
+//    for (UIView *view in self.view.subviews) {
+//        NSLog(@"%@",view);
+//    }
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     _viewModel = [SubjectViewModel viewModelWithDelegate:self];
+    
+    UILabel *pageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    pageLabel.text = @"当前分页数为:0  ";
+    pageLabel.textColor = [UIColor blackColor];
+    pageLabel.font = [UIFont systemFontOfSize:16];
+//    pageLabel.backgroundColor = [UIColor brownColor];
+    [self.view addSubview:pageLabel];
+    self.pageLabel = pageLabel;
+    [pageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(@0);
+        make.top.equalTo(@150);
+    }];
+    
+    UIButton *pageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [pageBtn addTarget:self action:@selector(sendTask:) forControlEvents:UIControlEventTouchUpInside];
+    [pageBtn setTitle:@"获得主题" forState:UIControlStateNormal];
+    [pageBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:pageBtn];
+    [pageBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(pageLabel);
+        make.top.equalTo(pageLabel.mas_bottom).offset(15);
+    }];
+    
+    UIButton *dbBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [dbBtn addTarget:self action:@selector(listSubject:) forControlEvents:UIControlEventTouchUpInside];
+    [dbBtn setTitle:@"列出数据库所有主题" forState:UIControlStateNormal];
+    [dbBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:dbBtn];
+    [dbBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(pageLabel);
+        make.top.equalTo(pageBtn.mas_bottom).offset(15);
+    }];
+    
 }
 
 - (void)viewModelConnetedNotifyForTask:(SessionTask *)task type:(NSString *)type
@@ -28,13 +71,9 @@
     if (task.succeed) {
         [self showSuccessWithText:@"请求成功"];
         self.pageLabel.text = [NSString stringWithFormat:@"当前分页数为:%ld",self.viewModel.subjectList.pagination.page.integerValue];
-        SubjectDay *day = [self.viewModel.subjectList.list firstObject];
-        [SubjectDay open];
-        SubjectDay *existDay = [SubjectDay modelWithSql:@"select *from SubjectDay where title = ?" withParameters:@[day.title]];
-        if (!existDay) {
-            [day safeSave];
-        }
-        [SubjectDay close];
+        
+        //数据处理均在viewModel处理
+        [self.viewModel saveSubject];
     }else {
         [self showFailWithText:task.message yOffset:0];
     }
@@ -58,7 +97,7 @@
     }
 }
 
-- (IBAction)sendTask:(id)sender
+- (void)sendTask:(id)sender
 {
     if (self.viewModel.task.runable) {
         [self.viewModel pageIncrease:self.viewModel.task];
@@ -67,7 +106,7 @@
     
 }
 
-- (IBAction)listSubject:(id)sender {
+- (void)listSubject:(id)sender {
     
     [SubjectDay open];
     //等价于[SubjectDay findAll]

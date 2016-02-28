@@ -1,5 +1,5 @@
 //
-//  UIView+HzExtend.m
+//  UIView+HZExtend.m
 //  ZHFramework
 //
 //  Created by xzh. on 15/7/26.

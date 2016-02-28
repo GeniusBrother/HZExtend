@@ -11,7 +11,7 @@
 @interface NSMutableArray (HZExtend)
 
 /**
- *  防止越界crash
+ *  若下标越界时,则什么也不做
  */
 - (void)safeRemoveObjectAtIndex:(NSInteger)index;
 

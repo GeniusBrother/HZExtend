@@ -12,4 +12,6 @@
 @property(nonatomic, strong) SessionTask *task;
 @property(nonatomic, strong) NSMutableArray *subjectArray;
 @property(nonatomic, strong) SubjectList *subjectList;
+
+- (void)saveSubject;
 @end

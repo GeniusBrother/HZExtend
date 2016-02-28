@@ -152,7 +152,7 @@ typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
 - (void)setValue:(id)value forHeaderField:(NSString *)key;
 - (NSDictionary *)httpRequestFields;
 
-- (BOOL)runable;                //表面任务可运行
+- (BOOL)runable;                //表明任务可运行
 - (BOOL)succeed;                //网络请求数据成功
 - (BOOL)failed;                 //网络请求数据失败
 - (BOOL)running;                //正在运行状态

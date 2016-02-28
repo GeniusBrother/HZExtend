@@ -10,8 +10,15 @@
 #import "NSObject+HZExtend.h"
 @interface NSDictionary (HZExtend)
 
+/**
+ *  @{ @“person”:@{@"name":@"GeniusBrotherHZExtend"}}
+ *  keyPath = @"person/name" 返回@“GeniusBrotherHZExtend”;
+ */
 - (id)objectAtKeyPath:(NSString *)keyPath;
 
+/**
+ *  不存在,则返回other
+ */
 - (id)objectAtKeyPath:(NSString *)path  otherwise:(NSObject *)other;
 
 //查询字符串

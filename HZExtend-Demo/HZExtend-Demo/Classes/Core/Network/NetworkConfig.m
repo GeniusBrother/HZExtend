@@ -31,6 +31,12 @@ singleton_m(Config)
     return self;
 }
 
+- (void)setupBaseURL:(NSString *)baseURL
+           userAgent:(NSString *)userAgent
+{
+    [self setupBaseURL:baseURL codeKeyPath:nil msgKeyPath:nil userAgent:userAgent rightCode:0];
+}
+
 -  (void)setupBaseURL:(NSString *)baseURL
           codeKeyPath:(NSString *)codeKeyPath
            msgKeyPath:(NSString *)msgKeyPath

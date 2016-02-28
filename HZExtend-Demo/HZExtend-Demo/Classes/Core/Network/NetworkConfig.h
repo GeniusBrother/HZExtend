@@ -50,6 +50,14 @@ singleton_h(Config)
 
 /**
  *  配置公共参数
+ *  只设置共同URL等
+ */
+- (void)setupBaseURL:(NSString *)baseURL
+           userAgent:(NSString *)userAgent;
+
+/**
+ *  配置公共参数
+ *  有状态码、消息码路径
  */
 - (void)setupBaseURL:(NSString *)baseURL
          codeKeyPath:(NSString *)codeKeyPath

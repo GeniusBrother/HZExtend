@@ -140,11 +140,13 @@
 - (void)setResponseObject:(NSDictionary *)responseObject
 {
     _responseObject = responseObject;
-
-    if ([NetworkConfig sharedConfig].msgKeyPath.isNoEmpty) {
-        _message = [responseObject objectAtKeyPath:[NetworkConfig sharedConfig].msgKeyPath]?:@"";
+    
+    NSString * msgKeyPath = [NetworkConfig sharedConfig].msgKeyPath;
+    if (msgKeyPath.isNoEmpty) {
+        _message = [responseObject objectAtKeyPath:msgKeyPath]?:@"";
+    }else {
+        _message = @"";
     }
-
 }
 
 - (void)setError:(NSError *)error
@@ -338,8 +340,12 @@
  */
 - (BOOL)checkCode
 {
-    if (self.shouldCheckCode && [NetworkConfig sharedConfig].codeKeyPath.isNoEmpty) {
-        self.codeKey = [[self.responseObject objectAtKeyPath:[NetworkConfig sharedConfig].codeKeyPath] integerValue];
+    //没有设置状态码路径则不需要检查
+    NSString *codeKeyPath = [NetworkConfig sharedConfig].codeKeyPath;
+    if (!codeKeyPath.isNoEmpty) return true;
+    
+    if (self.shouldCheckCode) {
+        self.codeKey = [[self.responseObject objectAtKeyPath:codeKeyPath] integerValue];
         if(self.codeKey == [NetworkConfig sharedConfig].rightCode) {
             return true;
         }else {

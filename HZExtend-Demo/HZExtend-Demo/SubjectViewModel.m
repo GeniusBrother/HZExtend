@@ -7,7 +7,7 @@
 //
 
 #import "SubjectViewModel.h"
-
+#import "SubjectDay.h"
 @implementation SubjectViewModel
 
 - (void)loadViewModel
@@ -32,5 +32,16 @@
 - (void)requestFailWithTask:(SessionTask *)task type:(NSString *)type
 {
     [self pageDecrease:task]; //将当前页减一
+}
+
+- (void)saveSubject
+{
+    SubjectDay *day = [self.subjectList.list firstObject];
+    [SubjectDay open];
+    SubjectDay *existDay = [SubjectDay modelWithSql:@"select *from SubjectDay where title = ?" withParameters:@[day.title]];
+    if (!existDay) {
+        [day safeSave];
+    }
+    [SubjectDay close];
 }
 @end

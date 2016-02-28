@@ -10,7 +10,7 @@
 #import "HZNetwork.h"
 @class HZViewModel;
 @protocol HZViewModelDelegate<NSObject>
-
+@optional
 /**
  *  最终的请求结果到来调用(成功或失败)
  */

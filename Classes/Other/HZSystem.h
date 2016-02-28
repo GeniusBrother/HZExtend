@@ -11,17 +11,17 @@
 @interface HZSystem : NSObject
 
 /********系统********/
-+ (BOOL)isIOS6Later;    //include
++ (BOOL)isIOS6Later;    //包括IOS6,下同
 + (BOOL)isIOS7Later;
 + (BOOL)isIOS8Later;
 + (BOOL)isIOS9Later;
 
-+ (BOOL)isIOS6Early;    //don't include
++ (BOOL)isIOS6Early;    //不包括IOS6,下同
 + (BOOL)isIOS7Early;
 + (BOOL)isIOS8Early;
 + (BOOL)isIOS9Early;
 
-/********型号********/
+/********尺寸********/
 + (BOOL)isIPhone35Inch;
 + (BOOL)isIPhone4Inch;
 + (BOOL)isIPhone47Inch;

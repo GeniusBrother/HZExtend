@@ -1,5 +1,5 @@
 //
-//  UIView+HzExtend.h
+//  UIView+HZExtend.h
 //  ZHFramework
 //
 //  Created by xzh. on 15/7/26.
@@ -46,7 +46,14 @@
  */
 - (void)topBehindView:(UIView *)view offset:(CGFloat)offset;
 
+/**
+ *  右边在参照视图前面(frame已经确定)offset距离 offset为负值
+ */
 - (void)rightOverView:(UIView *)view offset:(CGFloat)offset;
+
+/**
+ *  左边边在参照视图后面(frame已经确定)offset距离 offset为正值
+ */
 - (void)leftBehindView:(UIView *)view offset:(CGFloat)offset;
 
 - (UIImage *)saveImageWithScale:(float)scale;

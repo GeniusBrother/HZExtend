@@ -31,32 +31,32 @@
     return [self stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (NSString *)schema
+- (NSString *)scheme
 {
     NSRange range = [self rangeOfString:@"://"];
     if (range.length == 0) return @"";
     
-    NSString *schema = [self substringToIndex:range.location];
-    return schema;
+    NSString *scheme = [self substringToIndex:range.location];
+    return scheme;
 }
 
 - (NSString *)host
 {
-    NSString *schema = self.schema;
-    if (!schema.isNoEmpty) return @"";
+    NSString *scheme = self.scheme;
+    if (!scheme.isNoEmpty) return @"";
     
-    NSString *noSchema = [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@://",schema] withString:@""];
+    NSString *noScheme = [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@://",scheme] withString:@""];
     
-    NSRange range = [noSchema rangeOfString:@"/"];
-    if (range.length == 0) return noSchema;
+    NSRange range = [noScheme rangeOfString:@"/"];
+    if (range.length == 0) return noScheme;
     
-    return [noSchema substringToIndex:range.location];
+    return [noScheme substringToIndex:range.location];
 }
 
 - (NSString *)keyValues
 {
-    NSString *schema = self.schema;
-    if (!schema.isNoEmpty) return @"";
+    NSString *scheme = self.scheme;
+    if (!scheme.isNoEmpty) return @"";
     
     NSRange range = [self rangeOfString:@"?"];
     if (range.length == 0) return @"";
@@ -74,12 +74,12 @@
 
 - (NSString *)path
 {
-    NSString *schema = self.schema;
-    if (!schema.isNoEmpty) return @"";
+    NSString *scheme = self.scheme;
+    if (!scheme.isNoEmpty) return @"";
     
     NSString *path = nil;
     NSString *host = self.host;
-    if (host.isNoEmpty) path = [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@://%@",schema,host] withString:@""];
+    if (host.isNoEmpty) path = [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@://%@",scheme,host] withString:@""];
     
     NSString *keyValue = self.keyValues;
     if (keyValue.isNoEmpty) path = [path stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"?%@",keyValue] withString:@""];
@@ -89,8 +89,8 @@
 
 - (NSString *)allPath
 {
-    NSString *schema = self.schema;
-    if (!schema.isNoEmpty) return @"";
+    NSString *scheme = self.scheme;
+    if (!scheme.isNoEmpty) return @"";
     
     NSString *keyValue = self.keyValues;
     if (keyValue.isNoEmpty) return [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"?%@",keyValue] withString:@""];

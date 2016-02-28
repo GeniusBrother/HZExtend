@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface NSObject (HZExtend)
-
+/**
+ *  判断为非空,既非NSNull且长度(字符串)或者count(集合)>0
+ */
 - (BOOL)isNoEmpty;
 
 @end

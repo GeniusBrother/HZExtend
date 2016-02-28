@@ -21,5 +21,7 @@
 #import "UIImageView+HZExtend.h"
 #import "UIView+HZExtend.h"
 #import "UIViewController+HZHUD.h"
+#import "HZURLManager.h"
+#import "HZViewController.h"
 
 

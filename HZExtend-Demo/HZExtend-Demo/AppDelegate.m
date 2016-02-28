@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import "NetworkConfig.h"
 #import "AFNetworkReachabilityManager.h"
+#import "HZURLManageConfig.h"
+#import "HZNavigationController.h"
+#import "ExampleItemViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -44,6 +47,16 @@
     
     [[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.maichong.me" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
     
+    [HZURLManageConfig sharedConfig].config = @{
+                                                @"hz://network":@"ViewController",
+                                                @"hz://urlmanager":@"URLViewController",
+                                                @"hz://urlItem":@"URLItemViewController"
+                                                };
+    
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[ExampleItemViewController alloc] init]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
     
     return YES;
 }

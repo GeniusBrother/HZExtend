@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 @interface UIImageView (HZExtend)
 
-/*@Description:
+/*
  1.无url则直接设置为image
  2.老图片:若本地已经有图片，则直接从本地加载.
  3.新图片:设置占位，从远处加载

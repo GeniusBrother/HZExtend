@@ -1,18 +1,22 @@
 //
 //  HZViewController.h
-//  HZNetworkDemo
+//  ZHFramework
 //
-//  Created by xzh on 16/1/22.
-//  Copyright © 2016年 xzh. All rights reserved.
+//  Created by xzh. on 15/8/21.
+//  Copyright (c) 2015年 xzh. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "UIViewController+HZHUD.h"
+#import "HZNavigationController.h"
 #import "HZViewModel.h"
 @class SessionTask;
 @interface HZViewController : UIViewController<HZViewModelDelegate>
+/**
+ *  若导航控制器类型为HZNavigationController则返回,否则返回nil
+ */
+@property(nonatomic, strong, readonly) HZNavigationController *nav;
 
-#pragma mark - Override
-#pragma mark Request Call-back
 /**
  *  页面数据的设置,不涉及状态
  */

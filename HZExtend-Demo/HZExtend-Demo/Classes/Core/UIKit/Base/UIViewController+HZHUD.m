@@ -7,12 +7,13 @@
 //
 
 #import "UIViewController+HZHUD.h"
+#import <objc/runtime.h>
 static const CGFloat DELAY_TIME = 1;
 static NSString *const hudFailImage = @"error";
 static NSString *const HUD_SuccessImage = @"success";
 static const char HUD_DIC = '\0';
-#import <objc/runtime.h>
-@implementation UIViewController (HUD)
+
+@implementation UIViewController (HZHUD)
 
 #pragma mark - 创建
 /**

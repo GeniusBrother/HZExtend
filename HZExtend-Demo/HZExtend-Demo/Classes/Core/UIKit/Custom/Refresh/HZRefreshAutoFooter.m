@@ -96,7 +96,8 @@
             self.circleView.progress = 1;
             [self.circleView setNeedsDisplay];
             break;
-            
+        case MJRefreshStateWillRefresh:
+            break;
         case MJRefreshStateRefreshing:      /** 正在刷新中的状态 */
             self.circleView.progress = 1;
             [self.circleView setNeedsDisplay];
