@@ -3,30 +3,39 @@
 ####欢迎有兴趣的有好的想法的同学参与到项目中来，如果有问题请大家加入群中留言或者issue我，或者发邮件给我zuohong_xie@163.com
 
 本项目特点<br/>
+```bash
 1.解放VC:基于MVVM的思想，将数据处理放入ViewModel里从而减少控制器的压力，降低代码耦合.<br/>
 2.网络请求:基于AFN自定义了贴切业务逻辑的网络请求框架.<br/>
 3.缓存体系:基于TMCache定制与业务逻辑相符的缓存体系.<br/>
 4.数据元组:基于FMDB实现了与表元组对应的数据模型.<br/>
 5.一些常用的基础类扩展.<br/>
+```
 
 ##添加##
+```ruby
 1.Pod:pod 'HZExtend'<br/>
 2.直接添加:可以下载classes文件直接添加到项目中<br/>
-
+```
 ##一.MVVM&网络请求##
 基本思路:网络请求基于SessionTask、HZNetwork(任务执行器)、NetworkConfig组成
 ####NetworkConfig
 1.Duty:全局参数配置<br/>
 2.使用:<br/>
 >1.1配置接口的共同URL、状态码路径,消息路径以及正确的状态码:<br/>
+```objective-c
 [[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
+```
 ![](https://dn-impluse.qbox.me/24833/A98E9B1750666D91E88D21AFDC5ABFA4.jpg)<br/>
 
->1.2后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)<br/>
+>1.2后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)
+```objective-c
 [[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];<br/>
+```
 
->2.配置全局请求头<br/>
+>2.配置全局请求头
+```objective-c
 [[NetworkConfig sharedConfig] addDefaultHeaderFields:@{@"key":@"value"}];
+```
 
 >3.网络状态<br/>
 [NetworkConfig sharedConfig].reachable  //程序刚启动时有0.02的网络状态延迟判断。故请求应在0.02s后再发出
