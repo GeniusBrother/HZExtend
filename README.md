@@ -8,7 +8,8 @@
 2.网络请求:基于AFN自定义了贴切业务逻辑的网络请求框架.
 3.缓存体系:基于TMCache定制与业务逻辑相符的缓存体系.
 4.数据元组:基于FMDB实现了与表元组对应的数据模型.
-5.一些常用的基础类扩展.
+5.URLManager:支持URL跳转
+6.一些常用的基础类扩展.
 ```
 
 ##添加##
@@ -17,6 +18,10 @@
 
 2.可以下载classes文件直接添加到项目中
 ```
+##其它资源##
+* [简书论坛](http://www.jianshu.com/collection/ba017346481d)
+
+
 ##一.MVVM&网络请求##
 基本思路:网络请求基于SessionTask、HZNetwork(任务执行器)、NetworkConfig组成
 
@@ -251,24 +256,28 @@ for (Friend *f in select) {
 仅文字:[self showWindowMessage:@"只显示文字"];
 ```
 ##六.扩展类##
-####UIImageView+HZExtend.h
+####HZSystem.h
 ```objective-c
-/***************************************快捷设置图片***************************************/
-/*
- 1.无url则直接设置为image
- 2.老图片:若本地已经有图片，则直接从本地加载.
- 3.新图片:设置占位，从远处加载
- */
-- (void)safeSetImageWithURL:(NSString *)url placeholder:(UIImage *)image;
-```
-####UIColor+HzExtend.h
-```objective-c
-/***************************************快捷设置颜色***************************************/
-UIColor *whiteColor = [UIColor colorForString:@"#FFFFFF"];
-UIColor *alphaBlackColor = [UIColor colorForString:@"#000000 0.5"];  //0.5透明度
+/***************************************判断系统版本***************************************/
++ (BOOL)isIOS6Later;    //包括IOS6,下同
++ (BOOL)isIOS7Later;
++ (BOOL)isIOS8Later;
++ (BOOL)isIOS9Later;
 
-UIColor *whiteColor = RGB(255,255,255);
-UIColor *alphaBlackColor = RGBA(0,0,0,0.5);
++ (BOOL)isIOS6Early;    //不包括IOS6,下同
++ (BOOL)isIOS7Early;
++ (BOOL)isIOS8Early;
++ (BOOL)isIOS9Early;
+
+/***************************************判断手机尺寸***************************************/
++ (BOOL)isIPhone35Inch;
++ (BOOL)isIPhone4Inch;
++ (BOOL)isIPhone47Inch;
++ (BOOL)isIPhone55Inch;
++ (BOOL)isIPhone4InchEarly; //include
+
+/***************************************手机型号信息***************************************/
++ (NSString *)platform;
 ```
 ####UIView+HZExtend.h
 ```objective-c
@@ -304,6 +313,27 @@ alphaBlackView.backgroundColor = [UIColor colorForString:@"#000000 0.5"];
 
 //其它更快捷的方法详见UIView+HZExtend.h
 ```
+
+####UIImageView+HZExtend.h
+```objective-c
+/***************************************快捷设置图片***************************************/
+/*
+ 1.无url则直接设置为image
+ 2.老图片:若本地已经有图片，则直接从本地加载.
+ 3.新图片:设置占位，从远处加载
+ */
+- (void)safeSetImageWithURL:(NSString *)url placeholder:(UIImage *)image;
+```
+####UIColor+HZExtend.h
+```objective-c
+/***************************************快捷设置颜色***************************************/
+UIColor *whiteColor = [UIColor colorForString:@"#FFFFFF"];
+UIColor *alphaBlackColor = [UIColor colorForString:@"#000000 0.5"];  //0.5透明度
+
+UIColor *whiteColor = RGB(255,255,255);
+UIColor *alphaBlackColor = RGBA(0,0,0,0.5);
+```
+
 ####NSArray+HZExtend.h
 ```objective-c
 //若越界则返回nil
