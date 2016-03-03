@@ -20,8 +20,6 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
-    
     UIButton *pageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [pageBtn addTarget:self action:@selector(push:) forControlEvents:UIControlEventTouchUpInside];
     [pageBtn setTitle:@"URL-Push" forState:UIControlStateNormal];

@@ -2,9 +2,9 @@ Pod::Spec.new do |s|
 
   s.name         = "HZExtend"	
   s.version      = "0.5.3"		
-  s.summary      = "a useful powrful IOS Extend"
+  s.summary      = "MVVM, Powerful IOS Extension"
   s.description  = <<-DESC
-  					       a useful powrful IOS Extend，available Network、Model、MMVM
+  					       MVVM, Powerful IOS Extension，available Network、Model、MMVM、URLManager、database
                    DESC
   s.homepage     = "https://github.com/GeniusBrother/HZExtend.git"
   s.license      = "MIT"
