@@ -19,7 +19,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.3'
 ```
 
 ####安装CocoaPodspod后可傻瓜式添加任何开源框架,免于一些基础配置
-[CocoaPods的安装教程](http://code4app.com/article/cocoapods-install-usage)
+[CocoaPods的安装教程,群Q32272635我手把手教你安装](http://code4app.com/article/cocoapods-install-usage)
 
 ####没用过Pods同学注意了应该使用该文件来打开项目
 ![](Asset/podsError.png)
