@@ -12,12 +12,17 @@
 6.一些常用的基础类扩展.
 ```
 
-##添加##
+##使用##
+####添加
 ```ruby
-1.pod 'HZExtend'
-
-2.可以下载classes文件直接添加到项目中
+CocoaPods:pod 'HZExtend', '~> 0.5.3'
 ```
+
+####安装CocoaPodspod后可傻瓜式添加任何开源框架,免于一些基础配置
+[CocoaPods的安装教程](http://code4app.com/article/cocoapods-install-usage)
+
+####注意:下载的Demo需重新pod update下来安装一些依赖的第三方框架
+
 ##其它资源##
 * [简书论坛](http://www.jianshu.com/collection/ba017346481d)
 
