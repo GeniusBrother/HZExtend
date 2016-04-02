@@ -43,14 +43,24 @@
 - (NSString *)host
 {
     NSString *scheme = self.scheme;
-    if (!scheme.isNoEmpty) return @"";
+    if (!scheme.isNoEmpty) return @"";  //无schema该情况下无host
     
     NSString *noScheme = [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@://",scheme] withString:@""];
     
     NSRange range = [noScheme rangeOfString:@"/"];
-    if (range.length == 0) return noScheme;
+    if (range.length == 0) {    //无path
+        NSRange queryRange = [noScheme rangeOfString:@"?"];
+        //无查询字符串
+        if(queryRange.length == 0) {
+            return noScheme;
+        }else {//有查询字符串
+            return [noScheme substringToIndex:queryRange.location];
+        }
+    }else {
+        return [noScheme substringToIndex:range.location];
+    }
     
-    return [noScheme substringToIndex:range.location];
+    return @"";
 }
 
 - (NSString *)keyValues

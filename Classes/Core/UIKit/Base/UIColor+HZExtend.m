@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
 
-#import "UIColor+HzExtend.h"
-#import "NSString+HzExtend.h"
+#import "UIColor+HZExtend.h"
+#import "NSString+HZExtend.h"
 @implementation UIColor (HZExtend)
 
 + (UIColor *)fromHexValue:(NSUInteger)hex

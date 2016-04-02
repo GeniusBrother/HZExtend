@@ -217,7 +217,7 @@
     UIView *supView = self.superview;
     HZAssertNoReturn(self.superview == nil, @"view did have superView")
     
-    self.top = (supView.height-self.height/2);
+    self.top = (supView.height-self.height)/2;
 }
 
 - (void)bottomOverView:(UIView *)view offset:(CGFloat)offset

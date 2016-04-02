@@ -26,7 +26,7 @@
  *  将viewController present到当前的控制器上
  */
 + (void)presentViewControllerWithString:(NSString *)urlstring animated:(BOOL)animated completion:(void (^)(void))completion;
-+ (void)presentViewControllerWithString:(NSString *)urlstring queryDic:(NSDictionary *)query animated:(BOOL)animated completion:(void (^)(void))completion;
++ (void)presentViewControllerWithString:( NSString *)urlstring queryDic:(NSDictionary *)query animated:(BOOL)animated completion:(void (^)(void))completion;
 
 /**
  *  1.若当前控制器的容器为导航控制器,则pop

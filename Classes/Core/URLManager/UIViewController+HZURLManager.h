@@ -19,7 +19,7 @@
 @property(nonatomic, strong, readonly) NSString *originURL;
 
 /**
- *  由查询字符串和queryDic组成
+ *  由查询字符串和跳转时传入的NSDictionary组成
  */
 @property(nonatomic, strong, readonly) NSDictionary *queryDic;
 

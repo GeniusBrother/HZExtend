@@ -7,7 +7,7 @@
 //
 
 #import "HZViewController.h"
-
+#import "HZConst.h"
 @implementation HZViewController
 
 - (void)viewDidLoad
@@ -30,4 +30,8 @@
 - (void)setupSuccessDataWithTask:(SessionTask *)task type:(NSString *)type {}
 - (void)requestFailWithTask:(SessionTask *)task type:(NSString *)type {}
 
+- (void)dealloc
+{
+    HZLog(@"%@----Ctrl销毁了",self);
+}
 @end

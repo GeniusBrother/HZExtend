@@ -46,7 +46,7 @@
     
     [self setup];
 }
-
+- (void)handleNavigationTransition {}
 #pragma mark - Appearance
 - (UIStatusBarStyle)preferredStatusBarStyle
 {

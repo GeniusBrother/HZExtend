@@ -27,7 +27,7 @@
     [super prepare];
     // 设置控件的高度
     self.mj_h = 50;
-    
+    self.backgroundColor = [UIColor blueColor];
     HZCircleView *circleView = [[HZCircleView alloc] init];
     [self addSubview:circleView];
     self.circleView = circleView;

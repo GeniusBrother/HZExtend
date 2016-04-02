@@ -14,8 +14,8 @@
 @interface HZURLManageConfig : NSObject
 singleton_h(Config)
 /**
- *  URL->class配置参数,键值对形式为: URL:Class of UIViewController
- *  需先初始化
+ *  URL配置
+ *  URL的Host->class即 URL的host:Class of UIViewController
  */
 @property(nonatomic, strong) NSDictionary *config;
 
@@ -23,5 +23,10 @@ singleton_h(Config)
  *  指定传入http等URL时应生成控制器的名称,最好能继承HZWebViewController
  */
 @property(nonatomic, strong) NSString *classOfWebViewCtrl;
+
+/**
+ *  使用URLManager跳转时，指定下bar是否隐藏,默认NO
+ */
+@property(nonatomic, assign) BOOL hideBottomWhenPushed;
 
 @end

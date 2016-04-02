@@ -12,15 +12,22 @@
 #import "HZRefreshAutoFooter.h"
 @interface UIScrollView (HZRefresh)
 
-//增加刷新组件
-- (void)addRefreshHeader:(MJRefreshHeader *)headerView;
-- (void)addRefreshFooter:(MJRefreshFooter *)footerView;
+/**
+ *  1.创建刷新控件并指定回调
+ */
+- (void)addRefreshHeader:(MJRefreshHeader *)headerView; //下拉刷新控件
+- (void)addRefreshFooter:(MJRefreshFooter *)footerView; //上拉加载控件
 
-//触发刷新
+/**
+ *  2.触发回调
+ */
 - (void)headerBeginRefreshing;
 - (void)footerBeginRefreshing;
 
-//结束刷新 1YES 0NO
+/**
+ *  3.结束全部刷新,并指定是否有更多数据
+ *  isEnd:1YES 0NO
+ */
 - (void)endAllRefreshWithFooterEnd:(NSInteger)isEnd;
-- (void)endFooterRefreshWithEnd:(NSInteger)isEnd;
+
 @end

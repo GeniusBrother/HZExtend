@@ -25,7 +25,7 @@
     
     // 设置控件的高度,宽默认为屏宽
     self.mj_h = 50;
-    
+    self.backgroundColor = [UIColor redColor];
     HZCircleView *circleView = [[HZCircleView alloc] init];
     [self addSubview:circleView];
     self.circleView = circleView;
