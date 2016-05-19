@@ -7,8 +7,7 @@
 //
 
 #import "UIView+HZExtend.h"
-#import "HZConst.h"
-#import "NSObject+HZExtend.h"
+
 @implementation UIView (HZExtend)
 
 #pragma mark - Location
@@ -183,68 +182,62 @@
 #pragma mark - Relative
 - (void)alignRight:(CGFloat)rightOffset
 {
+    [self checkSuperView];
+    
     UIView *supView = self.superview;
-    HZAssertNoReturn(self.superview == nil, @"view did have superView")
     self.right = supView.width + rightOffset;
 }
 
 - (void)alignBottom:(CGFloat)bottomOffset
 {
-    UIView *supView = self.superview;
-    HZAssertNoReturn(supView == nil, @"view did have superView")
+    [self checkSuperView];
     
+    UIView *supView = self.superview;
     self.bottom = supView.height + bottomOffset;
 }
 
 - (void)alignCenter
 {
+    [self checkSuperView];
     UIView *supView = self.superview;
-    HZAssertNoReturn(self.superview == nil, @"view did have superView")
-    
     self.origin = CGPointMake((supView.width-self.width)/2, (supView.height-self.height)/2);
 }
 
 - (void)alignCenterX
 {
+    [self checkSuperView];
     UIView *supView = self.superview;
-    HZAssertNoReturn(self.superview == nil, @"view did have superView")
-    
     self.left = (supView.width-self.width)/2;
 }
 
 - (void)alignCenterY
 {
+    [self checkSuperView];
     UIView *supView = self.superview;
-    HZAssertNoReturn(self.superview == nil, @"view did have superView")
-    
     self.top = (supView.height-self.height)/2;
 }
 
 - (void)bottomOverView:(UIView *)view offset:(CGFloat)offset
 {
-    HZAssertNoReturn(self.superview == nil || !(self.superview == view.superview), @"views hierarchy not same")
-    
+    [self checkHierarchySameWithContrastView:view];
     self.bottom = view.top+offset;
 }
 
 - (void)topBehindView:(UIView *)view offset:(CGFloat)offset
 {
-    HZAssertNoReturn(self.superview == nil || !(self.superview == view.superview), @"views hierarchy not same")
-    
+    [self checkHierarchySameWithContrastView:view];
     self.top = view.bottom+offset;
 }
 
 - (void)rightOverView:(UIView *)view offset:(CGFloat)offset
 {
-    HZAssertNoReturn(self.superview == nil || !(self.superview == view.superview), @"views hierarchy not same")
-    
+    [self checkHierarchySameWithContrastView:view];
     self.right = view.left+offset;
 }
 
 - (void)leftBehindView:(UIView *)view offset:(CGFloat)offset
 {
-    HZAssertNoReturn(self.superview == nil || !(self.superview == view.superview), @"views hierarchy not same")
-    
+    [self checkHierarchySameWithContrastView:view];
     self.left = view.right+offset;
 }
 
@@ -255,6 +248,17 @@
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
+}
+
+#pragma mark - Private Method
+- (void)checkSuperView
+{
+    NSAssert(self.superview != nil, @"view did have superView");
+}
+
+- (void)checkHierarchySameWithContrastView:(UIView *)contrastView
+{
+    NSAssert((self.superview != nil && self.superview == contrastView.superview), @"views hierarchy not same");
 }
 
 @end

@@ -9,13 +9,6 @@
 /* Begin PBXBuildFile section */
 		289E257E1C831C24001B0AA2 /* ExampleItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E257D1C831C24001B0AA2 /* ExampleItemViewController.m */; };
 		289E25811C832255001B0AA2 /* ExampleItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E25801C832255001B0AA2 /* ExampleItemModel.m */; };
-		289E25911C83228D001B0AA2 /* HZNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E25841C83228D001B0AA2 /* HZNavigationController.m */; };
-		289E25921C83228D001B0AA2 /* HZURLManageConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E25861C83228D001B0AA2 /* HZURLManageConfig.m */; };
-		289E25931C83228D001B0AA2 /* HZURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E25881C83228D001B0AA2 /* HZURLManager.m */; };
-		289E25941C83228D001B0AA2 /* HZURLNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E258A1C83228D001B0AA2 /* HZURLNavigation.m */; };
-		289E25951C83228D001B0AA2 /* HZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E258C1C83228D001B0AA2 /* HZViewController.m */; };
-		289E25961C83228D001B0AA2 /* HZWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E258E1C83228D001B0AA2 /* HZWebViewController.m */; };
-		289E25971C83228D001B0AA2 /* UIViewController+HZURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E25901C83228D001B0AA2 /* UIViewController+HZURLManager.m */; };
 		289E259A1C8325CA001B0AA2 /* URLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E25991C8325CA001B0AA2 /* URLViewController.m */; };
 		289E259D1C832735001B0AA2 /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E259C1C832735001B0AA2 /* BaseModel.m */; };
 		289E25A01C833016001B0AA2 /* URLItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E259F1C833016001B0AA2 /* URLItemViewController.m */; };
@@ -24,31 +17,6 @@
 		28E9C8161C6F09AB00F7ED97 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8151C6F09AB00F7ED97 /* ViewController.m */; };
 		28E9C81B1C6F09AB00F7ED97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28E9C81A1C6F09AB00F7ED97 /* Assets.xcassets */; };
 		28E9C81E1C6F09AB00F7ED97 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28E9C81C1C6F09AB00F7ED97 /* LaunchScreen.storyboard */; };
-		28E9C8651C6F09E100F7ED97 /* HZConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8291C6F09E100F7ED97 /* HZConst.m */; };
-		28E9C8661C6F09E100F7ED97 /* NSArray+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C82B1C6F09E100F7ED97 /* NSArray+HZExtend.m */; };
-		28E9C8671C6F09E100F7ED97 /* NSData+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C82D1C6F09E100F7ED97 /* NSData+HZExtend.m */; };
-		28E9C8681C6F09E100F7ED97 /* NSDictionary+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C82F1C6F09E100F7ED97 /* NSDictionary+HZExtend.m */; };
-		28E9C8691C6F09E100F7ED97 /* NSMutableArray+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8311C6F09E100F7ED97 /* NSMutableArray+HZExtend.m */; };
-		28E9C86A1C6F09E100F7ED97 /* NSObject+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8331C6F09E100F7ED97 /* NSObject+HZExtend.m */; };
-		28E9C86B1C6F09E100F7ED97 /* NSString+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8351C6F09E100F7ED97 /* NSString+HZExtend.m */; };
-		28E9C86C1C6F09E100F7ED97 /* NSURL+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8371C6F09E100F7ED97 /* NSURL+HZExtend.m */; };
-		28E9C86D1C6F09E100F7ED97 /* HZModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C83B1C6F09E100F7ED97 /* HZModel.m */; };
-		28E9C86E1C6F09E100F7ED97 /* HZViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C83D1C6F09E100F7ED97 /* HZViewModel.m */; };
-		28E9C86F1C6F09E100F7ED97 /* HZNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8401C6F09E100F7ED97 /* HZNetwork.m */; };
-		28E9C8701C6F09E100F7ED97 /* NetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8421C6F09E100F7ED97 /* NetworkConfig.m */; };
-		28E9C8711C6F09E100F7ED97 /* SessionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8441C6F09E100F7ED97 /* SessionTask.m */; };
-		28E9C8721C6F09E100F7ED97 /* UploadSessionTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8461C6F09E100F7ED97 /* UploadSessionTask.m */; };
-		28E9C8741C6F09E100F7ED97 /* UIColor+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C84C1C6F09E100F7ED97 /* UIColor+HZExtend.m */; };
-		28E9C8751C6F09E100F7ED97 /* UIImageView+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C84E1C6F09E100F7ED97 /* UIImageView+HZExtend.m */; };
-		28E9C8761C6F09E100F7ED97 /* UIScrollView+HZRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8501C6F09E100F7ED97 /* UIScrollView+HZRefresh.m */; };
-		28E9C8771C6F09E100F7ED97 /* UIView+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8521C6F09E100F7ED97 /* UIView+Action.m */; };
-		28E9C8781C6F09E100F7ED97 /* UIView+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8541C6F09E100F7ED97 /* UIView+HZExtend.m */; };
-		28E9C8791C6F09E100F7ED97 /* UIViewController+HZHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8561C6F09E100F7ED97 /* UIViewController+HZHUD.m */; };
-		28E9C87A1C6F09E100F7ED97 /* HZCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C85A1C6F09E100F7ED97 /* HZCircleView.m */; };
-		28E9C87B1C6F09E100F7ED97 /* HZRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C85C1C6F09E100F7ED97 /* HZRefreshAutoFooter.m */; };
-		28E9C87C1C6F09E100F7ED97 /* HZRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C85E1C6F09E100F7ED97 /* HZRefreshBackFooter.m */; };
-		28E9C87D1C6F09E100F7ED97 /* HZRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8601C6F09E100F7ED97 /* HZRefreshHeaderView.m */; };
-		28E9C87E1C6F09E100F7ED97 /* HZSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8641C6F09E100F7ED97 /* HZSystem.m */; };
 		28E9C8851C6F219100F7ED97 /* SubjectViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8841C6F219100F7ED97 /* SubjectViewModel.m */; };
 		28E9C8881C6F21A000F7ED97 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8871C6F21A000F7ED97 /* SubjectModel.m */; };
 		28E9C88B1C6F220900F7ED97 /* SubjectList.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C88A1C6F220900F7ED97 /* SubjectList.m */; };
@@ -56,6 +24,8 @@
 		28E9C8911C6F22BB00F7ED97 /* SubjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8901C6F22BB00F7ED97 /* SubjectItem.m */; };
 		28E9C8941C6F27E000F7ED97 /* Pagination.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8931C6F27E000F7ED97 /* Pagination.m */; };
 		2C8705E147BEEAD30F91E32E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F479BAC070C3A341F3A3C22E /* libPods.a */; };
+		3FDE0B911F2B5E647D4AF897 /* libPods-HZExtend-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 907B91A1045CD47BE556E358 /* libPods-HZExtend-Demo.a */; };
+		53378E5A1CED8082003D1EF4 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53378E591CED8082003D1EF4 /* TestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,20 +33,6 @@
 		289E257D1C831C24001B0AA2 /* ExampleItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleItemViewController.m; sourceTree = "<group>"; };
 		289E257F1C832255001B0AA2 /* ExampleItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleItemModel.h; sourceTree = "<group>"; };
 		289E25801C832255001B0AA2 /* ExampleItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleItemModel.m; sourceTree = "<group>"; };
-		289E25831C83228D001B0AA2 /* HZNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZNavigationController.h; sourceTree = "<group>"; };
-		289E25841C83228D001B0AA2 /* HZNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZNavigationController.m; sourceTree = "<group>"; };
-		289E25851C83228D001B0AA2 /* HZURLManageConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZURLManageConfig.h; sourceTree = "<group>"; };
-		289E25861C83228D001B0AA2 /* HZURLManageConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZURLManageConfig.m; sourceTree = "<group>"; };
-		289E25871C83228D001B0AA2 /* HZURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZURLManager.h; sourceTree = "<group>"; };
-		289E25881C83228D001B0AA2 /* HZURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZURLManager.m; sourceTree = "<group>"; };
-		289E25891C83228D001B0AA2 /* HZURLNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZURLNavigation.h; sourceTree = "<group>"; };
-		289E258A1C83228D001B0AA2 /* HZURLNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZURLNavigation.m; sourceTree = "<group>"; };
-		289E258B1C83228D001B0AA2 /* HZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZViewController.h; sourceTree = "<group>"; };
-		289E258C1C83228D001B0AA2 /* HZViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZViewController.m; sourceTree = "<group>"; };
-		289E258D1C83228D001B0AA2 /* HZWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZWebViewController.h; sourceTree = "<group>"; };
-		289E258E1C83228D001B0AA2 /* HZWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZWebViewController.m; sourceTree = "<group>"; };
-		289E258F1C83228D001B0AA2 /* UIViewController+HZURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HZURLManager.h"; sourceTree = "<group>"; };
-		289E25901C83228D001B0AA2 /* UIViewController+HZURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HZURLManager.m"; sourceTree = "<group>"; };
 		289E25981C8325CA001B0AA2 /* URLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLViewController.h; sourceTree = "<group>"; };
 		289E25991C8325CA001B0AA2 /* URLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLViewController.m; sourceTree = "<group>"; };
 		289E259B1C832735001B0AA2 /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
@@ -92,58 +48,6 @@
 		28E9C81A1C6F09AB00F7ED97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		28E9C81D1C6F09AB00F7ED97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		28E9C81F1C6F09AB00F7ED97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		28E9C8281C6F09E100F7ED97 /* HZConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZConst.h; sourceTree = "<group>"; };
-		28E9C8291C6F09E100F7ED97 /* HZConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZConst.m; sourceTree = "<group>"; };
-		28E9C82A1C6F09E100F7ED97 /* NSArray+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C82B1C6F09E100F7ED97 /* NSArray+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C82C1C6F09E100F7ED97 /* NSData+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C82D1C6F09E100F7ED97 /* NSData+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C82E1C6F09E100F7ED97 /* NSDictionary+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C82F1C6F09E100F7ED97 /* NSDictionary+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C8301C6F09E100F7ED97 /* NSMutableArray+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C8311C6F09E100F7ED97 /* NSMutableArray+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C8321C6F09E100F7ED97 /* NSObject+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C8331C6F09E100F7ED97 /* NSObject+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C8341C6F09E100F7ED97 /* NSString+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C8351C6F09E100F7ED97 /* NSString+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C8361C6F09E100F7ED97 /* NSURL+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C8371C6F09E100F7ED97 /* NSURL+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C8381C6F09E100F7ED97 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
-		28E9C83A1C6F09E100F7ED97 /* HZModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZModel.h; sourceTree = "<group>"; };
-		28E9C83B1C6F09E100F7ED97 /* HZModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZModel.m; sourceTree = "<group>"; };
-		28E9C83C1C6F09E100F7ED97 /* HZViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZViewModel.h; sourceTree = "<group>"; };
-		28E9C83D1C6F09E100F7ED97 /* HZViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZViewModel.m; sourceTree = "<group>"; };
-		28E9C83F1C6F09E100F7ED97 /* HZNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZNetwork.h; sourceTree = "<group>"; };
-		28E9C8401C6F09E100F7ED97 /* HZNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZNetwork.m; sourceTree = "<group>"; };
-		28E9C8411C6F09E100F7ED97 /* NetworkConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkConfig.h; sourceTree = "<group>"; };
-		28E9C8421C6F09E100F7ED97 /* NetworkConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkConfig.m; sourceTree = "<group>"; };
-		28E9C8431C6F09E100F7ED97 /* SessionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionTask.h; sourceTree = "<group>"; };
-		28E9C8441C6F09E100F7ED97 /* SessionTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionTask.m; sourceTree = "<group>"; };
-		28E9C8451C6F09E100F7ED97 /* UploadSessionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadSessionTask.h; sourceTree = "<group>"; };
-		28E9C8461C6F09E100F7ED97 /* UploadSessionTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadSessionTask.m; sourceTree = "<group>"; };
-		28E9C84B1C6F09E100F7ED97 /* UIColor+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C84C1C6F09E100F7ED97 /* UIColor+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C84D1C6F09E100F7ED97 /* UIImageView+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C84E1C6F09E100F7ED97 /* UIImageView+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C84F1C6F09E100F7ED97 /* UIScrollView+HZRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+HZRefresh.h"; sourceTree = "<group>"; };
-		28E9C8501C6F09E100F7ED97 /* UIScrollView+HZRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+HZRefresh.m"; sourceTree = "<group>"; };
-		28E9C8511C6F09E100F7ED97 /* UIView+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Action.h"; sourceTree = "<group>"; };
-		28E9C8521C6F09E100F7ED97 /* UIView+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Action.m"; sourceTree = "<group>"; };
-		28E9C8531C6F09E100F7ED97 /* UIView+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HZExtend.h"; sourceTree = "<group>"; };
-		28E9C8541C6F09E100F7ED97 /* UIView+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HZExtend.m"; sourceTree = "<group>"; };
-		28E9C8551C6F09E100F7ED97 /* UIViewController+HZHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HZHUD.h"; sourceTree = "<group>"; };
-		28E9C8561C6F09E100F7ED97 /* UIViewController+HZHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HZHUD.m"; sourceTree = "<group>"; };
-		28E9C8591C6F09E100F7ED97 /* HZCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZCircleView.h; sourceTree = "<group>"; };
-		28E9C85A1C6F09E100F7ED97 /* HZCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZCircleView.m; sourceTree = "<group>"; };
-		28E9C85B1C6F09E100F7ED97 /* HZRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZRefreshAutoFooter.h; sourceTree = "<group>"; };
-		28E9C85C1C6F09E100F7ED97 /* HZRefreshAutoFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZRefreshAutoFooter.m; sourceTree = "<group>"; };
-		28E9C85D1C6F09E100F7ED97 /* HZRefreshBackFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZRefreshBackFooter.h; sourceTree = "<group>"; };
-		28E9C85E1C6F09E100F7ED97 /* HZRefreshBackFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZRefreshBackFooter.m; sourceTree = "<group>"; };
-		28E9C85F1C6F09E100F7ED97 /* HZRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZRefreshHeaderView.h; sourceTree = "<group>"; };
-		28E9C8601C6F09E100F7ED97 /* HZRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZRefreshHeaderView.m; sourceTree = "<group>"; };
-		28E9C8611C6F09E100F7ED97 /* HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZExtend.h; sourceTree = "<group>"; };
-		28E9C8631C6F09E100F7ED97 /* HZSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZSystem.h; sourceTree = "<group>"; };
-		28E9C8641C6F09E100F7ED97 /* HZSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZSystem.m; sourceTree = "<group>"; };
 		28E9C8831C6F219100F7ED97 /* SubjectViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectViewModel.h; sourceTree = "<group>"; };
 		28E9C8841C6F219100F7ED97 /* SubjectViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectViewModel.m; sourceTree = "<group>"; };
 		28E9C8861C6F21A000F7ED97 /* SubjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectModel.h; sourceTree = "<group>"; };
@@ -157,6 +61,9 @@
 		28E9C8921C6F27E000F7ED97 /* Pagination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pagination.h; sourceTree = "<group>"; };
 		28E9C8931C6F27E000F7ED97 /* Pagination.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pagination.m; sourceTree = "<group>"; };
 		477B360C57E6583CCFD08A8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		53378E581CED8082003D1EF4 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		53378E591CED8082003D1EF4 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		907B91A1045CD47BE556E358 /* libPods-HZExtend-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HZExtend-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE085C48EE71D01B3D28C20B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F479BAC070C3A341F3A3C22E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -167,6 +74,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C8705E147BEEAD30F91E32E /* libPods.a in Frameworks */,
+				3FDE0B911F2B5E647D4AF897 /* libPods-HZExtend-Demo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,27 +94,6 @@
 				289E259F1C833016001B0AA2 /* URLItemViewController.m */,
 			);
 			name = Ctrl;
-			sourceTree = "<group>";
-		};
-		289E25821C83228D001B0AA2 /* URLManager */ = {
-			isa = PBXGroup;
-			children = (
-				289E25831C83228D001B0AA2 /* HZNavigationController.h */,
-				289E25841C83228D001B0AA2 /* HZNavigationController.m */,
-				289E25851C83228D001B0AA2 /* HZURLManageConfig.h */,
-				289E25861C83228D001B0AA2 /* HZURLManageConfig.m */,
-				289E25871C83228D001B0AA2 /* HZURLManager.h */,
-				289E25881C83228D001B0AA2 /* HZURLManager.m */,
-				289E25891C83228D001B0AA2 /* HZURLNavigation.h */,
-				289E258A1C83228D001B0AA2 /* HZURLNavigation.m */,
-				289E258B1C83228D001B0AA2 /* HZViewController.h */,
-				289E258C1C83228D001B0AA2 /* HZViewController.m */,
-				289E258D1C83228D001B0AA2 /* HZWebViewController.h */,
-				289E258E1C83228D001B0AA2 /* HZWebViewController.m */,
-				289E258F1C83228D001B0AA2 /* UIViewController+HZURLManager.h */,
-				289E25901C83228D001B0AA2 /* UIViewController+HZURLManager.m */,
-			);
-			path = URLManager;
 			sourceTree = "<group>";
 		};
 		28E9C8021C6F09AB00F7ED97 = {
@@ -230,8 +117,8 @@
 		28E9C80D1C6F09AB00F7ED97 /* HZExtend-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				53378E571CED804C003D1EF4 /* Test */,
 				289E257B1C831BEF001B0AA2 /* Ctrl */,
-				28E9C8251C6F09E100F7ED97 /* Classes */,
 				28E9C8821C6F217B00F7ED97 /* Model */,
 				28E9C8111C6F09AB00F7ED97 /* AppDelegate.h */,
 				28E9C8121C6F09AB00F7ED97 /* AppDelegate.m */,
@@ -249,138 +136,6 @@
 				28E9C80F1C6F09AB00F7ED97 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		28E9C8251C6F09E100F7ED97 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C8261C6F09E100F7ED97 /* Core */,
-				28E9C8611C6F09E100F7ED97 /* HZExtend.h */,
-				28E9C8621C6F09E100F7ED97 /* Other */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		28E9C8261C6F09E100F7ED97 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				289E25821C83228D001B0AA2 /* URLManager */,
-				28E9C8271C6F09E100F7ED97 /* Foundation */,
-				28E9C8391C6F09E100F7ED97 /* Model */,
-				28E9C83E1C6F09E100F7ED97 /* Network */,
-				28E9C8471C6F09E100F7ED97 /* UIKit */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		28E9C8271C6F09E100F7ED97 /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C8281C6F09E100F7ED97 /* HZConst.h */,
-				28E9C8291C6F09E100F7ED97 /* HZConst.m */,
-				28E9C82A1C6F09E100F7ED97 /* NSArray+HZExtend.h */,
-				28E9C82B1C6F09E100F7ED97 /* NSArray+HZExtend.m */,
-				28E9C82C1C6F09E100F7ED97 /* NSData+HZExtend.h */,
-				28E9C82D1C6F09E100F7ED97 /* NSData+HZExtend.m */,
-				28E9C82E1C6F09E100F7ED97 /* NSDictionary+HZExtend.h */,
-				28E9C82F1C6F09E100F7ED97 /* NSDictionary+HZExtend.m */,
-				28E9C8301C6F09E100F7ED97 /* NSMutableArray+HZExtend.h */,
-				28E9C8311C6F09E100F7ED97 /* NSMutableArray+HZExtend.m */,
-				28E9C8321C6F09E100F7ED97 /* NSObject+HZExtend.h */,
-				28E9C8331C6F09E100F7ED97 /* NSObject+HZExtend.m */,
-				28E9C8341C6F09E100F7ED97 /* NSString+HZExtend.h */,
-				28E9C8351C6F09E100F7ED97 /* NSString+HZExtend.m */,
-				28E9C8361C6F09E100F7ED97 /* NSURL+HZExtend.h */,
-				28E9C8371C6F09E100F7ED97 /* NSURL+HZExtend.m */,
-				28E9C8381C6F09E100F7ED97 /* Singleton.h */,
-			);
-			path = Foundation;
-			sourceTree = "<group>";
-		};
-		28E9C8391C6F09E100F7ED97 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C83A1C6F09E100F7ED97 /* HZModel.h */,
-				28E9C83B1C6F09E100F7ED97 /* HZModel.m */,
-				28E9C83C1C6F09E100F7ED97 /* HZViewModel.h */,
-				28E9C83D1C6F09E100F7ED97 /* HZViewModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		28E9C83E1C6F09E100F7ED97 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C83F1C6F09E100F7ED97 /* HZNetwork.h */,
-				28E9C8401C6F09E100F7ED97 /* HZNetwork.m */,
-				28E9C8411C6F09E100F7ED97 /* NetworkConfig.h */,
-				28E9C8421C6F09E100F7ED97 /* NetworkConfig.m */,
-				28E9C8431C6F09E100F7ED97 /* SessionTask.h */,
-				28E9C8441C6F09E100F7ED97 /* SessionTask.m */,
-				28E9C8451C6F09E100F7ED97 /* UploadSessionTask.h */,
-				28E9C8461C6F09E100F7ED97 /* UploadSessionTask.m */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		28E9C8471C6F09E100F7ED97 /* UIKit */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C8481C6F09E100F7ED97 /* Base */,
-				28E9C8571C6F09E100F7ED97 /* Custom */,
-			);
-			path = UIKit;
-			sourceTree = "<group>";
-		};
-		28E9C8481C6F09E100F7ED97 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C84B1C6F09E100F7ED97 /* UIColor+HZExtend.h */,
-				28E9C84C1C6F09E100F7ED97 /* UIColor+HZExtend.m */,
-				28E9C84D1C6F09E100F7ED97 /* UIImageView+HZExtend.h */,
-				28E9C84E1C6F09E100F7ED97 /* UIImageView+HZExtend.m */,
-				28E9C84F1C6F09E100F7ED97 /* UIScrollView+HZRefresh.h */,
-				28E9C8501C6F09E100F7ED97 /* UIScrollView+HZRefresh.m */,
-				28E9C8511C6F09E100F7ED97 /* UIView+Action.h */,
-				28E9C8521C6F09E100F7ED97 /* UIView+Action.m */,
-				28E9C8531C6F09E100F7ED97 /* UIView+HZExtend.h */,
-				28E9C8541C6F09E100F7ED97 /* UIView+HZExtend.m */,
-				28E9C8551C6F09E100F7ED97 /* UIViewController+HZHUD.h */,
-				28E9C8561C6F09E100F7ED97 /* UIViewController+HZHUD.m */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
-		28E9C8571C6F09E100F7ED97 /* Custom */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C8581C6F09E100F7ED97 /* Refresh */,
-			);
-			path = Custom;
-			sourceTree = "<group>";
-		};
-		28E9C8581C6F09E100F7ED97 /* Refresh */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C8591C6F09E100F7ED97 /* HZCircleView.h */,
-				28E9C85A1C6F09E100F7ED97 /* HZCircleView.m */,
-				28E9C85B1C6F09E100F7ED97 /* HZRefreshAutoFooter.h */,
-				28E9C85C1C6F09E100F7ED97 /* HZRefreshAutoFooter.m */,
-				28E9C85D1C6F09E100F7ED97 /* HZRefreshBackFooter.h */,
-				28E9C85E1C6F09E100F7ED97 /* HZRefreshBackFooter.m */,
-				28E9C85F1C6F09E100F7ED97 /* HZRefreshHeaderView.h */,
-				28E9C8601C6F09E100F7ED97 /* HZRefreshHeaderView.m */,
-			);
-			path = Refresh;
-			sourceTree = "<group>";
-		};
-		28E9C8621C6F09E100F7ED97 /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				28E9C8631C6F09E100F7ED97 /* HZSystem.h */,
-				28E9C8641C6F09E100F7ED97 /* HZSystem.m */,
-			);
-			path = Other;
 			sourceTree = "<group>";
 		};
 		28E9C8821C6F217B00F7ED97 /* Model */ = {
@@ -410,8 +165,18 @@
 			isa = PBXGroup;
 			children = (
 				F479BAC070C3A341F3A3C22E /* libPods.a */,
+				907B91A1045CD47BE556E358 /* libPods-HZExtend-Demo.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		53378E571CED804C003D1EF4 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				53378E581CED8082003D1EF4 /* TestViewController.h */,
+				53378E591CED8082003D1EF4 /* TestViewController.m */,
+			);
+			path = Test;
 			sourceTree = "<group>";
 		};
 		DA5F4CEEC55DEEBC96091247 /* Pods */ = {
@@ -518,7 +283,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend-Demo/Pods-HZExtend-Demo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A37DEC58BD422DD39CDA6C18 /* Embed Pods Frameworks */ = {
@@ -533,7 +298,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend-Demo/Pods-HZExtend-Demo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -543,52 +308,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28E9C87D1C6F09E100F7ED97 /* HZRefreshHeaderView.m in Sources */,
 				289E25A01C833016001B0AA2 /* URLItemViewController.m in Sources */,
-				28E9C8741C6F09E100F7ED97 /* UIColor+HZExtend.m in Sources */,
-				289E25971C83228D001B0AA2 /* UIViewController+HZURLManager.m in Sources */,
 				28E9C8161C6F09AB00F7ED97 /* ViewController.m in Sources */,
-				28E9C86E1C6F09E100F7ED97 /* HZViewModel.m in Sources */,
-				28E9C8651C6F09E100F7ED97 /* HZConst.m in Sources */,
-				28E9C8661C6F09E100F7ED97 /* NSArray+HZExtend.m in Sources */,
-				28E9C8791C6F09E100F7ED97 /* UIViewController+HZHUD.m in Sources */,
-				28E9C86F1C6F09E100F7ED97 /* HZNetwork.m in Sources */,
-				289E25921C83228D001B0AA2 /* HZURLManageConfig.m in Sources */,
 				289E257E1C831C24001B0AA2 /* ExampleItemViewController.m in Sources */,
-				28E9C8721C6F09E100F7ED97 /* UploadSessionTask.m in Sources */,
 				28E9C88B1C6F220900F7ED97 /* SubjectList.m in Sources */,
 				28E9C8881C6F21A000F7ED97 /* SubjectModel.m in Sources */,
-				28E9C86D1C6F09E100F7ED97 /* HZModel.m in Sources */,
-				28E9C8691C6F09E100F7ED97 /* NSMutableArray+HZExtend.m in Sources */,
-				28E9C8701C6F09E100F7ED97 /* NetworkConfig.m in Sources */,
-				28E9C87C1C6F09E100F7ED97 /* HZRefreshBackFooter.m in Sources */,
 				289E259D1C832735001B0AA2 /* BaseModel.m in Sources */,
 				289E25811C832255001B0AA2 /* ExampleItemModel.m in Sources */,
-				28E9C8681C6F09E100F7ED97 /* NSDictionary+HZExtend.m in Sources */,
 				28E9C8131C6F09AB00F7ED97 /* AppDelegate.m in Sources */,
-				28E9C86C1C6F09E100F7ED97 /* NSURL+HZExtend.m in Sources */,
-				289E25911C83228D001B0AA2 /* HZNavigationController.m in Sources */,
-				289E25961C83228D001B0AA2 /* HZWebViewController.m in Sources */,
-				28E9C8771C6F09E100F7ED97 /* UIView+Action.m in Sources */,
-				28E9C8751C6F09E100F7ED97 /* UIImageView+HZExtend.m in Sources */,
-				28E9C87E1C6F09E100F7ED97 /* HZSystem.m in Sources */,
-				28E9C8761C6F09E100F7ED97 /* UIScrollView+HZRefresh.m in Sources */,
-				28E9C86A1C6F09E100F7ED97 /* NSObject+HZExtend.m in Sources */,
 				28E9C8941C6F27E000F7ED97 /* Pagination.m in Sources */,
-				28E9C8671C6F09E100F7ED97 /* NSData+HZExtend.m in Sources */,
+				53378E5A1CED8082003D1EF4 /* TestViewController.m in Sources */,
 				289E259A1C8325CA001B0AA2 /* URLViewController.m in Sources */,
-				28E9C8781C6F09E100F7ED97 /* UIView+HZExtend.m in Sources */,
-				28E9C87B1C6F09E100F7ED97 /* HZRefreshAutoFooter.m in Sources */,
 				28E9C8911C6F22BB00F7ED97 /* SubjectItem.m in Sources */,
-				289E25941C83228D001B0AA2 /* HZURLNavigation.m in Sources */,
-				289E25931C83228D001B0AA2 /* HZURLManager.m in Sources */,
 				28E9C8851C6F219100F7ED97 /* SubjectViewModel.m in Sources */,
-				289E25951C83228D001B0AA2 /* HZViewController.m in Sources */,
 				28E9C88E1C6F227100F7ED97 /* SubjectDay.m in Sources */,
 				28E9C8101C6F09AB00F7ED97 /* main.m in Sources */,
-				28E9C87A1C6F09E100F7ED97 /* HZCircleView.m in Sources */,
-				28E9C86B1C6F09E100F7ED97 /* NSString+HZExtend.m in Sources */,
-				28E9C8711C6F09E100F7ED97 /* SessionTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

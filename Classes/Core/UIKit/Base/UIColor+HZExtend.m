@@ -7,7 +7,6 @@
 //
 
 #import "UIColor+HZExtend.h"
-#import "NSString+HZExtend.h"
 @implementation UIColor (HZExtend)
 
 + (UIColor *)fromHexValue:(NSUInteger)hex

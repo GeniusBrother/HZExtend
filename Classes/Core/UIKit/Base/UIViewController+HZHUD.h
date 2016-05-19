@@ -44,7 +44,7 @@
 - (MBProgressHUD *)showSuccessWithText:(NSString *)text yOffset:(CGFloat)offset;
 - (MBProgressHUD *)showMessage:(NSString *)message yOffset:(CGFloat)offset;
 
-/********window类型********/
+/********keyWindow类型********/
 + (MBProgressHUD *)showWindowIndicatorWithText:(NSString *)text;
 + (MBProgressHUD *)showWindowBarWithText:(NSString *)text;
 

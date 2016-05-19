@@ -24,7 +24,7 @@ static const char HUD_DIC = '\0';
                         toView:(UIView *)view
                        yOffset:(CGFloat)offset
 {
-    if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
+    if (view == nil) view = [UIApplication sharedApplication].keyWindow;
 
     MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
     hud.userInteractionEnabled = NO;
@@ -120,7 +120,7 @@ static const char HUD_DIC = '\0';
 //window
 + (void)successWithText:(NSString *)text
 {
-    MBProgressHUD *hud = [MBProgressHUD HUDForView:[[UIApplication sharedApplication].windows lastObject]];
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:[UIApplication sharedApplication].keyWindow];
     if (hud) {
         [self successHUD:hud];
         hud.labelText = text;
@@ -130,7 +130,7 @@ static const char HUD_DIC = '\0';
 
 + (void)failWithText:(NSString *)text
 {
-    MBProgressHUD *hud = [MBProgressHUD HUDForView:[[UIApplication sharedApplication].windows lastObject]];
+    MBProgressHUD *hud = [MBProgressHUD HUDForView:[UIApplication sharedApplication].keyWindow];
     if (hud) {
         [self failHUD:hud];
         hud.labelText = text;

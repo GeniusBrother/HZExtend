@@ -1,10 +1,10 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://git.oschina.net/geniusbrother/podSpec.git'
+platform :ios, '7.0'
 
-pod 'AFNetworking'
-pod 'FMDB'
-pod 'MJExtension'
-pod 'TMCache', '~> 2.1.0'
-pod 'MBProgressHUD'
-pod 'Masonry'
-pod 'SDWebImage'
-pod 'MJRefresh', '~> 3.0.7'
-pod 'FMDBMigrationManager'
+target 'HZExtend-Demo' do
+    
+    pod 'HZExtend', :path => '../'
+    
+end
+

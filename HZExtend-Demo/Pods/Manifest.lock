@@ -14,44 +14,50 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
-  - FMDB (2.5):
-    - FMDB/standard (= 2.5)
-  - FMDB/common (2.5)
-  - FMDB/standard (2.5):
-    - FMDB/common
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
   - FMDBMigrationManager (1.4.1):
     - FMDBMigrationManager/System (= 1.4.1)
   - FMDBMigrationManager/System (1.4.1):
     - FMDB/standard (>= 2.3)
-  - Masonry (0.6.3)
-  - MBProgressHUD (0.9.1)
-  - MJExtension (3.0.7)
-  - MJRefresh (3.0.7)
-  - SDWebImage (3.7.3):
-    - SDWebImage/Core (= 3.7.3)
-  - SDWebImage/Core (3.7.3)
+  - HZExtend (0.5.4):
+    - HZExtend/Core (= 0.5.4)
+    - HZExtend/Other (= 0.5.4)
+  - HZExtend/Core (0.5.4):
+    - AFNetworking (~> 3.0.4)
+    - FMDB
+    - FMDBMigrationManager
+    - MBProgressHUD
+    - MJExtension
+    - MJRefresh (~> 3.0.7)
+    - SDWebImage
+    - TMCache
+  - HZExtend/Other (0.5.4)
+  - MBProgressHUD (0.9.2)
+  - MJExtension (3.0.10)
+  - MJRefresh (3.0.8)
+  - SDWebImage (3.7.6):
+    - SDWebImage/Core (= 3.7.6)
+  - SDWebImage/Core (3.7.6)
   - TMCache (2.1.0)
 
 DEPENDENCIES:
-  - AFNetworking
-  - FMDB
-  - FMDBMigrationManager
-  - Masonry
-  - MBProgressHUD
-  - MJExtension
-  - MJRefresh (~> 3.0.7)
-  - SDWebImage
-  - TMCache (~> 2.1.0)
+  - HZExtend (from `../`)
+
+EXTERNAL SOURCES:
+  HZExtend:
+    :path: ../
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
-  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
-  Masonry: ff105a956abcd19a618b2028b121cb638d7a8e2f
-  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  MJExtension: 290cc966f0f849b12b6391a38e296e0004ae8e5e
-  MJRefresh: f3e1228ec3d38c7ba5208d58032631a52f39f495
-  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  HZExtend: b1eb77f48cb1f3627760784f9046d0cc85e49a7e
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
+  MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
+  SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
 
 COCOAPODS: 0.39.0

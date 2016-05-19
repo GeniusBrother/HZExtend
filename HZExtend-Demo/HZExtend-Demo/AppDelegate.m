@@ -12,6 +12,7 @@
 #import "HZURLManageConfig.h"
 #import "HZNavigationController.h"
 #import "ExampleItemViewController.h"
+#import "TestViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -54,7 +55,7 @@
                                                 };
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[ExampleItemViewController alloc] init]];
+    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[TestViewController alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
