@@ -17,6 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+//    pod 'HZExtend', :path => '../'
+//    source 'https://github.com/CocoaPods/Specs.git'
+//    source 'https://git.oschina.net/geniusbrother/podSpec.git'
+//    platform :ios, '7.0'
 }
 
 - (void)didReceiveMemoryWarning {

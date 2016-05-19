@@ -34,6 +34,7 @@ PODS:
     - SDWebImage
     - TMCache
   - HZExtend/Other (0.5.4)
+  - Masonry (1.0.0)
   - MBProgressHUD (0.9.2)
   - MJExtension (3.0.10)
   - MJRefresh (3.0.8)
@@ -44,6 +45,7 @@ PODS:
 
 DEPENDENCIES:
   - HZExtend (from `../`)
+  - Masonry (~> 1.0.0)
 
 EXTERNAL SOURCES:
   HZExtend:
@@ -54,10 +56,13 @@ SPEC CHECKSUMS:
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
   HZExtend: b1eb77f48cb1f3627760784f9046d0cc85e49a7e
+  Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
   MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 07ebb3c32393976231c82f3aa2585f6ef5fb3376
+
+COCOAPODS: 1.0.0

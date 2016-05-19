@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190FE837F4D541138AD5E03F /* libPods-HZExtend-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 907B91A1045CD47BE556E358 /* libPods-HZExtend-Demo.a */; };
 		289E257E1C831C24001B0AA2 /* ExampleItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E257D1C831C24001B0AA2 /* ExampleItemViewController.m */; };
 		289E25811C832255001B0AA2 /* ExampleItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E25801C832255001B0AA2 /* ExampleItemModel.m */; };
 		289E259A1C8325CA001B0AA2 /* URLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289E25991C8325CA001B0AA2 /* URLViewController.m */; };
@@ -23,12 +24,11 @@
 		28E9C88E1C6F227100F7ED97 /* SubjectDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C88D1C6F227100F7ED97 /* SubjectDay.m */; };
 		28E9C8911C6F22BB00F7ED97 /* SubjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8901C6F22BB00F7ED97 /* SubjectItem.m */; };
 		28E9C8941C6F27E000F7ED97 /* Pagination.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E9C8931C6F27E000F7ED97 /* Pagination.m */; };
-		2C8705E147BEEAD30F91E32E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F479BAC070C3A341F3A3C22E /* libPods.a */; };
-		3FDE0B911F2B5E647D4AF897 /* libPods-HZExtend-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 907B91A1045CD47BE556E358 /* libPods-HZExtend-Demo.a */; };
 		53378E5A1CED8082003D1EF4 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53378E591CED8082003D1EF4 /* TestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		26A9E05E88C50341C5DA9D27 /* Pods-HZExtend-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HZExtend-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HZExtend-Demo/Pods-HZExtend-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		289E257C1C831C24001B0AA2 /* ExampleItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleItemViewController.h; sourceTree = "<group>"; };
 		289E257D1C831C24001B0AA2 /* ExampleItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleItemViewController.m; sourceTree = "<group>"; };
 		289E257F1C832255001B0AA2 /* ExampleItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleItemModel.h; sourceTree = "<group>"; };
@@ -64,6 +64,7 @@
 		53378E581CED8082003D1EF4 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		53378E591CED8082003D1EF4 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		907B91A1045CD47BE556E358 /* libPods-HZExtend-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HZExtend-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD322A46CC35057CD9B51923 /* Pods-HZExtend-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HZExtend-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-HZExtend-Demo/Pods-HZExtend-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		EE085C48EE71D01B3D28C20B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F479BAC070C3A341F3A3C22E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -73,8 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C8705E147BEEAD30F91E32E /* libPods.a in Frameworks */,
-				3FDE0B911F2B5E647D4AF897 /* libPods-HZExtend-Demo.a in Frameworks */,
+				190FE837F4D541138AD5E03F /* libPods-HZExtend-Demo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +184,8 @@
 			children = (
 				EE085C48EE71D01B3D28C20B /* Pods.debug.xcconfig */,
 				477B360C57E6583CCFD08A8A /* Pods.release.xcconfig */,
+				26A9E05E88C50341C5DA9D27 /* Pods-HZExtend-Demo.debug.xcconfig */,
+				CD322A46CC35057CD9B51923 /* Pods-HZExtend-Demo.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -195,12 +197,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28E9C8221C6F09AB00F7ED97 /* Build configuration list for PBXNativeTarget "HZExtend-Demo" */;
 			buildPhases = (
-				291521A4E47692FA5D31C8DB /* Check Pods Manifest.lock */,
+				291521A4E47692FA5D31C8DB /* 📦 Check Pods Manifest.lock */,
 				28E9C8071C6F09AB00F7ED97 /* Sources */,
 				28E9C8081C6F09AB00F7ED97 /* Frameworks */,
 				28E9C8091C6F09AB00F7ED97 /* Resources */,
-				A37DEC58BD422DD39CDA6C18 /* Embed Pods Frameworks */,
-				448F2222AF864B1BCF15CD67 /* Copy Pods Resources */,
+				A37DEC58BD422DD39CDA6C18 /* 📦 Embed Pods Frameworks */,
+				448F2222AF864B1BCF15CD67 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -222,6 +224,7 @@
 				TargetAttributes = {
 					28E9C80A1C6F09AB00F7ED97 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = ZWYDC45N9N;
 					};
 				};
 			};
@@ -256,14 +259,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		291521A4E47692FA5D31C8DB /* Check Pods Manifest.lock */ = {
+		291521A4E47692FA5D31C8DB /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,14 +274,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		448F2222AF864B1BCF15CD67 /* Copy Pods Resources */ = {
+		448F2222AF864B1BCF15CD67 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,14 +289,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend-Demo/Pods-HZExtend-Demo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A37DEC58BD422DD39CDA6C18 /* Embed Pods Frameworks */ = {
+		A37DEC58BD422DD39CDA6C18 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,25 +425,29 @@
 		};
 		28E9C8231C6F09AB00F7ED97 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE085C48EE71D01B3D28C20B /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 26A9E05E88C50341C5DA9D27 /* Pods-HZExtend-Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "HZExtend-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hz.HZExtend-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
 		};
 		28E9C8241C6F09AB00F7ED97 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 477B360C57E6583CCFD08A8A /* Pods.release.xcconfig */;
+			baseConfigurationReference = CD322A46CC35057CD9B51923 /* Pods-HZExtend-Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "HZExtend-Demo/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hz.HZExtend-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
 		};
