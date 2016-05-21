@@ -13,13 +13,13 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source       = { :git => "https://github.com/GeniusBrother/HZExtend.git", :tag => s.version }    
   s.frameworks = "CoreFoundation","Foundation","CoreGraphics","UIKit"
-  s.public_header_files = 'Classes/HZExtend.h'
-  s.source_files = 'Classes/HZExtend.h'
+  s.public_header_files = 'HZExtend-Demo/Classes/HZExtend.h'
+  s.source_files = 'HZExtend-Demo/Classes/HZExtend.h'
 
 
    s.subspec 'Core' do |c|
-    c.source_files = 'Classes/Core/**/*.{h,m}'
-    c.public_header_files = 'Classes/Core/**/*.h'
+    c.source_files = 'HZExtend-Demo/Classes/Core/**/*.{h,m}'
+    c.public_header_files = 'HZExtend-Demo/Classes/Core/**/*.h'
 
     c.dependency 'AFNetworking','~>3.0.4'
     c.dependency 'MBProgressHUD'
@@ -32,8 +32,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Other' do |o|
-    o.source_files = 'Classes/Other/**/*.{h,m}'
-    o.public_header_files = 'Classes/Other/**/*.h'
-
+    o.source_files = 'HZExtend-Demo/Classes/Other/**/*.{h,m}'
+    o.public_header_files = 'HZExtend-Demo/Classes/Other/**/*.h'
   end
 end

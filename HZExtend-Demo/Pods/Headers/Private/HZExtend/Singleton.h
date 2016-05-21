@@ -1,1 +1,0 @@
-../../../../../Classes/Core/Foundation/Singleton.h
