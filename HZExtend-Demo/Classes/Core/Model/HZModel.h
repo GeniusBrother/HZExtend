@@ -27,15 +27,7 @@
  */
 + (instancetype)modelWithDic:(NSDictionary *)dic;
 
-/**
- *  切换成不备份的数据库
- */
-+ (void)swtichNormalRoute;
-
-/**
- *  备份的数据库,默认存储数据库
- */
-+ (void)swtichImportantRoute;
++ (void)setupDBPath:(NSString *)dbPath;
 
 /**
  *  数据库地址

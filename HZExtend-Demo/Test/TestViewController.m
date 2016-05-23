@@ -8,6 +8,7 @@
 
 #import "TestViewController.h"
 #import "HZExtend.h"
+#import "SubjectItem.h"
 @interface TestViewController ()<UIAlertViewDelegate>
 
 @end
@@ -19,12 +20,23 @@
     // Do any additional setup after loading the view.
     self.navigationController.navigationBarHidden = YES;
 
-    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [btn setBackgroundColor:[UIColor purpleColor]];
     [self.view addSubview:btn];
+    
     btn.frame = CGRectMake(100, 100, 100, 100);
+    
+    
+    
+    [HZModel setupDBPath:@""];
+
+    SubjectItem *item = [SubjectItem modelWithDic:@{ @"color":@"123",
+                                                    @"type":@123,
+                                                     @"tag":@123,
+                                                     @"createdat":@123,
+                                                     }];
+    [item safeSave];
 }
 
 - (void)click:(UIButton *)sender

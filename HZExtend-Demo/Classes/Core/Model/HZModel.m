@@ -18,7 +18,7 @@
 #define DBData  @"blob"
 #define DBArray @"array"
 #define DBObject @"object"
-static NSString * kDatabasePath = @"Documents/HzDatabase.db";
+static NSString * kDatabasePath;
 static NSMutableDictionary *TABLE_CACHE;   //使用[self TABLE_CACHE]获取
 static FMDatabase *DATA_BASE;
 
@@ -30,6 +30,13 @@ static FMDatabase *DATA_BASE;
 @implementation HZModel
 
 #pragma mark - Init
++ (void)initialize
+{
+    if ([HZModel self] == self) {
+        kDatabasePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/HZDatabase.db"];
+    }
+}
+
 + (instancetype)modelWithDic:(NSDictionary *)dic
 {
     HZModel *model = [[[self alloc] init] mj_setKeyValues:dic];
@@ -48,20 +55,26 @@ static FMDatabase *DATA_BASE;
 - (void)loadModel {}
 
 #pragma mark - 数据库信息
-+ (void)swtichNormalRoute
++ (void)setupDBPath:(NSString *)dbPath
 {
-    kDatabasePath = @"Library/Caches/HzDatabase.db";
-}
-
-+ (void)swtichImportantRoute
-{
-    kDatabasePath = @"Documents/HzDatabase.db";
-    ;
+    if (!dbPath.isNoEmpty) {
+        NSAssert(NO, @"dbPath should not empty");
+        return;
+    }
+    
+    NSString *directory = [dbPath stringByDeletingLastPathComponent];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:directory]) {
+        NSError *error;
+        [fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:&error];
+    }
+    
+    kDatabasePath = dbPath;
 }
 
 + (NSString *)dbPath
 {
-    return [NSHomeDirectory() stringByAppendingPathComponent:kDatabasePath];
+    return kDatabasePath;
 }
 
 - (NSMutableDictionary *)TABLE_CACHE
@@ -75,7 +88,6 @@ static FMDatabase *DATA_BASE;
 + (BOOL)isOpen
 {
     BOOL result = DATA_BASE?YES:NO;
-//    if (!result) HZLog(@"数据库未打开");
     return result;
 }
 
@@ -261,11 +273,11 @@ static FMDatabase *DATA_BASE;
 + (void)open
 {
     if (DATA_BASE) return;    //数据库已开启
-
-    NSString *dbPath = [NSHomeDirectory() stringByAppendingPathComponent:kDatabasePath];
-    DATA_BASE = [FMDatabase databaseWithPath:dbPath];
+    
+    DATA_BASE = [FMDatabase databaseWithPath:kDatabasePath];
+    
     [DATA_BASE open];
-    HZLog(@"%@",dbPath);
+    HZLog(@"%@",kDatabasePath);
 }
 
 /**
@@ -289,6 +301,7 @@ static FMDatabase *DATA_BASE;
  */
 + (BOOL)excuteUpdate:(NSString *)sql withParams:(NSArray *)data
 {
+    if (![self isOpen]) return NO;
     
     if (!sql.isNoEmpty) {
         NSLog(@"%s SQL语句为空",__FUNCTION__);
@@ -323,6 +336,7 @@ static FMDatabase *DATA_BASE;
  */
 + (NSArray *)excuteQuery:(NSString *)sql withParams:(NSArray *)data isModel:(BOOL)isModel
 {
+    if (![self isOpen]) return nil;
     
     if (!sql.isNoEmpty) {
         NSLog(@"%s SQL语句为空",__FUNCTION__);
@@ -376,6 +390,8 @@ static FMDatabase *DATA_BASE;
  */
 + (NSArray *)excuteStatement:(NSString *)sql flag:(BOOL)isReturn
 {
+    if (![self isOpen]) return nil;
+    
     if (!sql.isNoEmpty)
     {
         HZLog(@"%s sql为空",__FUNCTION__);
@@ -405,10 +421,12 @@ static FMDatabase *DATA_BASE;
 
 + (long)longForQuery:(NSString *)sql
 {
+    if (![self isOpen]) return NSNotFound;
+    
     if (!sql.isNoEmpty)
     {
         NSLog(@"%s sql为空",__FUNCTION__);
-        return 0;
+        return NSNotFound;
     }
     
     return [DATA_BASE longForQuery:sql];

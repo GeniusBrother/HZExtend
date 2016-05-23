@@ -14,6 +14,6 @@
 @property(nonatomic, strong) NSNumber *type;
 @property(nonatomic, strong) NSNumber *tag;
 @property(nonatomic, strong) NSNumber *createdat;
-@property(nonatomic, strong) NSNumber *order;
+
 
 @end
