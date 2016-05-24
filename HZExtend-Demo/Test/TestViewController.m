@@ -19,28 +19,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationController.navigationBarHidden = YES;
-
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setBackgroundColor:[UIColor purpleColor]];
-    [self.view addSubview:btn];
     
-    btn.frame = CGRectMake(100, 100, 100, 100);
+    NSURL *url = [NSURL URLWithString:@":?/"];
     
-    
-    
-    [HZModel setupDBPath:@""];
-
-    SubjectItem *item = [SubjectItem modelWithDic:@{ @"color":@"123",
-                                                    @"type":@123,
-                                                     @"tag":@123,
-                                                     @"createdat":@123,
-                                                     }];
-    [item safeSave];
+    NSLog(@"%@",url);
 }
 
 - (void)click:(UIButton *)sender
 {
+
 //    [UIViewController showWindowSuccessWithText:@"请求失败，请稍后再试，误闯入无效ID，请仔细检查id后再操作" image:@"success"];
 //    [UIViewController showWindowFailWithText:@"请求失败，请稍后再试，误闯入无效ID，请仔细检查id后再操作" image:@"error"];
 //    [self showSuccessWithText:@"请求失败，请稍后再试，误闯入无效ID，请仔细检查id后再操作" image:@"success"];

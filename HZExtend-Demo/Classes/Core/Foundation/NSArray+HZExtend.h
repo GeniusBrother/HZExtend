@@ -8,18 +8,25 @@
 
 #import <Foundation/Foundation.h>
 #import "NSObject+HZExtend.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSArray (HZExtend)
 
-//防止越界
-- (id)objectAtSafeIndex:(NSInteger)index;
-
 //数字排序
-- (NSArray *)sortedWithArray:(NSArray *)numbers;
++ (nullable NSArray *)sortedWithArray:(NSArray *)numbers;
+
+//防止越界
+- (nullable id)objectAtSafeIndex:(NSInteger)index;
 
 //倒序数组
-- (NSArray *)reverseForArray:(NSArray *)array;
+- (NSArray *)reversedArray;
 
-//jsonString
+/**
+ *	返回字符串格式的json数据,即json字符串
+ */
 - (NSString *)jsonString;
 
 @end
+
+NS_ASSUME_NONNULL_END

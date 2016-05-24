@@ -11,10 +11,13 @@
 #import "NetworkConfig.h"
 #import "SessionTask.h"
 #import "UploadSessionTask.h"
-/**
- *  任务的执行器
- */
+
 @class HZNetwork;
+
+/****************     任务的执行器     ****************/
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface HZNetwork : NSObject
 singleton_h(Network)
 
@@ -33,6 +36,6 @@ singleton_h(Network)
  */
 - (void)cancel:(SessionTask *)sessionTask;
 
-
-
 @end
+
+NS_ASSUME_NONNULL_END

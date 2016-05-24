@@ -5,11 +5,13 @@
 //  Created by xzh. on 15/8/11.
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
-
-
-/**************与数据库中的元组映射**************/
 #import <Foundation/Foundation.h>
 #import "MJExtension.h"
+
+/****************     与数据库中的元组映射     ****************/
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface HZModel : NSObject
 
 /**
@@ -25,7 +27,7 @@
 /**
  *  dic->model
  */
-+ (instancetype)modelWithDic:(NSDictionary *)dic;
++ (instancetype)modelWithDic:(NSDictionary<NSString *, id> *)dic;
 
 + (void)setupDBPath:(NSString *)dbPath;
 
@@ -39,11 +41,11 @@
  */
 + (void)open;
 + (void)close;
-+ (BOOL)excuteUpdate:(NSString *)sql withParams:(NSArray *)data;
-+ (NSArray *)excuteQuery:(NSString *)sql withParams:(NSArray *)data;
++ (BOOL)excuteUpdate:(NSString *)sql withParams:(nullable NSArray *)data;
++ (nullable NSArray *)excuteQuery:(NSString *)sql withParams:(nullable NSArray *)data;
 + (long)longForQuery:(NSString *)sql;
 
-+ (NSArray *)excuteStatement:(NSString *)sql flag:(BOOL)isReturn;   //执行多条语句
++ (nullable NSArray *)excuteStatement:(NSString *)sql flag:(BOOL)isReturn;   //执行多条语句
 
 /**
  *  元组操作
@@ -51,10 +53,10 @@
 - (void)safeSave;   //safe代表执行之前先open数据库，执行完毕后再close数据库
 - (void)safeDelete;
 
-+ (instancetype)modelWithSql:(NSString *)sql withParameters:(NSArray *)parameters;
-+ (NSArray *)findByColumn:(NSString *)column value:(id)value;
-+ (NSArray *)findWithSql:(NSString *)sql withParameters:(NSArray *)parameters;
-+ (NSArray *)findAll;
++ (nullable instancetype)modelWithSql:(NSString *)sql withParameters:(NSArray *)parameters;
++ (nullable NSArray *)findByColumn:(NSString *)column value:(id)value;
++ (nullable NSArray *)findWithSql:(NSString *)sql withParameters:(nullable NSArray *)parameters;
++ (nullable NSArray *)findAll;
 
 - (void)save;
 - (void)deleteSelf;
@@ -77,3 +79,5 @@
 - (void)afterDeleteSelf;
 
 @end
+
+NS_ASSUME_NONNULL_END

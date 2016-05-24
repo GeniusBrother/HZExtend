@@ -9,6 +9,25 @@
 #import "NSArray+HZExtend.h"
 #import "HZConst.h"
 @implementation NSArray (HZExtend)
++ (NSArray *)sortedWithArray:(NSArray *)numbers
+{
+    if (!numbers.isNoEmpty) return nil;
+    
+    return  [numbers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSComparisonResult result = NSOrderedSame;
+        NSInteger value1 = [obj1 floatValue];
+        NSInteger value2 = [obj2 floatValue];
+        if (value1 > value2) {
+            result =  NSOrderedDescending;
+        } else if (value1 > value2) {
+            result = NSOrderedSame;
+        } else if (value1 > value2) {
+            result =  NSOrderedDescending;
+        }
+        return result;
+    }];
+    
+}
 
 - (id)objectAtSafeIndex:(NSInteger)index
 {
@@ -21,27 +40,9 @@
     return [self objectAtIndex:index];
 }
 
-- (NSArray *)sortedWithArray:(NSArray *)numbers
+- (NSArray *)reversedArray
 {
-    return  [numbers sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                NSComparisonResult result = NSOrderedSame;
-                NSInteger value1 = [obj1 floatValue];
-                NSInteger value2 = [obj2 floatValue];
-                if (value1 > value2) {
-                    result =  NSOrderedDescending;
-                } else if (value1 > value2) {
-                    result = NSOrderedSame;
-                } else if (value1 > value2) {
-                    result =  NSOrderedDescending;
-                }
-                return result;
-            }];
-
-}
-
-- (NSArray *)reverseForArray:(NSArray *)array
-{
-    return array.reverseObjectEnumerator.allObjects;
+    return self.reverseObjectEnumerator.allObjects;
 }
 
 - (NSString *)jsonString

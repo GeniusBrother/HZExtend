@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "NetworkConfig.h"
-/**
- *  具体的请求任务,配置参数,输出数据。
- */
 @class SessionTask;
+
+/****************     具体的请求任务,配置参数,输出数据     ****************/
+
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
     SessionTaskStateRunable            = 1 <<  0,//初始状态
     SessionTaskStateRunning            = 1 <<  1,//执行状态
@@ -49,23 +51,23 @@ typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
 
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
-                        params:(NSMutableDictionary *)params
+                        params:(nullable NSMutableDictionary<NSString *, id> *)params
                       delegate:(id<SessionTaskDelegate>)delegate
-                   requestType:(NSString *)type;
+                   requestType:(nullable NSString *)type;
 
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
-                        params:(NSMutableDictionary *)params
-                      pathKeys:(NSArray *)keys
+                        params:(nullable NSMutableDictionary<NSString *, id> *)params
+                      pathKeys:(NSArray<NSString *> *)keys
                       delegate:(id<SessionTaskDelegate>)delegate
-                   requestType:(NSString *)type;
+                   requestType:(nullable NSString *)type;
 
 @property(nonatomic, weak) id<SessionTaskDelegate> delegate;
 
 /**
  *  不设置则每个session默认为NetworkConfig的baseURL为基本的路径
  */
-@property(nonatomic, copy) NSString *baseURL;
+@property(nullable, nonatomic, copy) NSString *baseURL;
 
 /**
  *  baseURL+path+params构成完整的请求
@@ -77,12 +79,12 @@ typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
 /**
  *  pathKeys不为空则表示为http://abc/a/value1/value2/...的格式。pathkeys=@[key1,key2....]
  */
-@property(nonatomic, copy) NSArray *pathkeys;
+@property(nullable, nonatomic, copy) NSArray *pathkeys;
 
 /**
  *  请求参数
  */
-@property(nonatomic, strong) NSMutableDictionary *params;
+@property(nullable, nonatomic, strong) NSMutableDictionary<NSString *, id> *params;
 
 /**
  *  分页模型中的快捷参数
@@ -109,22 +111,22 @@ typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
 /**
  *  任务标识
  */
-@property(nonatomic, copy) NSString *requestType;
+@property(nullable, nonatomic, copy) NSString *requestType;
 
 /**
- *  返回的数据模型
+ *  返回数据模型
  */
-@property(nonatomic, strong, readonly) NSDictionary *responseObject;
+@property(nullable, nonatomic, strong, readonly) NSDictionary *responseObject;
 
 /**
  *  请求时发生的错误，无网有数据情况下也有缓存。
  */
-@property(nonatomic, strong, readonly) NSError *error;      //(无网情况下有error)
+@property(nullable, nonatomic, strong, readonly) NSError *error;      //(无网情况下有error)
 
 /**
  *  请求反馈消息,在设置Error或者responseObject设置
  */
-@property(nonatomic, copy, readonly) NSString *message;
+@property(nullable, nonatomic, copy, readonly) NSString *message;
 
 /**
  *  GET的请求格式 每次准备请求时刷新
@@ -150,7 +152,7 @@ typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
  *  请求头设置，或者在NetworkConfig设置全局的
  */
 - (void)setValue:(id)value forHeaderField:(NSString *)key;
-- (NSDictionary *)httpRequestFields;
+- (NSDictionary<NSString *, id> *)httpRequestFields;
 
 - (BOOL)runable;                //表明任务可运行
 - (BOOL)succeed;                //网络请求数据成功
@@ -178,7 +180,7 @@ typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
  *  2.缓存数据
  *  3.通知
  */
-- (void)responseSessionWithResponseObject:(NSDictionary *)responseObject error:(NSError *)error;
+- (void)responseSessionWithResponseObject:(nullable NSDictionary<NSString *, id> *)responseObject error:(nullable NSError *)error;
 
 /**
  *  配置任务无法连接的输出
@@ -188,3 +190,5 @@ typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
 - (void)noReach;
 
 @end
+
+NS_ASSUME_NONNULL_END

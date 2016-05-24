@@ -8,28 +8,32 @@
 
 #import <Foundation/Foundation.h>
 #import "NSObject+HZExtend.h"
+NS_ASSUME_NONNULL_BEGIN
 @interface NSDictionary (HZExtend)
 
 /**
  *  @{ @“person”:@{@"name":@"GeniusBrotherHZExtend"}}
  *  keyPath = @"person/name" 返回@“GeniusBrotherHZExtend”;
  */
-- (id)objectAtKeyPath:(NSString *)keyPath;
+- (nullable id)objectAtKeyPath:(NSString *)keyPath;
 
 /**
  *  不存在,则返回other
  */
-- (id)objectAtKeyPath:(NSString *)path  otherwise:(NSObject *)other;
+- (nullable id)objectAtKeyPath:(NSString *)path otherwise:(NSObject *)other;
 
-//查询字符串
-- (NSString *)keyValueString;   //返回简单的查询字符串 如:?name=xzh&age=21
+/**
+ *	查询字符串
+ *
+ *	@return 返回简单的查询字符串如:?name=xzh&age=21,如果自身为空，则返回nil
+ */
+- (nullable NSString *)keyValueString;
 
-//jsonString
+
+/**
+ *	返回字符串格式的json数据，即json字符串
+ */
 - (NSString *)jsonString;
 
 @end
-
-@interface NSMutableDictionary (HZExtend)
-
-
-@end
+NS_ASSUME_NONNULL_END
