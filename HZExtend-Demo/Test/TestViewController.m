@@ -6,9 +6,19 @@
 //  Copyright © 2016年 xzh. All rights reserved.
 //
 
+
+
+
 #import "TestViewController.h"
 #import "HZExtend.h"
 #import "SubjectItem.h"
+
+
+static NSString *str = @"ENsjdhakjdhsadsdkj";
+static CGFloat count = 0;
+static NSInteger h = 1;
+
+
 @interface TestViewController ()<UIAlertViewDelegate>
 
 @end
@@ -20,9 +30,21 @@
     // Do any additional setup after loading the view.
     self.navigationController.navigationBarHidden = YES;
     
-    NSURL *url = [NSURL URLWithString:@":?/"];
     
-    NSLog(@"%@",url);
+    NSArray *sortedArray = [@[@3,@1,@2] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSComparisonResult result = NSOrderedSame;
+        NSInteger value1 = [obj1 integerValue];
+        NSInteger value2 = [obj2 integerValue];
+        if (value1 > value2) {
+            result =  NSOrderedAscending;
+        } else if (value1 < value2) {
+            result =  NSOrderedDescending;
+        }
+        return result;
+    }];
+    
+    NSLog(@"%@",sortedArray);
+    
 }
 
 - (void)click:(UIButton *)sender

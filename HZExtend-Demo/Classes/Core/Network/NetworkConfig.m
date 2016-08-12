@@ -66,7 +66,7 @@ singleton_m(Config)
 
 - (BOOL)reachable
 {
-    return [AFNetworkReachabilityManager sharedManager].reachable;
+    return !([AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable);
 }
 
 @end
