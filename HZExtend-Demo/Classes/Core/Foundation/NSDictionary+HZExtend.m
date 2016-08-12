@@ -31,6 +31,8 @@
 
 - (NSString *)keyValueString
 {
+    if (!self.isNoEmpty) return nil;
+    
     NSMutableString *string = [NSMutableString stringWithString:@"?"];
     [self enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [string appendFormat:@"%@=%@&",key,obj];

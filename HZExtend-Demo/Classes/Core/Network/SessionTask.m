@@ -77,7 +77,7 @@
     _responseObject = nil;
     _error = nil;
     _message = nil;
-    _codeKey = INT_MAX;
+    _codeKey = NSNotFound;
     _absoluteURL = nil;
 }
 

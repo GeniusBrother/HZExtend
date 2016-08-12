@@ -15,7 +15,8 @@
 {
     if (self.length == 0) return @"";
     
-    return [self stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
     /*
     NSString *encodedValue = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(nil,
                                                                                                   (CFStringRef)string, nil,
@@ -28,7 +29,7 @@
 {
     if (self.length == 0) return @"";
     
-    return [self stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return self.stringByRemovingPercentEncoding;
 }
 
 - (NSString *)scheme
@@ -113,29 +114,22 @@
 {
     NSData *value = [[NSData dataWithBytes:[self UTF8String] length:[self length]] md5];
     
-    if (value)
+    char			tmp[16];
+    unsigned char *	hex = (unsigned char *)malloc( 2048 + 1 );
+    unsigned char *	bytes = (unsigned char *)[value bytes];
+    unsigned long	length = [value length];
+    
+    hex[0] = '\0';
+    
+    for ( unsigned long i = 0; i < length; ++i )
     {
-        char			tmp[16];
-        unsigned char *	hex = (unsigned char *)malloc( 2048 + 1 );
-        unsigned char *	bytes = (unsigned char *)[value bytes];
-        unsigned long	length = [value length];
-        
-        hex[0] = '\0';
-        
-        for ( unsigned long i = 0; i < length; ++i )
-        {
-            sprintf( tmp, "%02X", bytes[i] );
-            strcat( (char *)hex, tmp );
-        }
-        
-        NSString * result = [NSString stringWithUTF8String:(const char *)hex];
-        free( hex );
-        return result;
+        sprintf( tmp, "%02X", bytes[i] );
+        strcat( (char *)hex, tmp );
     }
-    else
-    {
-        return nil;
-    }
+    
+    NSString * result = [NSString stringWithUTF8String:(const char *)hex];
+    free( hex );
+    return result;
 }
 
 #pragma mark - Private

@@ -10,6 +10,9 @@
 #import "Singleton.h"
 #define kNetworkPage @"page"
 #define kNetworkPageSize @"pageSize"
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NetworkConfig : NSObject
 singleton_h(Config)
 
@@ -21,17 +24,17 @@ singleton_h(Config)
 /**
  *  状态码路径,供task取得数据
  */
-@property(nonatomic, copy, readonly) NSString *codeKeyPath;
+@property(nullable, nonatomic, copy, readonly) NSString *codeKeyPath;
 
 /**
  *  消息码路径,供task取得数据
  */
-@property(nonatomic, copy, readonly) NSString *msgKeyPath;
+@property(nullable, nonatomic, copy, readonly) NSString *msgKeyPath;
 
 /**
  *  客户端标识，用于设置请求头
  */
-@property(nonatomic, copy, readonly) NSString *userAgent;
+@property(nullable, nonatomic, copy, readonly) NSString *userAgent;
 
 /**
  *  正确的状态码
@@ -41,10 +44,10 @@ singleton_h(Config)
 /**
  *  默认的公共请求头
  */
-@property(nonatomic, copy, readonly) NSDictionary *defaultHeaderFields;
+@property(nonatomic, copy, readonly) NSDictionary<NSString *, id> *defaultHeaderFields;
 
 /**
- *  网络是否通(程序启动时有0.02左右的延迟,故需延迟0.02秒请求)
+ *  网络是否通(程序启动时检测网络状态有0.05左右的延迟,故需延迟0.05秒请求)
  */
 @property(nonatomic, assign, readonly) BOOL reachable;
 
@@ -53,21 +56,24 @@ singleton_h(Config)
  *  只设置共同URL等
  */
 - (void)setupBaseURL:(NSString *)baseURL
-           userAgent:(NSString *)userAgent;
+           userAgent:(nullable NSString *)userAgent;
 
 /**
  *  配置公共参数
  *  有状态码、消息码路径
  */
 - (void)setupBaseURL:(NSString *)baseURL
-         codeKeyPath:(NSString *)codeKeyPath
-          msgKeyPath:(NSString *)msgKeyPath
-           userAgent:(NSString *)userAgent
+         codeKeyPath:(nullable NSString *)codeKeyPath
+          msgKeyPath:(nullable NSString *)msgKeyPath
+           userAgent:(nullable NSString *)userAgent
            rightCode:(NSUInteger)rightCode;
 
 /**
  *  添加公共请求头
  */
-- (void)addDefaultHeaderFields:(NSDictionary *)headerFields;
+- (void)addDefaultHeaderFields:(NSDictionary<NSString *, id> *)headerFields;
 
 @end
+
+
+NS_ASSUME_NONNULL_END

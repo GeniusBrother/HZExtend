@@ -8,23 +8,27 @@
 
 #import <Foundation/Foundation.h>
 #import "HZNetwork.h"
+
 @class HZViewModel;
+
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol HZViewModelDelegate<NSObject>
 @optional
 /**
  *  最终的请求结果到来调用(成功或失败)
  */
-- (void)viewModelConnetedNotifyForTask:(SessionTask *)task type:(NSString *)type;
+- (void)viewModelConnetedNotifyForTask:(SessionTask *)task type:(nullable NSString *)type;
 
 /**
  *  请求过程中调用(有缓存,无缓存,不尝试导入缓存,取消)
  */
-- (void)viewModelSendingNotifyForTask:(SessionTask *)task type:(NSString *)type;
+- (void)viewModelSendingNotifyForTask:(SessionTask *)task type:(nullable NSString *)type;
 
 /**
  *  无网下调用(有缓存，无缓存，不尝试导入缓存)
  */
-- (void)viewModelLostedNotifyForTask:(SessionTask *)task type:(NSString *)type;
+- (void)viewModelLostedNotifyForTask:(SessionTask *)task type:(nullable NSString *)type;
 
 @end
 
@@ -50,7 +54,7 @@
  *  appendArray:分页的数据
  *  task:请求的task
  */
-- (void)pageArray:(NSString *)pageArray appendArray:(NSArray *)appendArray task:(SessionTask *)task;
+- (void)pageArray:(NSString *)pageArray appendArray:(NSArray<id> *)appendArray task:(SessionTask *)task;
 
 /**********子类重写回调**********/
 /**
@@ -62,11 +66,13 @@
  *  加载数据模型，数据返回时会调用(请求数据，缓存数据)
  *  type:即task的任务标识，requestType
  */
-- (void)loadDataWithTask:(SessionTask *)task type:(NSString *)type;
+- (void)loadDataWithTask:(SessionTask *)task type:(nullable NSString *)type;
 
 /**
  *  做一些失败处理,如页数减一,请求失败或者无网无缓存时调用
  */
-- (void)requestFailWithTask:(SessionTask *)task type:(NSString *)type;
+- (void)requestFailWithTask:(SessionTask *)task type:(nullable NSString *)type;
 
 @end
+
+NS_ASSUME_NONNULL_END

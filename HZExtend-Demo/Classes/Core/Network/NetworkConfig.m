@@ -34,7 +34,7 @@ singleton_m(Config)
 - (void)setupBaseURL:(NSString *)baseURL
            userAgent:(NSString *)userAgent
 {
-    [self setupBaseURL:baseURL codeKeyPath:nil msgKeyPath:nil userAgent:userAgent rightCode:0];
+    [self setupBaseURL:baseURL codeKeyPath:nil msgKeyPath:nil userAgent:userAgent rightCode:NSNotFound];
 }
 
 -  (void)setupBaseURL:(NSString *)baseURL
@@ -66,7 +66,7 @@ singleton_m(Config)
 
 - (BOOL)reachable
 {
-    return [AFNetworkReachabilityManager sharedManager].reachable;
+    return !([AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable);
 }
 
 @end

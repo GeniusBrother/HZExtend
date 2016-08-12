@@ -15,9 +15,9 @@
 #import "NSString+HZExtend.h"
 @interface HZNetwork ()
 
-@property(nonatomic, strong) NSMutableDictionary *defaultFields;   //默认添加的请求头，以便还原
+@property(nonatomic, strong) NSMutableDictionary<NSString *, id> *defaultFields;   //默认添加的请求头，以便还原
 @property(nonatomic, strong) AFHTTPSessionManager *sessionManager;
-@property(nonatomic, strong) NSMutableDictionary *dataTasks;    //任务集合
+@property(nonatomic, strong) NSMutableDictionary<NSString *, __kindof NSURLSessionTask *> *dataTasks;    //任务集合
 @end
 
 @implementation HZNetwork
