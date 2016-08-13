@@ -16,6 +16,8 @@
 
 @interface UIColor (HZExtend)
 
-+ (UIColor *)colorForString:(NSString *)string;
++ (UIColor *)colorForHex:(NSInteger)colorHex;
+
++ (UIColor *)colorForHex:(NSInteger)colorHex alpha:(CGFloat)alpha;
 
 @end

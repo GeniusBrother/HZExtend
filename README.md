@@ -292,7 +292,7 @@ for (Friend *f in select) {
 UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
 view.left = view.top = 0;
 view.width = view.height = 100;
-view.backgroundColor = [UIColor colorForString:@"#000000 0.5"];
+view.backgroundColor = [UIColor colorForHex:0x000000 alpha:0.5];
 [self.view addSubview:view];
 
 //居中长为100的正方形
@@ -300,7 +300,7 @@ UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
 view.width = view.height = 100;
 //view.centerX = (self.view.width-view.width)/2;
 //view.centerY = (self.view.height - view.height)/2;
-view.backgroundColor = [UIColor colorForString:@"#000000 0.5"];
+view.backgroundColor = [UIColor colorForHex:0x000000 alpha:0.5];
 [self.view addSubview:view];
 [view alignCenter]; //必须有父视图后才可以设置
 
@@ -312,7 +312,7 @@ brownView.backgroundColor = [UIColor brownColor];
 UIView *alphaBlackView = [[UIView alloc] initWithFrame:CGRectZero];
 alphaBlackView.width = alphaBlackView.height = 100;
 alphaBlackView.top = brownView.top;
-alphaBlackView.backgroundColor = [UIColor colorForString:@"#000000 0.5"];
+alphaBlackView.backgroundColor = [UIColor colorForHex:0x000000 alpha:0.5];
 [self.view addSubview:alphaBlackView];
 [alphaBlackView leftBehindView:brownView offset:5]; //必须在同一个视图层次结构后才可以参照brownView
 
@@ -333,8 +333,8 @@ alphaBlackView.backgroundColor = [UIColor colorForString:@"#000000 0.5"];
 ####UIColor+HZExtend.h
 ```objective-c
 /***************************************快捷设置颜色***************************************/
-UIColor *whiteColor = [UIColor colorForString:@"#FFFFFF"];
-UIColor *alphaBlackColor = [UIColor colorForString:@"#000000 0.5"];  //0.5透明度
+UIColor *whiteColor = [UIColor colorForHex:0xFFFFFF];
+UIColor *alphaBlackColor = [UIColor colorForHex:0x000000 alpha:0.5];
 
 UIColor *whiteColor = RGB(255,255,255);
 UIColor *alphaBlackColor = RGBA(0,0,0,0.5);

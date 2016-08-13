@@ -25,7 +25,7 @@
     
     CGContextSetLineWidth(context, 2.0);
     CGContextSetLineCap(context, kCGLineCapRound);
-    CGContextSetStrokeColorWithColor(context, [UIColor colorForString:@"#49d2ff"].CGColor);
+    CGContextSetStrokeColorWithColor(context, [UIColor colorForHex:0x49d2ff].CGColor);
     CGFloat startAngle = -M_PI/4;
     CGFloat step = 11*M_PI/6 * self.progress;
     CGContextAddArc(context, self.bounds.size.width/2, self.bounds.size.height/2, self.bounds.size.width/2-3, startAngle, startAngle+step, 0);
