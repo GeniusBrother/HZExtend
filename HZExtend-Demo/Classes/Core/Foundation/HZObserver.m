@@ -61,7 +61,7 @@
 - (void)dealloc
 {
     @try {
-        //观察者无观察该keyPath,却调用会crash
+        //观察者无观察该keyPath,调用会crash
         [self.object removeObserver:self forKeyPath:self.objectKeyPath];
         HZLog(@"%@销毁了",self);
     } @catch (NSException *exception) {

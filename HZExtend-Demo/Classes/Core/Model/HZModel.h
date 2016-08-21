@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  子类重写
  */
-- (void)loadModel;  //初始化配置(成员变量，或数组对象类设置)
+- (void)loadModel;  //init时调用
 - (void)beforeSave;
 - (void)afterSave;
 - (void)beforeUpdateSelf;

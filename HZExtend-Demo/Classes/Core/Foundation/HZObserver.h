@@ -22,6 +22,11 @@ typedef void (^DidChangeBlock)(id object, id value);
 @property(nonatomic, weak, readonly) id object;
 
 /**
+ *  被观察的属性
+ */
+@property(nonatomic, copy, readonly) NSString *objectKeyPath;
+
+/**
  *  属性改变时调用
  */
 @property(nonatomic, copy) DidChangeBlock didChange;

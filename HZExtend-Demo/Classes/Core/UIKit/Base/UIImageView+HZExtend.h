@@ -10,10 +10,16 @@
 #import "UIImageView+WebCache.h"
 @interface UIImageView (HZExtend)
 
+
+/**
+ *	下载并缓存图片，然后设置给imageView
+ *  @discussion  无url则直接设置为image,若本地已经有URL对应的图片，则直接从本地加载 否则设置先设置占位，从远处加载
+ *
+ *	@param url  图片地址
+ *  @param image  占位图
+ */
 /*
- 1.无url则直接设置为image
- 2.老图片:若本地已经有图片，则直接从本地加载.
- 3.新图片:设置占位，从远处加载
+
  */
 - (void)safeSetImageWithURL:(NSString *)url placeholder:(UIImage *)image;
 
