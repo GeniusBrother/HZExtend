@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'HZExtend_Example' do
+  pod 'HZExtend', :path => '../'
+  pod 'Masonry', '~> 1.0.1'
+  target 'HZExtend_Tests' do
+    inherit! :search_paths
+
+    pod 'Kiwi'
+  end
+end

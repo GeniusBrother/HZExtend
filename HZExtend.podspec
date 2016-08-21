@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
 
-  s.name         = "HZExtend"	
-  s.version      = "0.5.4"		
+  s.name         = "HZExtend" 
+  s.version      = "0.5.4"    
   s.summary      = "MVVM, Powerful IOS Extension"
   s.description  = <<-DESC
-  					       MVVM, Powerful IOS Extension，available Network、Model、MMVM、URLManager、database
+                   MVVM, Powerful IOS Extension，available Network、Model、MMVM、URLManager、database
                    DESC
   s.homepage     = "https://github.com/GeniusBrother/HZExtend.git"
   s.license      = "MIT"
@@ -13,26 +13,22 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source       = { :git => "https://github.com/GeniusBrother/HZExtend.git", :tag => s.version }    
   s.frameworks = "CoreFoundation","Foundation","CoreGraphics","UIKit"
-  s.public_header_files = 'HZExtend-Demo/Classes/HZExtend.h'
-  s.source_files = 'HZExtend-Demo/Classes/HZExtend.h'
+
+  s.public_header_files = 'HZExtend/Classes/**/*.h'
+  s.source_files = 'HZExtend/Classes/**/*.{h,m}'
+
+  s.dependency 'AFNetworking','~>3.0.4'
+  s.dependency 'MBProgressHUD'
+  s.dependency 'FMDB'
+  s.dependency 'FMDBMigrationManager'
+  s.dependency 'MJExtension'
+  s.dependency 'TMCache'
+  s.dependency 'SDWebImage'
+  s.dependency 'MJRefresh', '~> 3.0.7'
 
 
-   s.subspec 'Core' do |c|
-    c.source_files = 'HZExtend-Demo/Classes/Core/**/*.{h,m}'
-    c.public_header_files = 'HZExtend-Demo/Classes/Core/**/*.h'
+  # s.resource_bundles = {
+  #   'HZNetwork' => ['HZExtend/Assets/*.png']
+  # }
 
-    c.dependency 'AFNetworking','~>3.0.4'
-    c.dependency 'MBProgressHUD'
-    c.dependency 'FMDB'
-    c.dependency 'FMDBMigrationManager'
-    c.dependency 'MJExtension'
-    c.dependency 'TMCache'
-    c.dependency 'SDWebImage'
-    c.dependency 'MJRefresh', '~> 3.0.7'
-  end
-
-  s.subspec 'Other' do |o|
-    o.source_files = 'HZExtend-Demo/Classes/Other/**/*.{h,m}'
-    o.public_header_files = 'HZExtend-Demo/Classes/Other/**/*.h'
-  end
 end

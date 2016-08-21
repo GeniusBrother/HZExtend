@@ -1,0 +1,6 @@
+framework module FMDBMigrationManager {
+  umbrella header "FMDBMigrationManager-umbrella.h"
+
+  export *
+  module * { export * }
+}

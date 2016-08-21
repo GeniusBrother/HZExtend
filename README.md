@@ -22,7 +22,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.3'
 [CocoaPods的安装教程,群Q32272635我手把手教你安装](http://code4app.com/article/cocoapods-install-usage)
 
 ####没用过Pods同学注意了应该使用该文件来打开项目
-![](Asset/podsError.png)
+![](Resource/podsError.png)
 
 ##其它资源##
 * [简书论坛](http://www.jianshu.com/collection/ba017346481d)
@@ -63,26 +63,26 @@ CocoaPods:pod 'HZExtend', '~> 0.5.3'
 @implementation FrameworkViewModel
 - (void)loadViewModel //子类重写
 {
-    [super loadViewModel];
+[super loadViewModel];
 
-    _recTask = [SessionTask taskWithMethod:@"GET" path:@"/party/pooks-rank" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@1,kNetworkPage,MC_PAGE_SIZE,kNetworkPageSize, nil] delegate:self requestType:@"rank"];
-    self.recTask.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取
-    self.recTask.pathkeys = @[kNetworkPage,kNetworkPageSize];   //设置后支持支持http://baseURL/path/value1/value2类型请求
+_recTask = [SessionTask taskWithMethod:@"GET" path:@"/party/pooks-rank" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@1,kNetworkPage,MC_PAGE_SIZE,kNetworkPageSize, nil] delegate:self requestType:@"rank"];
+self.recTask.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取
+self.recTask.pathkeys = @[kNetworkPage,kNetworkPageSize];   //设置后支持支持http://baseURL/path/value1/value2类型请求
 }
 
 //加载数据的回调
 - (void)loadDataWithTask:(SessionTask *)task type:(NSString *)type
 {
-    if([type isEqualToString:@"rank"]) {
-        _pageData = [PageModel modelWithDic:task.responseObject]; //设置当前页的数据模型
-        [self pageArray:@"recArray" appendArray:self.pageData.list task:task];  //追加分页数据
-    }
+if([type isEqualToString:@"rank"]) {
+_pageData = [PageModel modelWithDic:task.responseObject]; //设置当前页的数据模型
+[self pageArray:@"recArray" appendArray:self.pageData.list task:task];  //追加分页数据
+}
 }
 
 //请求失败的回调,请求失败，无网失败
 - (void)requestFailWithTask:(SessionTask *)task type:(NSString *)type
 {
-    [self pageDecrease:task]; //将当前页减一
+[self pageDecrease:task]; //将当前页减一
 }
 @end
 
@@ -91,33 +91,33 @@ CocoaPods:pod 'HZExtend', '~> 0.5.3'
 
 - (void)viewDidLoad
 {
-     _viewModel = [MorePookViewModel viewModelWithDelegate:self];
-     [self.viewModel sendTask:self.viewModel]; //发送请求
+_viewModel = [MorePookViewModel viewModelWithDelegate:self];
+[self.viewModel sendTask:self.viewModel]; //发送请求
 }
 
 //网络状态回调
 //最终的请求结果到来调用(失败或成功)
 - (void)viewModelConnetedNotifyForTask:(SessionTask *)task type:(NSString *)type
 {
-    if (task.succeed) {
-        [self.tableView reloadData];
-    }else {
-        [self showFailWithText:task.message yOffset:0];
-    }
+if (task.succeed) {
+[self.tableView reloadData];
+}else {
+[self showFailWithText:task.message yOffset:0];
+}
 }
 
 //本地缓存数据到来调用(多种状态)(第一次再页面显示之前就会回调)
 - (void)viewModelSendingNotifyForTask:(SessionTask *)task type:(NSString *)type
 {
-    if (task.cacheSuccess) [self.tableView reloadData];
+if (task.cacheSuccess) [self.tableView reloadData];
 }
 
 //无网情况下缓存数据到来调用(多种状态)(第一次再页面显示之前就会回调)
 - (void)viewModelLostedNotifyForTask:(SessionTask *)task type:(NSString *)type
 {
-    if (task.cacheSuccess) {
-        [self.tableView reloadData];
-    }
+if (task.cacheSuccess) {
+[self.tableView reloadData];
+}
 }
 
 @end
@@ -136,7 +136,7 @@ Friend *friend = [Friend modelWithDic:@"name":@"xzh3",@"age":@20,@"email":@"6540
 [Friend excuteUpdate:@"insert into Friend(name,age) values(?,?)" withParams:@[@"xzh",@20]]; //除查询外的任何操作
 NSArray *select = [Friend excuteQuery:@"select *from Friend" withParams:nil];
 for (NSDictionary *f in select) {
-    NSLog(@"%@---%@----%@",[f objectForKey:@"name"],[f objectForKey:@"age"],[f objectForKey:@"email"]);
+NSLog(@"%@---%@----%@",[f objectForKey:@"name"],[f objectForKey:@"age"],[f objectForKey:@"email"]);
 }
 NSInteger count = [Friend longForQuery:@"select count(*) from Friend"];   //查询整数型的数据如count
 ```
@@ -154,7 +154,7 @@ NSInteger count = [Friend longForQuery:@"select count(*) from Friend"];   //查�
 + (NSArray *)findAll;
 NSArray *select = [Friend findWithSql:@"select *from Friend" withParameters:nil];
 for (Friend *f in select) {
-    NSLog(@"%@---%ld----%@",f.name,f.age,f.email);
+NSLog(@"%@---%ld----%@",f.name,f.age,f.email);
 }
 ```
 
@@ -175,11 +175,11 @@ for (Friend *f in select) {
 ```objective-c
 //URL:类名
 [HZURLManageConfig sharedConfig].config = @{
-                                             @"hz://Subject":@"SubjectViewController",
-                                             @"hz://Home":@"HomeViewController"
-                                            };
-                                            
- //遇到http或者https时应创建的控制器,不写默认为HZWebViewController                                       
+@"hz://Subject":@"SubjectViewController",
+@"hz://Home":@"HomeViewController"
+};
+
+//遇到http或者https时应创建的控制器,不写默认为HZWebViewController                                       
 [HZURLManageConfig sharedConfig].classOfWebViewCtrl = @"HZWebViewController";
 ```
 
@@ -202,21 +202,21 @@ for (Friend *f in select) {
 自定义侧滑手势,可以从任意位置触发侧滑,而自带的侧滑只能在边缘位置触发.
 ```objective-c
 /**
- *  是否开启侧滑
- */
+*  是否开启侧滑
+*/
 @property(nonatomic, assign) BOOL swipeEnable;
 
 /**
- *  当子控制器的数量<=改值时不触发侧滑手势,默认为1
- */
+*  当子控制器的数量<=改值时不触发侧滑手势,默认为1
+*/
 @property(nonatomic, assign) NSUInteger countOfNoPanChild;
 ```
 ####HZViewController
 框架的模板控制器,推荐继承该控制器
 ```objective-c
 /**
- *  若导航控制器类型为HZNavigationController则返回,否则返回nil
- */
+*  若导航控制器类型为HZNavigationController则返回,否则返回nil
+*/
 @property(nonatomic, strong, readonly) HZNavigationController *nav;
 ```
 ####HZWebViewController
@@ -324,10 +324,10 @@ alphaBlackView.backgroundColor = [UIColor colorForHex:0x000000 alpha:0.5];
 ```objective-c
 /***************************************快捷设置图片***************************************/
 /*
- 1.无url则直接设置为image
- 2.老图片:若本地已经有图片，则直接从本地加载.
- 3.新图片:设置占位，从远处加载
- */
+1.无url则直接设置为image
+2.老图片:若本地已经有图片，则直接从本地加载.
+3.新图片:设置占位，从远处加载
+*/
 - (void)safeSetImageWithURL:(NSString *)url placeholder:(UIImage *)image;
 ```
 ####UIColor+HZExtend.h
@@ -349,38 +349,38 @@ UIColor *alphaBlackColor = RGBA(0,0,0,0.5);
 ####NSDictionary+HZExtend.h
 ```objective-c
 /**
- *  @{ @“person”:@{@"name":@"GeniusBrotherHZExtend"}}
- *  keyPath = @"person/name" 返回@“GeniusBrotherHZExtend”;
- */
+*  @{ @“person”:@{@"name":@"GeniusBrotherHZExtend"}}
+*  keyPath = @"person/name" 返回@“GeniusBrotherHZExtend”;
+*/
 - (id)objectAtKeyPath:(NSString *)keyPath;
 
 /**
- *  不存在,则返回other
- */
+*  不存在,则返回other
+*/
 - (id)objectAtKeyPath:(NSString *)path  otherwise:(NSObject *)other;
 ```
 
 ####NSMutableArray+HZExtend.h
 ```objective-c
 /**
- *  若下标越界时,则什么也不做
- */
+*  若下标越界时,则什么也不做
+*/
 - (void)safeRemoveObjectAtIndex:(NSInteger)index;
 ```
 
 ####NSString+HZExtend.h
 ```objective-c
 /**
- *  以md5算法加密
- */
+*  以md5算法加密
+*/
 - (NSString *)md5;
 
 /************查询字符串************/
 - (NSString *)urlEncode;    //url编码
 - (NSString *)urlDecode;    //url解码
 /**
- *  以https://github.com/GeniusBrother/HZExtend?author=GeniusBrother为例
- */
+*  以https://github.com/GeniusBrother/HZExtend?author=GeniusBrother为例
+*/
 - (NSString *)scheme;   //https
 - (NSString *)host; //github.com
 - (NSString *)allPath;  //https://github.com/GeniusBrother/HZExtend

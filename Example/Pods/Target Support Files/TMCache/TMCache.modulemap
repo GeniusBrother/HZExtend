@@ -1,0 +1,6 @@
+framework module TMCache {
+  umbrella header "TMCache-umbrella.h"
+
+  export *
+  module * { export * }
+}
