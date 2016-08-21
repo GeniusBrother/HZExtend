@@ -15,7 +15,7 @@
 ##使用##
 ####添加
 ```ruby
-CocoaPods:pod 'HZExtend', '~> 0.5.3'
+CocoaPods:pod 'HZExtend', '~> 0.5.4'
 ```
 
 ####安装CocoaPodspod后可傻瓜式添加任何开源框架,免于一些基础配置
