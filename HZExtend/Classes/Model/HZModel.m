@@ -7,7 +7,7 @@
 //
 
 #import "HZModel.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 #import "NSObject+HZExtend.h"
 #import "sqlite3.h"
 #import <objc/runtime.h>

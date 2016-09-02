@@ -7,7 +7,7 @@
 //
 
 #import "NSMutableArray+HZExtend.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 @implementation NSMutableArray (HZExtend)
 - (void)safeRemoveObjectAtIndex:(NSInteger)index
 {

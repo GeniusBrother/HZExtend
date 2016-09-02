@@ -7,7 +7,7 @@
 //
 
 #import "HZCircleView.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 #import "UIColor+HZExtend.h"
 @implementation HZCircleView
 - (instancetype)initWithFrame:(CGRect)frame

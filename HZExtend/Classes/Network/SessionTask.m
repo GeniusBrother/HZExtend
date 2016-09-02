@@ -7,7 +7,7 @@
 //
 
 #import "SessionTask.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 #import "NetworkConfig.h"
 #import "NSString+HZExtend.h"
 #import "NSDictionary+HZExtend.h"

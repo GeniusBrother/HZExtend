@@ -7,7 +7,7 @@
 //
 
 #import "HZViewController.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 @implementation HZViewController
 
 - (void)viewDidLoad

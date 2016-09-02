@@ -7,7 +7,7 @@
 //
 
 #import "UploadSessionTask.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 @implementation UploadSessionTask
 
 - (instancetype)init

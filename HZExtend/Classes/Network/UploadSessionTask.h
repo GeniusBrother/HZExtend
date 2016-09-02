@@ -12,11 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UploadSessionTask : SessionTask
 
-@property(null_unspecified, nonatomic, copy) NSString *mimeType;
-@property(null_unspecified, nonatomic, copy) NSString *fileName;
-@property(null_unspecified, nonatomic, copy) NSString *formName;
-@property(null_unspecified, nonatomic, strong) NSData *fileData;
-@property(null_unspecified, nonatomic, strong, readonly) NSURL *fileURL; //根据fileName生成
+@property(nonatomic, copy, nullable) NSString *mimeType;
+@property(nonatomic, copy, nullable) NSString *fileName;
+@property(nonatomic, copy, nullable) NSString *formName;
+@property(nonatomic, strong, nullable) NSData *fileData;
+@property(nonatomic, strong, readonly, nullable) NSURL *fileURL; //根据fileName生成
 
 
 /**

@@ -7,7 +7,7 @@
 //
 
 #import "NSArray+HZExtend.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 @implementation NSArray (HZExtend)
 + (NSArray *)sortedWithArray:(NSArray *)numbers
 {

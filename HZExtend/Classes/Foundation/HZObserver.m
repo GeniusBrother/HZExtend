@@ -8,7 +8,8 @@
 
 #import "HZObserver.h"
 #import "NSObject+HZExtend.h"
-#import "HZConst.h"
+#import "HZMacro.h"
+#import "HZMacro.h"
 @interface HZObserver ()
 
 @property(nonatomic, weak) id object;

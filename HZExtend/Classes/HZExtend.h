@@ -16,12 +16,10 @@
 #import "MJExtension.h"
 #import "HZViewModel.h"
 #import "HZModel.h"
-#import "HZConst.h"
 #import "UIColor+HZExtend.h"
 #import "UIImageView+HZExtend.h"
 #import "UIView+HZExtend.h"
 #import "UIViewController+HZHUD.h"
 #import "HZURLManager.h"
-#import "HZViewController.h"
-
+#import "HZMacro.h"
 

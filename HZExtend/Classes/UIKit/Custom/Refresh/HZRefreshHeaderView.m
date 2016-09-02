@@ -9,7 +9,7 @@
 #import "HZRefreshHeaderView.h"
 #import "HZCircleView.h"
 #import "UIView+HZExtend.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 @interface HZRefreshHeaderView ()
 
 @property(nonatomic, weak) HZCircleView *circleView;

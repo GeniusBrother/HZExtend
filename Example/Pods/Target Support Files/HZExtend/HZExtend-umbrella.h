@@ -1,6 +1,5 @@
 #import <UIKit/UIKit.h>
 
-#import "HZConst.h"
 #import "HZObserver.h"
 #import "NSArray+HZExtend.h"
 #import "NSData+HZExtend.h"
@@ -17,6 +16,7 @@
 #import "NetworkConfig.h"
 #import "SessionTask.h"
 #import "UploadSessionTask.h"
+#import "HZMacro.h"
 #import "HZSystem.h"
 #import "HZScrollView.h"
 #import "UIColor+HZExtend.h"

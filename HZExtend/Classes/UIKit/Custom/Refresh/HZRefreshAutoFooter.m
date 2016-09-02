@@ -10,7 +10,6 @@
 #import "HZCircleView.h"
 #import "UIView+HZExtend.h"
 #import "UIColor+HZExtend.h"
-//#import "HZConst.h"
 @interface HZRefreshAutoFooter ()
 
 @property(nonatomic, weak) HZCircleView *circleView;

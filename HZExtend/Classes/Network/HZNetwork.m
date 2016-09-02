@@ -7,7 +7,7 @@
 //
 
 #import "HZNetwork.h"
-#import "HZConst.h"
+#import "HZMacro.h"
 #import "NSDictionary+HZExtend.h"
 #import "UploadSessionTask.h"
 #import "AFNetworking.h"
