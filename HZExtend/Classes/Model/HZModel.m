@@ -12,12 +12,14 @@
 #import "sqlite3.h"
 #import <objc/runtime.h>
 #import "FMDB.h"
-#define DBText  @"text"
-#define DBInt   @"integer"
-#define DBFloat @"real"
-#define DBData  @"blob"
-#define DBArray @"array"
-#define DBObject @"object"
+
+static NSString *const kDBTextType = @"text";
+static NSString *const kDBIntType = @"integer";
+static NSString *const kDBFloatType = @"real";
+static NSString *const kDBDataType = @"blob";
+static NSString *const kDBArrayType = @"array";
+static NSString *const kDBObjectType = @"object";
+
 static NSString * kDatabasePath;
 static NSMutableDictionary *TABLE_CACHE;   //使用[self TABLE_CACHE]获取
 static FMDatabase *DATA_BASE;
@@ -208,39 +210,39 @@ static FMDatabase *DATA_BASE;
                 cls = [cls stringByReplacingOccurrencesOfString:@"\"" withString:@""];
                 
                 if ([NSClassFromString(cls) isSubclassOfClass:[NSString class]]) {
-                    return DBText;
+                    return kDBTextType;
                 }
                 
                 if ([NSClassFromString(cls) isSubclassOfClass:[NSNumber class]]) {
-                    return DBText;
+                    return kDBTextType;
                 }
                 
                 if ([NSClassFromString(cls) isSubclassOfClass:[NSDictionary class]] || [NSClassFromString(cls) isSubclassOfClass:[NSMutableDictionary class]]) {
-                    return DBObject;
+                    return kDBObjectType;
                 }
                 
                 if ([NSClassFromString(cls) isSubclassOfClass:[NSArray class]] ||[NSClassFromString(cls) isSubclassOfClass:[NSMutableArray class]] ||
                     [cls hasPrefix:@"NSMutableArray"] ||
                     [cls hasPrefix:@"NSArray"]) {
-                    return DBArray;
+                    return kDBArrayType;
                 }
                 
                 if ([NSClassFromString(cls) isSubclassOfClass:[NSDate class]]) {
-                    return DBText;
+                    return kDBTextType;
                 }
                 
                 if ([NSClassFromString(cls) isSubclassOfClass:[NSData class]]) {
-                    return DBData;
+                    return kDBDataType;
                 }
                 
                 if ([NSClassFromString(cls) isSubclassOfClass:[HZModel class]]) {
-                    return DBObject;
+                    return kDBObjectType;
                 }
             }
                 break;
         }
         
-        return DBText;
+        return kDBTextType;
     }
 }
 

@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Singleton.h"
-#define kNetworkPage @"page"
-#define kNetworkPageSize @"pageSize"
+
+extern NSString *const kNetworkPage;
+extern NSString *const kNetworkPageSize;
 
 NS_ASSUME_NONNULL_BEGIN
 

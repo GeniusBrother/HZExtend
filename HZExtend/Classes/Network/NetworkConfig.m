@@ -10,6 +10,10 @@
 #import "AFNetworking.h"
 #import "NSDictionary+HZExtend.h"
 #import "NSString+HZExtend.h"
+
+NSString *const kNetworkPage = @"page";
+NSString *const kNetworkPageSize = @"pageSize";
+
 @interface NetworkConfig ()
 
 @property(nonatomic, copy) NSMutableDictionary *headerFields;
