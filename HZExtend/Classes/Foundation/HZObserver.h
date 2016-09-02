@@ -7,9 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#define HZKeyPath(keyPath) NSStringFromSelector(@selector(keyPath))
-
 /**
  *  若被观察者先消失,注意提前移除通知即试观察者为nil
  */

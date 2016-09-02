@@ -32,6 +32,17 @@
 
 #define HZNowTimeStamp (long)[[[NSDate alloc] init] timeIntervalSince1970]
 
+//返回属性字符串，结合HZObserver使用
+#define HZKeyPath(keyPath) NSStringFromSelector(@selector(keyPath))
+
+//颜色
+#define HZRGB(R,G,B)		[UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:1.0f]
+#define HZRGBA(R,G,B,A)	[UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
+
+//屏幕信息
+#define HZDeviceWidth [[UIScreen mainScreen] bounds].size.width
+#define HZDeviceHeight [[UIScreen mainScreen] bounds].size.height
+
 //断言
 #define HZAssertNoReturn(condition, msg) \
 if (condition) {\
