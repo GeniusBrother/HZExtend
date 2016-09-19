@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/GeniusBrother/HZExtend.git"
   s.license      = "MIT"
   s.author             = { "GeniusBrother" => "zuohong_xie@163.com" }
-  s.platform     = :ios, "7.0"
+  s.platform     = :ios, "8.0"
   s.requires_arc = true
   s.source       = { :git => "https://github.com/GeniusBrother/HZExtend.git", :tag => s.version }    
   s.frameworks = "CoreFoundation","Foundation","CoreGraphics","UIKit"
