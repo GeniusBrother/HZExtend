@@ -82,6 +82,8 @@
 		26368487A08E1304B6825FF426ECBC6C /* MJRefreshAutoNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 105057562119EEFCA511037B0689CA32 /* MJRefreshAutoNormalFooter.m */; };
 		277940B09CE7EFE02528DF22E45B187B /* KiwiBlockMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = C5CB0FCB7E8A443484496B471B02CE70 /* KiwiBlockMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2829D2C87086793A1E846CA0F99C5C8B /* TMMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B1F0C8642494A9BE9864B7F89622645 /* TMMemoryCache.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		2848ABA21D87D381004AE090 /* UIImage+HZExtend.h in Headers */ = {isa = PBXBuildFile; fileRef = 2848ABA01D87D381004AE090 /* UIImage+HZExtend.h */; };
+		2848ABA31D87D381004AE090 /* UIImage+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 2848ABA11D87D381004AE090 /* UIImage+HZExtend.m */; };
 		28E14B34BF4D9A45EF5CDB2E998AA2EA /* HZURLNavigation.h in Headers */ = {isa = PBXBuildFile; fileRef = C924AD9ADA6F1DB80070821FD1488EEC /* HZURLNavigation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		299F1CF2FD8DCE55C16ACDA19D27130E /* KWChangeMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 54C3F35F8932C13DD7EE91B5047219C3 /* KWChangeMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		29E12972FF5B8259985EFE49A250BAE0 /* KWFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 2715976AA942CE65623A307949DA9424 /* KWFailure.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
@@ -724,6 +726,8 @@
 		278970439F17CD4E5A519A3F2B89BAB3 /* MJRefresh.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MJRefresh.xcconfig; sourceTree = "<group>"; };
 		282D586E05E4C1C534104F1FE30BBD05 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = AFNetworking/AFSecurityPolicy.h; sourceTree = "<group>"; };
 		2842C22F0FA305DF1B87418F5D23E615 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		2848ABA01D87D381004AE090 /* UIImage+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HZExtend.h"; sourceTree = "<group>"; };
+		2848ABA11D87D381004AE090 /* UIImage+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HZExtend.m"; sourceTree = "<group>"; };
 		2868F293BBC08CD54BF5DDB2F86232DA /* AFURLSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetworking/AFURLSessionManager.h; sourceTree = "<group>"; };
 		28A90996D7BE4029D003CD1C94D107DE /* HZURLManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = HZURLManager.h; sourceTree = "<group>"; };
 		28B822B09B342B3B250AFBADA3E56062 /* KWWorkarounds.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWWorkarounds.h; path = Classes/Core/KWWorkarounds.h; sourceTree = "<group>"; };
@@ -1369,6 +1373,8 @@
 				D2CB5FFFE57C23674FC4489045F84AD9 /* UIView+HZExtend.m */,
 				BEFAB0AC91282D8C26E80480D5AE7ABC /* UIViewController+HZHUD.h */,
 				BA608C792975238D71C86D24A2CAE35C /* UIViewController+HZHUD.m */,
+				2848ABA01D87D381004AE090 /* UIImage+HZExtend.h */,
+				2848ABA11D87D381004AE090 /* UIImage+HZExtend.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2542,6 +2548,7 @@
 				9D36FA2528008DAB4699BAFF6AF15BBD /* HZWebViewController.h in Headers */,
 				B2083EC719419F8307E6E7CF2B5795CE /* NetworkConfig.h in Headers */,
 				5AB3966999B21FFF093114344D518C00 /* NSArray+HZExtend.h in Headers */,
+				2848ABA21D87D381004AE090 /* UIImage+HZExtend.h in Headers */,
 				FBCD91D4A58421D51475AC2DF274627D /* NSData+HZExtend.h in Headers */,
 				E6C398156431890116368F345972A95B /* NSDictionary+HZExtend.h in Headers */,
 				3F343070AEA556389701E181381A3071 /* NSMutableArray+HZExtend.h in Headers */,
@@ -2941,6 +2948,7 @@
 				23F3016EA09AC27060F3B3BA67DE6E91 /* UIScrollView+HZRefresh.m in Sources */,
 				6AFE62FD67777182CCA2104AFD1BF1D2 /* UIView+Action.m in Sources */,
 				58BADEC5D58341B7A129899E120045D9 /* UIView+HZExtend.m in Sources */,
+				2848ABA31D87D381004AE090 /* UIImage+HZExtend.m in Sources */,
 				F5804C40597BB7E16E4851562DB1E497 /* UIViewController+HZHUD.m in Sources */,
 				6F8EF4FD57A5F94DB0D03BF5E1D0A07C /* UIViewController+HZURLManager.m in Sources */,
 				F36694D2AE017243D3EA2AEB418B002F /* UploadSessionTask.m in Sources */,

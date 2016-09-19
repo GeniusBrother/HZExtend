@@ -14,6 +14,7 @@
 #import "ExampleItemViewController.h"
 #import "TestViewController.h"
 #import "ViewController.h"
+#import "HZExtend.h"
 @implementation HZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -42,7 +43,7 @@
      */
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
-    [[NetworkConfig sharedConfig] setupBaseURL:@"http://v4.api.maichong.me" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
+    [[NetworkConfig sharedConfig] setupBaseURL:@"https://jz.wacai.com" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
     
     [HZURLManageConfig sharedConfig].config = @{
                                                 @"hz://network":@"ViewController",
@@ -53,6 +54,12 @@
     self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    NSArray *array = @[];
+    NSLog(@"%@",array.reversedArray);
+    
+    NSLog(@"%@",array.jsonString);
+
     
     return YES;
 }

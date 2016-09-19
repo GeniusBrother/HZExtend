@@ -5,11 +5,13 @@
 //  Created by xzh on 16/3/21.
 //  Copyright © 2016年 xzh. All rights reserved.
 //
-
-#import <Foundation/Foundation.h>
 /**
- *  若被观察者先消失,注意提前移除通知即试观察者为nil
+ *  若被观察者先消失,注意提前移除通知即使观察者为nil
  */
+#import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void (^DidChangeBlock)(id object, id value);
 @interface HZObserver : NSObject
 
@@ -48,3 +50,5 @@ typedef void (^DidChangeBlock)(id object, id value);
                                change:(DidChangeBlock)didChange;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -13,17 +13,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSArray (HZExtend)
 
-//数字排序
-+ (nullable NSArray *)sortedWithArray:(NSArray *)numbers;
-
-//防止越界
+/**
+ *	返回与index对应的数组元素, 若越界返回nil
+ *
+ *	@param index  数组下标
+ *
+ *  @return 与index对应的数组元素
+ */
 - (nullable id)objectAtSafeIndex:(NSInteger)index;
 
-//倒序数组
+/**
+ *  返回数组的倒序数组
+ */
 - (NSArray *)reversedArray;
 
 /**
- *	返回字符串格式的json数据,即json字符串
+ *	将数组转换成json字符串，并返回
  */
 - (NSString *)jsonString;
 

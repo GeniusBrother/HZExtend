@@ -10,6 +10,7 @@
 #import "HZCircleView.h"
 #import "UIView+HZExtend.h"
 #import "UIColor+HZExtend.h"
+#import "HZMacro.h"
 @interface HZRefreshAutoFooter ()
 
 @property(nonatomic, weak) HZCircleView *circleView;
@@ -34,7 +35,7 @@
     
     UILabel *noDataLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     noDataLabel.text = @"已经全部加载完毕";
-    noDataLabel.textColor = RGB(90, 90, 90);
+    noDataLabel.textColor = HZRGB(90, 90, 90);
     noDataLabel.textAlignment = NSTextAlignmentCenter;
     noDataLabel.font = [UIFont boldSystemFontOfSize:14];
     noDataLabel.backgroundColor = [UIColor clearColor];

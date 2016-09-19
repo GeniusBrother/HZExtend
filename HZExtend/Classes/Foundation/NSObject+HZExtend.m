@@ -9,6 +9,7 @@
 #import "NSObject+HZExtend.h"
 
 @implementation NSObject (HZExtend)
+
 - (BOOL)isNoEmpty
 {
     if ([self isKindOfClass:[NSNull class]])

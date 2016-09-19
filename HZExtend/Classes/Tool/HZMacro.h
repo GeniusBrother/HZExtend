@@ -30,13 +30,13 @@
 
 #define HZLocalString(key) NSLocalizedString(key, nil)
 
-#define HZNowTimeStamp (long)[[[NSDate alloc] init] timeIntervalSince1970]
+#define HZNowTimeStamp (long long)[[[NSDate alloc] init] timeIntervalSince1970]
 
 //返回属性字符串，结合HZObserver使用
 #define HZKeyPath(keyPath) NSStringFromSelector(@selector(keyPath))
 
 //颜色
-#define HZRGB(R,G,B)		[UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:1.0f]
+#define HZRGB(R,G,B) [UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:1.0f]
 #define HZRGBA(R,G,B,A)	[UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 
 //屏幕信息

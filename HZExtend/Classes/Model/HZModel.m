@@ -162,7 +162,7 @@ static FMDatabase *DATA_BASE;
         objc_property_t property = properties[i];
         const char * name = property_getName(property);
         NSString * attributes = [self dbTypeConvertFromObjc_property_t:property];
-        if(![attributes isEqualToString:DBObject] && ![attributes isEqualToString:DBArray]
+        if(![attributes isEqualToString:kDBObjectType] && ![attributes isEqualToString:kDBArrayType]
            ){
             [propertyNamesArray addObject:[NSString stringWithFormat:@"%@ %@",[NSString stringWithUTF8String:name],attributes]];
         }
@@ -180,7 +180,7 @@ static FMDatabase *DATA_BASE;
             case 'f' : //float
             case 'd' : //double
             {
-                return DBFloat;
+                return kDBFloatType;
             }
                 break;
             case 'c':   // char
@@ -194,7 +194,7 @@ static FMDatabase *DATA_BASE;
             case 'Q' :  // unsigned long long
             case 'B': // BOOL
             {
-                return DBInt;
+                return kDBIntType;
             }
                 break;
                 

@@ -10,6 +10,7 @@
 #import "NSObject+HZExtend.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
 @interface NSData (HZExtend)
 
 /**
@@ -23,4 +24,5 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)md5String;
 
 @end
+
 NS_ASSUME_NONNULL_END

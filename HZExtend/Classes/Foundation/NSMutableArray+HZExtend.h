@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "NSObject+HZExtend.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
 @interface NSMutableArray (HZExtend)
 
 /**
@@ -17,4 +19,5 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)safeRemoveObjectAtIndex:(NSInteger)index;
 
 @end
+
 NS_ASSUME_NONNULL_END

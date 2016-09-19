@@ -9,6 +9,7 @@
 #import "NSMutableArray+HZExtend.h"
 #import "HZMacro.h"
 @implementation NSMutableArray (HZExtend)
+
 - (void)safeRemoveObjectAtIndex:(NSInteger)index
 {
     if (index >(self.count-1) || index < 0)
@@ -18,4 +19,5 @@
     }
     [self removeObjectAtIndex:index];
 }
+
 @end

@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "NSObject+HZExtend.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
 @interface NSDictionary (HZExtend)
 
 /**
@@ -36,4 +38,5 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)jsonString;
 
 @end
+
 NS_ASSUME_NONNULL_END

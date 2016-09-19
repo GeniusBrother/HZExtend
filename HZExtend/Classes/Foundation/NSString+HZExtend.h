@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "NSObject+HZExtend.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
 @interface NSString (HZExtend)
 
 /**
@@ -30,4 +32,5 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary *)queryDic; //@{@"author":@"GeniusBrother"}
 
 @end
+
 NS_ASSUME_NONNULL_END

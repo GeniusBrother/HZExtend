@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "Singleton.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString *const kNetworkPage;
 extern NSString *const kNetworkPageSize;
-
-NS_ASSUME_NONNULL_BEGIN
 
 @interface NetworkConfig : NSObject
 singleton_h(Config)
