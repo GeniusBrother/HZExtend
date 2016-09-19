@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "Singleton.h"
+typedef NS_ENUM(NSUInteger, HZSSLPinningMode) {
+    HZSSLPinningModeNone,       //验证返回的证书是否由受信任的机构颁发
+    HZSSLPinningModePublicKey,  //验证返回的证书的公钥是否与本地的副本一致
+    HZSSLPinningModeCertificate,//验证返回的证书是否过去，全部内容是否与本地一致
+};
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,6 +51,12 @@ singleton_h(Config)
  *  默认的公共请求头
  */
 @property(nonatomic, copy, readonly) NSDictionary<NSString *, id> *defaultHeaderFields;
+
+/** 是否允许信任非信任机构的证书，默认为NO */
+@property(nonatomic, assign) BOOL allowInvalidCertificates;
+
+/** 验证证书方式，默认为HZSSLPinningModeNone */
+@property(nonatomic, assign) HZSSLPinningMode SSLPinningMode;
 
 /**
  *  网络是否通(程序启动时检测网络状态有0.05左右的延迟,故需延迟0.05秒请求)

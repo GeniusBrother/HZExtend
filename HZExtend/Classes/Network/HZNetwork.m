@@ -21,7 +21,7 @@
 @end
 
 @implementation HZNetwork
-#pragma mark - Init
+#pragma mark - Initializtion
 singleton_m(Network)
 
 - (instancetype)init
@@ -30,14 +30,22 @@ singleton_m(Network)
     if (self) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            _sessionManager = [AFHTTPSessionManager manager];
-            _dataTasks = [NSMutableDictionary dictionary];
-            _defaultFields = [NSMutableDictionary dictionary];
-            
-            [self.defaultFields addEntriesFromDictionary:[NetworkConfig sharedConfig].defaultHeaderFields];
+            [self setup];
         });
     }
     return self;
+}
+
+- (void)setup
+{
+    _dataTasks = [NSMutableDictionary dictionary];
+    _defaultFields = [NSMutableDictionary dictionary];
+    [self.defaultFields addEntriesFromDictionary:[NetworkConfig sharedConfig].defaultHeaderFields];
+    
+    _sessionManager = [AFHTTPSessionManager manager];
+    AFSecurityPolicy *securityConfigModel = [AFSecurityPolicy policyWithPinningMode:[NetworkConfig sharedConfig].SSLPinningMode];
+    securityConfigModel.allowInvalidCertificates = [NetworkConfig sharedConfig].allowInvalidCertificates;
+    self.sessionManager.securityPolicy = securityConfigModel;
 }
 
 - (void)httpSetup:(SessionTask *)sessionTask

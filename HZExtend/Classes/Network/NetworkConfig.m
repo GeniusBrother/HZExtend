@@ -30,6 +30,8 @@ singleton_m(Config)
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             _headerFields = [NSMutableDictionary dictionary];
+            _SSLPinningMode = HZSSLPinningModeNone;
+            _allowInvalidCertificates = NO;
         });
     }
     return self;
