@@ -17,14 +17,14 @@ Pod::Spec.new do |s|
   s.public_header_files = 'HZExtend/Classes/**/*.h'
   s.source_files = 'HZExtend/Classes/**/*.{h,m}'
 
-  s.dependency 'AFNetworking','~>3.0.4'
+  s.dependency 'AFNetworking','~>3.1.0'
   s.dependency 'MBProgressHUD'
   s.dependency 'FMDB'
   s.dependency 'FMDBMigrationManager'
   s.dependency 'MJExtension'
   s.dependency 'TMCache'
   s.dependency 'SDWebImage'
-  s.dependency 'MJRefresh', '~> 3.0.7'
+  s.dependency 'MJRefresh', '~> 3.1.0'
 
 
   # s.resource_bundles = {
