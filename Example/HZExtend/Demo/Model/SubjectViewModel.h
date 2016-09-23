@@ -9,7 +9,7 @@
 #import "HZViewModel.h"
 #import "SubjectList.h"
 @interface SubjectViewModel : HZViewModel
-@property(nonatomic, strong) SessionTask *task;
+@property(nonatomic, strong) HZSessionTask *task;
 @property(nonatomic, strong) NSMutableArray *subjectArray;
 @property(nonatomic, strong) SubjectList *subjectList;
 

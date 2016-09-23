@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
 
-#import "UploadSessionTask.h"
+#import "HZUploadSessionTask.h"
 #import "HZMacro.h"
-@implementation UploadSessionTask
+@implementation HZUploadSessionTask
 
 - (instancetype)init
 {

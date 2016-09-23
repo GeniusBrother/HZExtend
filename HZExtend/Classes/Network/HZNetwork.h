@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
-#import "NetworkConfig.h"
-#import "SessionTask.h"
-#import "UploadSessionTask.h"
+#import "HZSingleton.h"
+#import "HZNetworkConfig.h"
+#import "HZSessionTask.h"
+#import "HZUploadSessionTask.h"
 
 @class HZNetwork;
 
@@ -24,17 +24,17 @@ singleton_h(Network)
 /**
  *  GET或POST
  */
-- (void)send:(SessionTask *)sessionTask;
+- (void)send:(HZSessionTask *)sessionTask;
 
 /**
  *  上传任务
  */
-- (void)upload:(UploadSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;
+- (void)upload:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;
 
 /**
  *  取消
  */
-- (void)cancel:(SessionTask *)sessionTask;
+- (void)cancel:(HZSessionTask *)sessionTask;
 
 @end
 

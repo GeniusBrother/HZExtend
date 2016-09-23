@@ -18,35 +18,35 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  最终的请求结果到来调用(成功或失败)
  */
-- (void)viewModelConnetedNotifyForTask:(SessionTask *)task type:(nullable NSString *)type;
+- (void)viewModelConnetedNotifyForTask:(HZSessionTask *)task type:(nullable NSString *)type;
 
 /**
  *  请求过程中调用(有缓存,无缓存,不尝试导入缓存,取消)
  */
-- (void)viewModelSendingNotifyForTask:(SessionTask *)task type:(nullable NSString *)type;
+- (void)viewModelSendingNotifyForTask:(HZSessionTask *)task type:(nullable NSString *)type;
 
 /**
  *  无网下调用(有缓存，无缓存，不尝试导入缓存)
  */
-- (void)viewModelLostedNotifyForTask:(SessionTask *)task type:(nullable NSString *)type;
+- (void)viewModelLostedNotifyForTask:(HZSessionTask *)task type:(nullable NSString *)type;
 
 @end
 
-@interface HZViewModel : NSObject<SessionTaskDelegate>
+@interface HZViewModel : NSObject<HZSessionTaskDelegate>
 
 @property(nonatomic, weak) id<HZViewModelDelegate> delegate;
 
 + (instancetype)viewModelWithDelegate:(id<HZViewModelDelegate>)delegate;
 
 /**********发送请求**********/
-- (void)sendTask:(SessionTask *)sessionTask;    //GET或POST
-- (void)uploadTask:(SessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;   //upload
-- (void)cancelTask:(SessionTask *)sessionTask;
+- (void)sendTask:(HZSessionTask *)task;    //GET或POST
+- (void)uploadTask:(HZSessionTask *)task progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;   //upload
+- (void)cancelTask:(HZSessionTask *)task;
 
 /**********简便分页模型**********/
-- (void)pageIncrease:(SessionTask *)task;   //kNetworkPage+1
-- (void)pageDecrease:(SessionTask *)task;   //kNetworkPage-1
-- (void)pageOrigin:(SessionTask *)task;     //kNetworkPage=1
+- (void)pageIncrease:(HZSessionTask *)task;   //kNetworkPage+1
+- (void)pageDecrease:(HZSessionTask *)task;   //kNetworkPage-1
+- (void)pageOrigin:(HZSessionTask *)task;     //kNetworkPage=1
 
 /**
  *  若为第一页初始化pageArray,追加数据。其它页删除掉缓存数据，追加数据。
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  appendArray:分页的数据
  *  task:请求的task
  */
-- (void)pageArray:(NSString *)pageArray appendArray:(NSArray<id> *)appendArray task:(SessionTask *)task;
+- (void)pageArray:(NSString *)pageArray appendArray:(NSArray<id> *)appendArray task:(HZSessionTask *)task;
 
 /**********子类重写回调**********/
 /**
@@ -66,12 +66,12 @@ NS_ASSUME_NONNULL_BEGIN
  *  加载数据模型，数据返回时会调用(请求数据，缓存数据)
  *  type:即task的任务标识，requestType
  */
-- (void)loadDataWithTask:(SessionTask *)task type:(nullable NSString *)type;
+- (void)loadDataWithTask:(HZSessionTask *)task type:(nullable NSString *)type;
 
 /**
  *  做一些失败处理,如页数减一,请求失败或者无网无缓存时调用
  */
-- (void)requestFailWithTask:(SessionTask *)task type:(nullable NSString *)type;
+- (void)requestFailWithTask:(HZSessionTask *)task type:(nullable NSString *)type;
 
 @end
 

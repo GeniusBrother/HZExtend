@@ -1,18 +1,18 @@
 PODS:
-  - AFNetworking (3.0.4):
-    - AFNetworking/NSURLSession (= 3.0.4)
-    - AFNetworking/Reachability (= 3.0.4)
-    - AFNetworking/Security (= 3.0.4)
-    - AFNetworking/Serialization (= 3.0.4)
-    - AFNetworking/UIKit (= 3.0.4)
-  - AFNetworking/NSURLSession (3.0.4):
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.0.4)
-  - AFNetworking/Security (3.0.4)
-  - AFNetworking/Serialization (3.0.4)
-  - AFNetworking/UIKit (3.0.4):
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
@@ -22,22 +22,22 @@ PODS:
   - FMDBMigrationManager/System (1.4.1):
     - FMDB/standard (>= 2.3)
   - HZExtend (0.5.4):
-    - AFNetworking (~> 3.0.4)
+    - AFNetworking (~> 3.1.0)
     - FMDB
     - FMDBMigrationManager
     - MBProgressHUD
     - MJExtension
-    - MJRefresh (~> 3.0.7)
+    - MJRefresh (~> 3.1.0)
     - SDWebImage
     - TMCache
   - Kiwi (2.4.0)
   - Masonry (1.0.1)
   - MBProgressHUD (1.0.0)
   - MJExtension (3.0.13)
-  - MJRefresh (3.0.8)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
+  - MJRefresh (3.1.12)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - TMCache (2.1.0)
 
 DEPENDENCIES:
@@ -50,16 +50,16 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
-  HZExtend: 3930f438521e119fb67336c79d6b93260759018b
+  HZExtend: 3f798b31e42252ebfb66faf2688fa2d7b8debc32
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
 
 PODFILE CHECKSUM: afc3f350d5ef1e3fd1f5f60426f995069824839c

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
+#import "HZSingleton.h"
 /**
  *  URLManager中的数据配置器
  */

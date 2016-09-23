@@ -67,7 +67,7 @@
     
 }
 
-- (void)viewModelConnetedNotifyForTask:(SessionTask *)task type:(NSString *)type
+- (void)viewModelConnetedNotifyForTask:(HZSessionTask *)task type:(NSString *)type
 {
     if (task.succeed) {
         [self showSuccessWithText:@"请求成功" image:@"success"];
@@ -81,7 +81,7 @@
 }
 
 //本地缓存数据到来调用(多种状态)(第一次再页面显示之前就会回调)
-- (void)viewModelSendingNotifyForTask:(SessionTask *)task type:(NSString *)type
+- (void)viewModelSendingNotifyForTask:(HZSessionTask *)task type:(NSString *)type
 {
     if (task.cacheSuccess) {
         [self showSuccessWithText:@"获得缓存" image:@"success"];
@@ -90,7 +90,7 @@
 }
 
 //无网情况下缓存数据到来调用(多种状态)(第一次再页面显示之前就会回调)
-- (void)viewModelLostedNotifyForTask:(SessionTask *)task type:(NSString *)type
+- (void)viewModelLostedNotifyForTask:(HZSessionTask *)task type:(NSString *)type
 {
     if (task.cacheSuccess) {
         [self showSuccessWithText:@"获得缓存" image:@"success"];

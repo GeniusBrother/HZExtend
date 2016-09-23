@@ -7,7 +7,7 @@
 //
 
 #import "HZAppDelegate.h"
-#import "NetworkConfig.h"
+#import "HZNetworkConfig.h"
 #import "AFNetworkReachabilityManager.h"
 #import "HZURLManageConfig.h"
 #import "HZNavigationController.h"
@@ -43,7 +43,7 @@
      */
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
-    [[NetworkConfig sharedConfig] setupBaseURL:@"https://jz.wacai.com" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
+    [[HZNetworkConfig sharedConfig] setupBaseURL:@"https://jz.wacai.com" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
     
     [HZURLManageConfig sharedConfig].config = @{
                                                 @"hz://network":@"ViewController",

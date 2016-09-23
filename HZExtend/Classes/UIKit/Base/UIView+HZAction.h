@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UIView (Action)
+@interface UIView (HZAction)
 - (void)tapPeformBlock:(void(^)())block;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
+#import "HZSingleton.h"
 #import "HZURLNavigation.h"
 #import "UIViewController+HZURLManager.h"
 @class HZViewController;

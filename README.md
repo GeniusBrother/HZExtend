@@ -29,34 +29,34 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
 
 
 ##一.MVVM&网络请求##
-基本思路:网络请求基于SessionTask、HZNetwork(任务执行器)、NetworkConfig组成
+基本思路:网络请求基于HZSessionTask、HZNetwork(任务执行器)、HZNetworkConfig组成
 
 ####配置接口的共同URL、状态码路径,消息路径以及正确的状态码:
 ```objective-c
-[[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
+[[HZNetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
 ```
 ![](https://dn-impluse.qbox.me/24833/A98E9B1750666D91E88D21AFDC5ABFA4.jpg)<br/>
 
 ####后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)
 ```objective-c
-[[NetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];
+[[HZNetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];
 ```
 
 ####配置全局请求头
 ```objective-c
-[[NetworkConfig sharedConfig] addDefaultHeaderFields:@{@"key":@"value"}];
+[[HZNetworkConfig sharedConfig] addDefaultHeaderFields:@{@"key":@"value"}];
 ```
 
 ####网络状态
 ```objective-c
-[NetworkConfig sharedConfig].reachable  //程序刚启动时有0.02的网络状态延迟判断。故请求应在0.02s后再发出
+[HZNetworkConfig sharedConfig].reachable  //程序刚启动时有0.02的网络状态延迟判断。故请求应在0.02s后再发出
 ```
 
-####SessionTask
+####HZSessionTask
 ```objective-c
 @interface FrameworkViewModel : HZViewModel
-@property(nonatomic, strong) SessionTask *task;
-@property(nonatomic, strong) UploadSessionTask *uploadTask;
+@property(nonatomic, strong) HZSessionTask *task;
+@property(nonatomic, strong) HZUploadSessionTask *uploadTask;
 @property(nonatomic, strong) NSMutableArray *recArray;
 @end
 
@@ -65,13 +65,13 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
 {
 [super loadViewModel];
 
-_recTask = [SessionTask taskWithMethod:@"GET" path:@"/party/pooks-rank" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@1,kNetworkPage,MC_PAGE_SIZE,kNetworkPageSize, nil] delegate:self requestType:@"rank"];
+_recTask = [HZSessionTask taskWithMethod:@"GET" path:@"/party/pooks-rank" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@1,kNetworkPage,MC_PAGE_SIZE,kNetworkPageSize, nil] delegate:self requestType:@"rank"];
 self.recTask.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取
 self.recTask.pathkeys = @[kNetworkPage,kNetworkPageSize];   //设置后支持支持http://baseURL/path/value1/value2类型请求
 }
 
 //加载数据的回调
-- (void)loadDataWithTask:(SessionTask *)task type:(NSString *)type
+- (void)loadDataWithTask:(HZSessionTask *)task type:(NSString *)type
 {
 if([type isEqualToString:@"rank"]) {
 _pageData = [PageModel modelWithDic:task.responseObject]; //设置当前页的数据模型
@@ -80,7 +80,7 @@ _pageData = [PageModel modelWithDic:task.responseObject]; //设置当前页的�
 }
 
 //请求失败的回调,请求失败，无网失败
-- (void)requestFailWithTask:(SessionTask *)task type:(NSString *)type
+- (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type
 {
 [self pageDecrease:task]; //将当前页减一
 }
@@ -97,7 +97,7 @@ _viewModel = [MorePookViewModel viewModelWithDelegate:self];
 
 //网络状态回调
 //最终的请求结果到来调用(失败或成功)
-- (void)viewModelConnetedNotifyForTask:(SessionTask *)task type:(NSString *)type
+- (void)viewModelConnetedNotifyForTask:(HZSessionTask *)task type:(NSString *)type
 {
 if (task.succeed) {
 [self.tableView reloadData];
@@ -107,13 +107,13 @@ if (task.succeed) {
 }
 
 //本地缓存数据到来调用(多种状态)(第一次再页面显示之前就会回调)
-- (void)viewModelSendingNotifyForTask:(SessionTask *)task type:(NSString *)type
+- (void)viewModelSendingNotifyForTask:(HZSessionTask *)task type:(NSString *)type
 {
 if (task.cacheSuccess) [self.tableView reloadData];
 }
 
 //无网情况下缓存数据到来调用(多种状态)(第一次再页面显示之前就会回调)
-- (void)viewModelLostedNotifyForTask:(SessionTask *)task type:(NSString *)type
+- (void)viewModelLostedNotifyForTask:(HZSessionTask *)task type:(NSString *)type
 {
 if (task.cacheSuccess) {
 [self.tableView reloadData];

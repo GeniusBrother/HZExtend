@@ -27,8 +27,8 @@
     
 }
 
-- (void)setupSuccessDataWithTask:(SessionTask *)task type:(NSString *)type {}
-- (void)requestFailWithTask:(SessionTask *)task type:(NSString *)type {}
+- (void)setupSuccessDataWithTask:(HZSessionTask *)task type:(NSString *)type {}
+- (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type {}
 
 - (void)dealloc
 {

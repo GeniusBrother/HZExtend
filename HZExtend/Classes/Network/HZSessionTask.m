@@ -6,13 +6,13 @@
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
 
-#import "SessionTask.h"
+#import "HZSessionTask.h"
 #import "HZMacro.h"
-#import "NetworkConfig.h"
+#import "HZNetworkConfig.h"
 #import "NSString+HZExtend.h"
 #import "NSDictionary+HZExtend.h"
 #import "TMCache.h"
-@interface SessionTask ()
+@interface HZSessionTask ()
 #pragma mark - Input
 @property(nonatomic, strong) NSMutableDictionary *httpRequestFields;
 
@@ -23,21 +23,21 @@
 @property(nonatomic, copy) NSString *cacheKey;
 @property(nonatomic, copy) NSString *absoluteURL;
 @property(nonatomic, assign) NSInteger codeKey;
-@property(nonatomic, assign) SessionTaskState state;
+@property(nonatomic, assign) HZSessionTaskState state;
 
 @property(nonatomic, assign) BOOL hasImportCache;
 
 @end
 
-@implementation SessionTask
+@implementation HZSessionTask
 #pragma mark - Init
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
                         params:(NSMutableDictionary *)params
-                      delegate:(id<SessionTaskDelegate>)delegate requestType:(NSString *)type
+                      delegate:(id<HZSessionTaskDelegate>)delegate requestType:(NSString *)type
 {
 
-    SessionTask *task = [[self alloc] init];
+    HZSessionTask *task = [[self alloc] init];
     task.method = method;
     task.path = path;
     task.params = params;
@@ -50,10 +50,10 @@
                           path:(NSString *)path
                         params:(NSMutableDictionary *)params
                       pathKeys:(NSArray *)keys
-                      delegate:(id<SessionTaskDelegate>)delegate
+                      delegate:(id<HZSessionTaskDelegate>)delegate
                    requestType:(NSString *)type
 {
-    SessionTask *task = [self taskWithMethod:method path:path params:params delegate:delegate requestType:type];
+    HZSessionTask *task = [self taskWithMethod:method path:path params:params delegate:delegate requestType:type];
     task.pathkeys = keys;
     return task;
 }
@@ -67,7 +67,7 @@
         _cached = YES;
         _importCacheOnce = YES;
         _shouldCheckCode = YES;
-        _state = SessionTaskStateRunable;
+        _state = HZSessionTaskStateRunable;
     }
     return self;
 }
@@ -83,7 +83,7 @@
 
 - (void)makeTaskReady
 {
-    self.state = SessionTaskStateRunable;
+    self.state = HZSessionTaskStateRunable;
 }
 
 #pragma mark - Output
@@ -117,7 +117,7 @@
         if (!self.path.isNoEmpty) {
             _absoluteURL = @"";
         }else {
-            NSString *baseURL = self.baseURL?:[NetworkConfig sharedConfig].baseURL;
+            NSString *baseURL = self.baseURL?:[HZNetworkConfig sharedConfig].baseURL;
             _absoluteURL = [baseURL stringByAppendingString:self.path];
             if (self.params.isNoEmpty) {
                 if([self.method isEqualToString:@"GET"] && self.pathkeys.isNoEmpty) {
@@ -141,7 +141,7 @@
 {
     _responseObject = responseObject;
     
-    NSString * msgKeyPath = [NetworkConfig sharedConfig].msgKeyPath;
+    NSString * msgKeyPath = [HZNetworkConfig sharedConfig].msgKeyPath;
     if (msgKeyPath.isNoEmpty) {
         _message = [responseObject objectAtKeyPath:msgKeyPath]?:@"";
     }else {
@@ -192,7 +192,7 @@
 #pragma mark - State
 - (BOOL)runable
 {
-    return SessionTaskStateRunable == _state;
+    return HZSessionTaskStateRunable == _state;
 }
 
 - (BOOL)succeed
@@ -201,17 +201,17 @@
         return NO;
     }
     
-    return SessionTaskStateSuccess == _state;
+    return HZSessionTaskStateSuccess == _state;
 }
 
 - (BOOL)failed
 {
-    return SessionTaskStateFail == _state;
+    return HZSessionTaskStateFail == _state;
 }
 
 - (BOOL)running
 {
-    return self.state&SessionTaskStateRunning;
+    return self.state & HZSessionTaskStateRunning;
 }
 
 - (BOOL)cacheSuccess
@@ -220,23 +220,23 @@
         return NO;
     }
     
-    return self.state&SessionTaskStateCacheSuccess;
+    return self.state & HZSessionTaskStateCacheSuccess;
 }
 
 - (BOOL)cacheFail
 {
-    return self.state&SessionTaskStateCacheFail;
+    return self.state & HZSessionTaskStateCacheFail;
 }
 
 - (BOOL)isCancel
 {
-    return SessionTaskStateCancel == self.state;
+    return HZSessionTaskStateCancel == self.state;
 }
 
 #pragma mark - Call-Back
 - (void)notifyDataState
 {
-    if ([NetworkConfig sharedConfig].reachable) {
+    if ([HZNetworkConfig sharedConfig].reachable) {
         if (self.running || self.isCancel) {
             if ([self.delegate respondsToSelector:@selector(taskSending:)]) {
                 [self.delegate taskSending:self];
@@ -269,17 +269,17 @@
                 NSDictionary *responseObject = [[TMCache sharedCache] objectForKey:self.cacheKey];
                 if (responseObject.isNoEmpty) {
                     self.responseObject = responseObject;
-                    self.state = self.state | SessionTaskStateCacheSuccess;
-                    self.error = [NetworkConfig sharedConfig].reachable?nil:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
+                    self.state = self.state | HZSessionTaskStateCacheSuccess;
+                    self.error = [HZNetworkConfig sharedConfig].reachable?nil:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
                 }else {
-                    self.state = self.state | SessionTaskStateCacheFail;
-                    self.error = [NetworkConfig sharedConfig].reachable?nil:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
+                    self.state = self.state | HZSessionTaskStateCacheFail;
+                    self.error = [HZNetworkConfig sharedConfig].reachable?nil:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
                 }
                 _hasImportCache = YES;
             }
         }else {
-            self.state = self.state | SessionTaskStateCacheNoTry;
-            self.error = [NetworkConfig sharedConfig].reachable?[NSError errorWithDomain:@"HZNetwork" code:0 userInfo:@{@"NSLocalizedDescription":@"error"}]:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
+            self.state = self.state | HZSessionTaskStateCacheNoTry;
+            self.error = [HZNetworkConfig sharedConfig].reachable?[NSError errorWithDomain:@"HZNetwork" code:0 userInfo:@{@"NSLocalizedDescription":@"error"}]:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
         }
     }
 
@@ -289,7 +289,7 @@
 #pragma mark - Control
 - (void)startSession
 {
-    self.state = SessionTaskStateRunning;
+    self.state = HZSessionTaskStateRunning;
 
     [self importCache];
 }
@@ -301,7 +301,7 @@
         /**************设置输出**************/
         self.responseObject = responseObject;
         BOOL codeRight = [self checkCode];
-        self.state = codeRight?SessionTaskStateSuccess:SessionTaskStateFail;
+        self.state = codeRight?HZSessionTaskStateSuccess:HZSessionTaskStateFail;
         self.error = codeRight?nil:[NSError errorWithDomain:@"HZNetwork" code:3 userInfo:@{@"NSLocalizedDescription":self.message}];
         
         /**************通知**************/
@@ -317,7 +317,7 @@
         
         //**************设置输出**************/
         self.error = error;
-        self.state = [self.message isEqualToString:@"cancelled"]?SessionTaskStateCancel:SessionTaskStateFail;
+        self.state = [self.message isEqualToString:@"cancelled"]?HZSessionTaskStateCancel:HZSessionTaskStateFail;
         
         [self notifyDataState];
     }
@@ -328,7 +328,7 @@
 
 - (void)noReach
 {
-    self.state = SessionTaskStateNoReach;
+    self.state = HZSessionTaskStateNoReach;
     
     [self importCache];
     
@@ -341,12 +341,12 @@
 - (BOOL)checkCode
 {
     //没有设置状态码路径则不需要检查
-    NSString *codeKeyPath = [NetworkConfig sharedConfig].codeKeyPath;
+    NSString *codeKeyPath = [HZNetworkConfig sharedConfig].codeKeyPath;
     if (!codeKeyPath.isNoEmpty) return true;
     
     if (self.shouldCheckCode) {
         self.codeKey = [[self.responseObject objectAtKeyPath:codeKeyPath] integerValue];
-        if(self.codeKey == [NetworkConfig sharedConfig].rightCode) {
+        if(self.codeKey == [HZNetworkConfig sharedConfig].rightCode) {
             return true;
         }else {
             return false;

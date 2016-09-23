@@ -7,65 +7,65 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NetworkConfig.h"
-@class SessionTask;
+#import "HZNetworkConfig.h"
+@class HZSessionTask;
 
 /****************     具体的请求任务,配置参数,输出数据     ****************/
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
-    SessionTaskStateRunable            = 1 <<  0,//初始状态
-    SessionTaskStateRunning            = 1 <<  1,//执行状态
-    SessionTaskStateCancel             = 1 <<  2,//任务取消
-    SessionTaskStateSuccess            = 1 <<  3,//任务成功
-    SessionTaskStateFail               = 1 <<  4,//业务错误||请求失败
-    SessionTaskStateNoReach            = 1 <<  5,//无法连接
-    SessionTaskStateCacheSuccess       = 1 <<  6,//获取到正确数据的缓存
-    SessionTaskStateCacheFail          = 1 <<  7,//无缓存数据
-    SessionTaskStateCacheNoTry         = 1 <<  8,//不尝试导入缓存
+typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
+    HZSessionTaskStateRunable            = 1 <<  0,//初始状态
+    HZSessionTaskStateRunning            = 1 <<  1,//执行状态
+    HZSessionTaskStateCancel             = 1 <<  2,//任务取消
+    HZSessionTaskStateSuccess            = 1 <<  3,//任务成功
+    HZSessionTaskStateFail               = 1 <<  4,//业务错误||请求失败
+    HZSessionTaskStateNoReach            = 1 <<  5,//无法连接
+    HZSessionTaskStateCacheSuccess       = 1 <<  6,//获取到正确数据的缓存
+    HZSessionTaskStateCacheFail          = 1 <<  7,//无缓存数据
+    HZSessionTaskStateCacheNoTry         = 1 <<  8,//不尝试导入缓存
 };
 
 //请求数据的状态回调
-@protocol SessionTaskDelegate<NSObject>
+@protocol HZSessionTaskDelegate<NSObject>
 
 /**
  *  请求完成后调用，state:SessionTaskStateSuccess 或 SessionTaskStateFail
  */
-- (void)taskConnected:(SessionTask *)task;
+- (void)taskConnected:(HZSessionTask *)task;
 
 /**
  *  请求过程中调用 state:SessionTaskStateRunning|SessionTaskStateCacheSuccess 或 SessionTaskStateRunning|SessionTaskStateCacheFail 或 SessionTaskStateRunning|SessionTaskStateCacheNoTry 或 SessionTaskStateCancel
  */
-- (void)taskSending:(SessionTask *)task;
+- (void)taskSending:(HZSessionTask *)task;
 
 /**
  *  无网情况下调用 state:SessionTaskStateNoReach|SessionTaskStateCacheSuccess 或 SessionTaskStateNoReach| SessionTaskStateCacheFail 或 SessionTaskStateNoReach| SessionTaskStateCacheNoTry
  */
-- (void)taskLosted:(SessionTask *)task;
+- (void)taskLosted:(HZSessionTask *)task;
 
 
 
 @end
-@interface SessionTask : NSObject
+@interface HZSessionTask : NSObject
 
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
                         params:(nullable NSMutableDictionary<NSString *, id> *)params
-                      delegate:(id<SessionTaskDelegate>)delegate
+                      delegate:(id<HZSessionTaskDelegate>)delegate
                    requestType:(nullable NSString *)type;
 
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
                         params:(nullable NSMutableDictionary<NSString *, id> *)params
                       pathKeys:(NSArray<NSString *> *)keys
-                      delegate:(id<SessionTaskDelegate>)delegate
+                      delegate:(id<HZSessionTaskDelegate>)delegate
                    requestType:(nullable NSString *)type;
 
-@property(nonatomic, weak) id<SessionTaskDelegate> delegate;
+@property(nonatomic, weak) id<HZSessionTaskDelegate> delegate;
 
 /**
- *  不设置则每个session默认为NetworkConfig的baseURL为基本的路径
+ *  不设置则每个session默认为HZNetworkConfig的baseURL为基本的路径
  */
 @property(nullable, nonatomic, copy) NSString *baseURL;
 
@@ -146,10 +146,10 @@ typedef NS_OPTIONS(NSUInteger, SessionTaskState) {
 /**
  *  请求状态
  */
-@property(nonatomic, assign, readonly) SessionTaskState state;
+@property(nonatomic, assign, readonly) HZSessionTaskState state;
 
 /**
- *  请求头设置，或者在NetworkConfig设置全局的
+ *  请求头设置，或者在HZNetworkConfig设置全局的
  */
 - (void)setValue:(id)value forHeaderField:(NSString *)key;
 - (NSDictionary<NSString *, id> *)httpRequestFields;

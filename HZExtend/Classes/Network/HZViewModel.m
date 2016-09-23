@@ -7,7 +7,7 @@
 //
 
 #import "HZViewModel.h"
-#import "UploadSessionTask.h"
+#import "HZUploadSessionTask.h"
 #import "NSObject+HZExtend.h"
 @interface HZViewModel ()
 
@@ -33,11 +33,11 @@
 }
 
 - (void)loadViewModel {}
-- (void)loadDataWithTask:(SessionTask *)task type:(NSString *)type {}
-- (void)requestFailWithTask:(SessionTask *)task type:(NSString *)type {}
+- (void)loadDataWithTask:(HZSessionTask *)task type:(NSString *)type {}
+- (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type {}
 
 #pragma mark - Page
-- (void)pageIncrease:(SessionTask *)task
+- (void)pageIncrease:(HZSessionTask *)task
 {
     NSNumber *oldNumber = [task.params objectForKey:kNetworkPage];
     
@@ -47,7 +47,7 @@
     
 }
 
-- (void)pageDecrease:(SessionTask *)task
+- (void)pageDecrease:(HZSessionTask *)task
 {
     NSNumber *oldNumber = [task.params objectForKey:kNetworkPage];
     
@@ -56,12 +56,12 @@
     }
 }
 
-- (void)pageOrigin:(SessionTask *)task
+- (void)pageOrigin:(HZSessionTask *)task
 {
     [task.params setObject:@1 forKey:kNetworkPage];
 }
 
-- (void)pageArray:(NSString *)pageArrayName appendArray:(NSArray *)appendArray task:(SessionTask *)task;
+- (void)pageArray:(NSString *)pageArrayName appendArray:(NSArray *)appendArray task:(HZSessionTask *)task;
 {
     if (appendArray.isNoEmpty){
         NSInteger pageNumber = task.page;
@@ -81,17 +81,17 @@
 }
 
 #pragma mark - Network
-- (void)sendTask:(SessionTask *)sessionTask
+- (void)sendTask:(HZSessionTask *)sessionTask
 {    
     [[HZNetwork sharedNetwork] send:sessionTask];
 }
 
-- (void)uploadTask:(UploadSessionTask *)sessionTask progress:(void (^)(NSProgress *))uploadProgressBlock
+- (void)uploadTask:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *))uploadProgressBlock
 {
     return [[HZNetwork sharedNetwork] upload:sessionTask progress:uploadProgressBlock];
 }
 
-- (void)cancelTask:(SessionTask *)sessionTask
+- (void)cancelTask:(HZSessionTask *)sessionTask
 {
     [[HZNetwork sharedNetwork] cancel:sessionTask];
 }
@@ -100,7 +100,7 @@
 /**
  *  主要实现了回调
  */
-- (void)taskConnected:(SessionTask *)task
+- (void)taskConnected:(HZSessionTask *)task
 {
     if (task.succeed) {
         [self loadDataWithTask:task type:task.requestType];
@@ -113,7 +113,7 @@
     }
 }
 
-- (void)taskSending:(SessionTask *)task
+- (void)taskSending:(HZSessionTask *)task
 {
     if (task.cacheSuccess) [self loadDataWithTask:task type:task.requestType];
     
@@ -122,7 +122,7 @@
     }
 }
 
-- (void)taskLosted:(SessionTask *)task
+- (void)taskLosted:(HZSessionTask *)task
 {
     if (task.cacheSuccess) {
         [self loadDataWithTask:task type:task.requestType];

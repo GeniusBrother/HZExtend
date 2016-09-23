@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
 
-#import "SessionTask.h"
+#import "HZSessionTask.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UploadSessionTask : SessionTask
+@interface HZUploadSessionTask : HZSessionTask
 
 @property(nonatomic, copy, nullable) NSString *mimeType;
 @property(nonatomic, copy, nullable) NSString *fileName;

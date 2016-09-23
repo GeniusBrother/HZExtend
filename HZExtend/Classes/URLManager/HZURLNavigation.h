@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "Singleton.h"
+#import "HZSingleton.h"
 
 /**
  *  负责跳转,获得当前viewCtrl&navgationController

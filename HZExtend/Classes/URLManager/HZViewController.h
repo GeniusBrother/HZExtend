@@ -10,7 +10,7 @@
 #import "UIViewController+HZHUD.h"
 #import "HZNavigationController.h"
 #import "HZViewModel.h"
-@class SessionTask;
+@class HZSessionTask;
 @interface HZViewController : UIViewController<HZViewModelDelegate>
 /**
  *  若导航控制器类型为HZNavigationController则返回,否则返回nil
@@ -20,11 +20,11 @@
 /**
  *  页面数据的设置,不涉及状态
  */
-- (void)setupSuccessDataWithTask:(SessionTask *)task type:(NSString *)type;
+- (void)setupSuccessDataWithTask:(HZSessionTask *)task type:(NSString *)type;
 
 /**
  *  失败处理,不涉及状态
  */
-- (void)requestFailWithTask:(SessionTask *)task type:(NSString *)type;
+- (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type;
 
 @end

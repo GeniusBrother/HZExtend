@@ -1,5 +1,5 @@
 //
-//  NetworkConfig.h
+//  HZNetworkConfig.h
 //  ZHFramework
 //
 //  Created by xzh on 16/1/9.
@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
+#import "HZSingleton.h"
 typedef NS_ENUM(NSUInteger, HZSSLPinningMode) {
     HZSSLPinningModeNone,       //验证返回的证书是否由受信任的机构颁发
     HZSSLPinningModePublicKey,  //验证返回的证书的公钥是否与本地的副本一致
@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 extern NSString *const kNetworkPage;
 extern NSString *const kNetworkPageSize;
 
-@interface NetworkConfig : NSObject
+@interface HZNetworkConfig : NSObject
 singleton_h(Config)
 
 /**

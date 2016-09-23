@@ -6,7 +6,7 @@
 //  Copyright © 2016年 xzh. All rights reserved.
 //
 
-#import "NetworkConfig.h"
+#import "HZNetworkConfig.h"
 #import "AFNetworking.h"
 #import "NSDictionary+HZExtend.h"
 #import "NSString+HZExtend.h"
@@ -14,13 +14,13 @@
 NSString *const kNetworkPage = @"page";
 NSString *const kNetworkPageSize = @"pageSize";
 
-@interface NetworkConfig ()
+@interface HZNetworkConfig ()
 
 @property(nonatomic, copy) NSMutableDictionary *headerFields;
 
 @end
 
-@implementation NetworkConfig
+@implementation HZNetworkConfig
 singleton_m(Config)
 
 - (instancetype)init

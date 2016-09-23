@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
 
-#import "UIView+Action.h"
+#import "UIView+HZAction.h"
 #import <objc/runtime.h>
 
 static const char kBlock = '\0';
-@implementation UIView (Action)
+@implementation UIView (HZAction)
 
 - (void)tapPeformBlock:(void(^)())block
 {

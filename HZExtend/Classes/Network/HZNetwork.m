@@ -9,7 +9,7 @@
 #import "HZNetwork.h"
 #import "HZMacro.h"
 #import "NSDictionary+HZExtend.h"
-#import "UploadSessionTask.h"
+#import "HZUploadSessionTask.h"
 #import "AFNetworking.h"
 #import "TMCache.h"
 #import "NSString+HZExtend.h"
@@ -40,15 +40,15 @@ singleton_m(Network)
 {
     _dataTasks = [NSMutableDictionary dictionary];
     _defaultFields = [NSMutableDictionary dictionary];
-    [self.defaultFields addEntriesFromDictionary:[NetworkConfig sharedConfig].defaultHeaderFields];
+    [self.defaultFields addEntriesFromDictionary:[HZNetworkConfig sharedConfig].defaultHeaderFields];
     
     _sessionManager = [AFHTTPSessionManager manager];
-    AFSecurityPolicy *securityConfigModel = [AFSecurityPolicy policyWithPinningMode:[NetworkConfig sharedConfig].SSLPinningMode];
-    securityConfigModel.allowInvalidCertificates = [NetworkConfig sharedConfig].allowInvalidCertificates;
+    AFSecurityPolicy *securityConfigModel = [AFSecurityPolicy policyWithPinningMode:[HZNetworkConfig sharedConfig].SSLPinningMode];
+    securityConfigModel.allowInvalidCertificates = [HZNetworkConfig sharedConfig].allowInvalidCertificates;
     self.sessionManager.securityPolicy = securityConfigModel;
 }
 
-- (void)httpSetup:(SessionTask *)sessionTask
+- (void)httpSetup:(HZSessionTask *)sessionTask
 {
     //1.重置自身数据
     [self rest];
@@ -81,16 +81,16 @@ singleton_m(Network)
 /**
  *  发送GET/POST任务
  */
-- (void)send:(SessionTask *)sessionTask
+- (void)send:(HZSessionTask *)sessionTask
 {
     NSString *path = sessionTask.path;
     HZAssertNoReturn(!path.isNoEmpty, @"path nil")
-    HZAssertNoReturn(sessionTask.state != SessionTaskStateRunable, @"task has run already")
+    HZAssertNoReturn(sessionTask.state != HZSessionTaskStateRunable, @"task has run already")
     
     //启动前还原配置
     [self httpSetup:sessionTask];
     
-    if ([NetworkConfig sharedConfig].reachable) {
+    if ([HZNetworkConfig sharedConfig].reachable) {
         NSString *method = sessionTask.method?:@"GET";
         if ([method caseInsensitiveCompare:@"GET"] == NSOrderedSame) {
             [self GET:sessionTask];
@@ -105,7 +105,7 @@ singleton_m(Network)
 /**
  *  GET
  */
-- (void)GET:(SessionTask *)sessionTask
+- (void)GET:(HZSessionTask *)sessionTask
 {
     /**************启动任务**************/
     BOOL pathSchema = sessionTask.pathkeys.isNoEmpty;
@@ -126,7 +126,7 @@ singleton_m(Network)
 /**
  *  POST
  */
-- (void)POST:(SessionTask *)sessionTask
+- (void)POST:(HZSessionTask *)sessionTask
 {
     /**************启动任务**************/
     NSString *urlstring = sessionTask.absoluteURL.allPath;
@@ -147,12 +147,12 @@ singleton_m(Network)
 /**
  *  upload
  */
-- (void)upload:(UploadSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock
+- (void)upload:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock
 {
 //    if (sessionTask.fileName.isEmpty || sessionTask.formName.isEmpty) return; AFN已经做了
     NSString *path = sessionTask.path;
     HZAssertNoReturn(!path.isNoEmpty, @"path nil")
-    HZAssertNoReturn(sessionTask.state != SessionTaskStateRunable, @"task has run already")
+    HZAssertNoReturn(sessionTask.state != HZSessionTaskStateRunable, @"task has run already")
     
     //启动前参数配置
     [self httpSetup:sessionTask];
@@ -183,7 +183,7 @@ singleton_m(Network)
 /**
  *  取消任务
  */
-- (void)cancel:(SessionTask *)sessionTask
+- (void)cancel:(HZSessionTask *)sessionTask
 {
     NSURLSessionTask *task = [self.dataTasks objectForKey:sessionTask.cacheKey];
     if(task) [task cancel];
@@ -193,7 +193,7 @@ singleton_m(Network)
 /**
  *  成功后的默认处理
  */
-- (void)sucess:(SessionTask *)sessionTask response:(id)responseObject
+- (void)sucess:(HZSessionTask *)sessionTask response:(id)responseObject
 {
     //移掉该任务
     [self.dataTasks removeObjectForKey:sessionTask.cacheKey];
@@ -205,7 +205,7 @@ singleton_m(Network)
 /**
  *  失败后的默认处理
  */
-- (void)fail:(SessionTask *)sessionTask error:(NSError *)error
+- (void)fail:(HZSessionTask *)sessionTask error:(NSError *)error
 {
     HZLog(@"%@",error);
     [self.dataTasks removeObjectForKey:sessionTask.cacheKey];
