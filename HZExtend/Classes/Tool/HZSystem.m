@@ -11,7 +11,7 @@
 #include <sys/sysctl.h>
 @implementation HZSystem
 
-#pragma mark - sytemVersion
+#pragma mark - Sytem Version
 + (BOOL)isIOS6Later
 {
     return ( [[[UIDevice currentDevice] systemVersion] compare:@"6.0"] != NSOrderedAscending );
@@ -30,6 +30,11 @@
 + (BOOL)isIOS9Later
 {
     return ( [[[UIDevice currentDevice] systemVersion] compare:@"9.0"] != NSOrderedAscending );
+}
+
++ (BOOL)isIOS10Later
+{
+    return ( [[[UIDevice currentDevice] systemVersion] compare:@"10.0"] != NSOrderedAscending );
 }
 
 + (BOOL)isIOS6Early
@@ -52,7 +57,12 @@
     return ![self isIOS9Later];
 }
 
-#pragma mark - DeviceSize
++ (BOOL)isIOS10Early
+{
+    return ![self isIOS10Later];
+}
+
+#pragma mark - Device Size
 + (BOOL)isIPhone35Inch
 {
     return ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO);
@@ -93,6 +103,7 @@
     
     free(machine);
     
+    //iphone
     if ([platform isEqualToString:@"iPhone1,1"]) return @"iPhone 2G (A1203)";
     if ([platform isEqualToString:@"iPhone1,2"]) return @"iPhone 3G (A1241/A1324)";
     if ([platform isEqualToString:@"iPhone2,1"]) return @"iPhone 3GS (A1303/A1325)";
@@ -110,6 +121,52 @@
     if ([platform isEqualToString:@"iPhone7,2"]) return @"iPhone 6 (A1549/A1586)";
     if ([platform isEqualToString:@"iPhone8,1"]) return @"iPhone 6s Plus";
     if ([platform isEqualToString:@"iPhone8,2"]) return @"iPhone 6s";
+    if ([platform isEqualToString:@"iPhone8,3"]) return @"iPhoneSE";
+    if ([platform isEqualToString:@"iPhone8,4"]) return @"iPhoneSE";
+    if ([platform isEqualToString:@"iPhone9,1"]) return @"iPhone7";
+    if ([platform isEqualToString:@"iPhone9,2"]) return @"iPhone7Plus";
+    
+    //iPod Touch
+    if ([platform isEqualToString:@"iPod1,1"])   return @"iPodTouch";
+    if ([platform isEqualToString:@"iPod2,1"])   return @"iPodTouch2G";
+    if ([platform isEqualToString:@"iPod3,1"])   return @"iPodTouch3G";
+    if ([platform isEqualToString:@"iPod4,1"])   return @"iPodTouch4G";
+    if ([platform isEqualToString:@"iPod5,1"])   return @"iPodTouch5G";
+    if ([platform isEqualToString:@"iPod7,1"])   return @"iPodTouch6G";
+    
+    //iPad
+    if ([platform isEqualToString:@"iPad1,1"])   return @"iPad";
+    if ([platform isEqualToString:@"iPad2,1"])   return @"iPad2";
+    if ([platform isEqualToString:@"iPad2,2"])   return @"iPad2";
+    if ([platform isEqualToString:@"iPad2,3"])   return @"iPad2";
+    if ([platform isEqualToString:@"iPad2,4"])   return @"iPad2";
+    if ([platform isEqualToString:@"iPad3,1"])   return @"iPad3";
+    if ([platform isEqualToString:@"iPad3,2"])   return @"iPad3";
+    if ([platform isEqualToString:@"iPad3,3"])   return @"iPad3";
+    if ([platform isEqualToString:@"iPad3,4"])   return @"iPad4";
+    if ([platform isEqualToString:@"iPad3,5"])   return @"iPad4";
+    if ([platform isEqualToString:@"iPad3,6"])   return @"iPad4";
+    
+    //iPad Air
+    if ([platform isEqualToString:@"iPad4,1"])   return @"iPadAir";
+    if ([platform isEqualToString:@"iPad4,2"])   return @"iPadAir";
+    if ([platform isEqualToString:@"iPad4,3"])   return @"iPadAir";
+    if ([platform isEqualToString:@"iPad5,3"])   return @"iPadAir2";
+    if ([platform isEqualToString:@"iPad5,4"])   return @"iPadAir2";
+    
+    //iPad mini
+    if ([platform isEqualToString:@"iPad2,5"])   return @"iPadmini1G";
+    if ([platform isEqualToString:@"iPad2,6"])   return @"iPadmini1G";
+    if ([platform isEqualToString:@"iPad2,7"])   return @"iPadmini1G";
+    if ([platform isEqualToString:@"iPad4,4"])   return @"iPadmini2";
+    if ([platform isEqualToString:@"iPad4,5"])   return @"iPadmini2";
+    if ([platform isEqualToString:@"iPad4,6"])   return @"iPadmini2";
+    if ([platform isEqualToString:@"iPad4,7"])   return @"iPadmini3";
+    if ([platform isEqualToString:@"iPad4,8"])   return @"iPadmini3";
+    if ([platform isEqualToString:@"iPad4,9"])   return @"iPadmini3";
+    if ([platform isEqualToString:@"iPad5,1"])   return @"iPadmini4";
+    if ([platform isEqualToString:@"iPad5,2"])   return @"iPadmini4";
+    
     return @"";
 }
 

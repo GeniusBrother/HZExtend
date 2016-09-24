@@ -14,11 +14,13 @@
 + (BOOL)isIOS7Later;
 + (BOOL)isIOS8Later;
 + (BOOL)isIOS9Later;
++ (BOOL)isIOS10Later;
 
 + (BOOL)isIOS6Early;    //不包括IOS6,下同
 + (BOOL)isIOS7Early;
 + (BOOL)isIOS8Early;
 + (BOOL)isIOS9Early;
++ (BOOL)isIOS10Early;
 
 /********尺寸********/
 + (BOOL)isIPhone35Inch;
