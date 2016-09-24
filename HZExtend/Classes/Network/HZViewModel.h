@@ -43,13 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)uploadTask:(HZSessionTask *)task progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;   //upload
 - (void)cancelTask:(HZSessionTask *)task;
 
-/**********简便分页模型**********/
-- (void)pageIncrease:(HZSessionTask *)task;   //kNetworkPage+1
-- (void)pageDecrease:(HZSessionTask *)task;   //kNetworkPage-1
-- (void)pageOrigin:(HZSessionTask *)task;     //kNetworkPage=1
-
-
 /**********子类重写回调**********/
+
 /**
  *  初始化ViewModel,可在这里初始化task
  */

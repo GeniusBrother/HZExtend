@@ -47,6 +47,7 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
 
 
 @end
+
 @interface HZSessionTask : NSObject
 
 + (instancetype)taskWithMethod:(NSString *)method
@@ -188,6 +189,21 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
  *  2.通知完用户后并准备重新运行
  */
 - (void)noReach;
+
+/**
+ *  将page+1,若无设置page参数，则什么都不做
+ */
+- (void)addPage;
+
+/**
+ *  将page-1,若无设置page参数，则什么都不做
+ */
+- (void)minusPage;
+
+/**
+ *  将page重置为1,若无设置page参数，则什么都不做
+ */
+- (void)revertPage;
 
 @end
 

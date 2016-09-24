@@ -36,31 +36,6 @@
 - (void)loadDataWithTask:(HZSessionTask *)task type:(NSString *)type {}
 - (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type {}
 
-#pragma mark - Page
-- (void)pageIncrease:(HZSessionTask *)task
-{
-    NSNumber *oldNumber = [task.params objectForKey:kNetworkPage];
-    
-    if (oldNumber) {
-        [task.params setObject:@(oldNumber.integerValue+1) forKey:kNetworkPage];
-    }
-    
-}
-
-- (void)pageDecrease:(HZSessionTask *)task
-{
-    NSNumber *oldNumber = [task.params objectForKey:kNetworkPage];
-    
-    if (oldNumber.integerValue >=2) {
-        [task.params setObject:@(oldNumber.integerValue-1) forKey:kNetworkPage];
-    }
-}
-
-- (void)pageOrigin:(HZSessionTask *)task
-{
-    [task.params setObject:@1 forKey:kNetworkPage];
-}
-
 #pragma mark - Network
 - (void)sendTask:(HZSessionTask *)sessionTask
 {    

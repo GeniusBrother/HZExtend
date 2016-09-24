@@ -186,8 +186,28 @@
 - (NSUInteger)pageSize
 {
     NSNumber *pageSize = [self.params objectForKey:kNetworkPageSize];
-    return [pageSize integerValue];
+    
+    return pageSize?[pageSize integerValue]:20; //默认为20
 }
+
+- (void)addPage
+{
+    NSNumber *oldNumber = [self.params objectForKey:kNetworkPage];
+    if (oldNumber) self.page = oldNumber.integerValue + 1;
+}
+
+- (void)minusPage
+{
+    NSNumber *oldNumber = [self.params objectForKey:kNetworkPage];
+    if (oldNumber.integerValue >=2) self.page = oldNumber.integerValue - 1;
+}
+
+- (void)revertPage
+{
+    NSNumber *oldNumber = [self.params objectForKey:kNetworkPage];
+    if (oldNumber) self.page = 1;
+}
+
 
 #pragma mark - State
 - (BOOL)runable
