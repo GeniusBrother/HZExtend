@@ -20,4 +20,21 @@
     [self removeObjectAtIndex:index];
 }
 
+- (void)appendPageArray:(NSArray *)pageArray pageNumber:(NSInteger)pageNumber pageSize:(NSInteger)pageSize
+{
+    if (pageArray.isNoEmpty){
+        if (pageNumber == 1) {  //1.第一页时对数组进行初始化
+            [self setArray:pageArray];
+        }else if (pageNumber >1) {  //2.大于第一页时如果有缓存数据去掉缓存数据
+            NSInteger preCount = (pageNumber-1) * pageSize;
+            if (self.count > preCount) {
+                [self removeObjectsInRange:NSMakeRange(preCount-1, pageArray.count-preCount)];
+            }
+        }
+
+        //3.追加数据
+        [self addObjectsFromArray:pageArray];
+    }
+}
+
 @end

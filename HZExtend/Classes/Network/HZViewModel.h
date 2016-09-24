@@ -48,13 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pageDecrease:(HZSessionTask *)task;   //kNetworkPage-1
 - (void)pageOrigin:(HZSessionTask *)task;     //kNetworkPage=1
 
-/**
- *  若为第一页初始化pageArray,追加数据。其它页删除掉缓存数据，追加数据。
- *  pageArray:tableView数据源的名字
- *  appendArray:分页的数据
- *  task:请求的task
- */
-- (void)pageArray:(NSString *)pageArray appendArray:(NSArray<id> *)appendArray task:(HZSessionTask *)task;
 
 /**********子类重写回调**********/
 /**

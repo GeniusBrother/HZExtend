@@ -61,25 +61,6 @@
     [task.params setObject:@1 forKey:kNetworkPage];
 }
 
-- (void)pageArray:(NSString *)pageArrayName appendArray:(NSArray *)appendArray task:(HZSessionTask *)task;
-{
-    if (appendArray.isNoEmpty){
-        NSInteger pageNumber = task.page;
-        if (pageNumber == 1) {  //1.第一页时对数组进行初始化
-            [self setValue:[NSMutableArray arrayWithCapacity:appendArray.count] forKey:pageArrayName];
-        }else if (pageNumber >1) {  //2.大于第一页时如果有缓存数据去掉缓存数据
-            NSMutableArray *pageArray = [self valueForKey:pageArrayName];
-            NSInteger preCount = (pageNumber-1)*task.pageSize;
-            if (pageArray.count > preCount) {
-                [pageArray removeObjectsInRange:NSMakeRange(preCount-1, pageArray.count-preCount)];
-            }
-        }
-        
-        //3.追加数据
-        [[self valueForKey:pageArrayName] addObjectsFromArray:appendArray];
-    }
-}
-
 #pragma mark - Network
 - (void)sendTask:(HZSessionTask *)sessionTask
 {    
