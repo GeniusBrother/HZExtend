@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "HZNetworkConfig.h"
+#import "HZNetworkConst.h"
+
 @class HZSessionTask;
 
 /****************     具体的请求任务,配置参数,输出数据     ****************/
@@ -32,7 +34,7 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
 /**
  *  请求完成后调用，state:SessionTaskStateSuccess 或 SessionTaskStateFail
  */
-- (void)taskConnected:(HZSessionTask *)task;
+- (void)taskComplted:(HZSessionTask *)task;
 
 /**
  *  请求过程中调用 state:SessionTaskStateRunning|SessionTaskStateCacheSuccess 或 SessionTaskStateRunning|SessionTaskStateCacheFail 或 SessionTaskStateRunning|SessionTaskStateCacheNoTry 或 SessionTaskStateCancel

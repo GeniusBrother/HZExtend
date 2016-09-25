@@ -267,8 +267,8 @@
             }
         }else {
         
-            if ([self.delegate respondsToSelector:@selector(taskConnected:)]) {
-                [self.delegate taskConnected:self];
+            if ([self.delegate respondsToSelector:@selector(taskComplted:)]) {
+                [self.delegate taskComplted:self];
             }
         }
     }else {

@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "HZSingleton.h"
-#import "HZNetworkConfig.h"
-#import "HZSessionTask.h"
 #import "HZUploadSessionTask.h"
 
 @class HZNetwork;

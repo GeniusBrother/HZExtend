@@ -16,19 +16,25 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol HZViewModelDelegate<NSObject>
 @optional
 /**
- *  最终的请求结果到来调用(成功或失败)
+ *  task请求完成时调用,此时task的状态可能成功或失败
+ *	@param task  请求任务
+ *  @param type  请求任务的标识
  */
-- (void)viewModelConnetedNotifyForTask:(HZSessionTask *)task type:(nullable NSString *)type;
+- (void)viewModel:(HZViewModel *)viewModel taskDidCompleted:(HZSessionTask *)task type:(nullable NSString *)type;
 
 /**
- *  请求过程中调用(有缓存,无缓存,不尝试导入缓存,取消)
+ *  task进入请求中调用,此时task的状态可能为请求中取得缓存成功,请求中取得缓存失败,请求中不尝试导入缓存,请求中取消请求
+ *	@param task  请求任务
+ *  @param type  请求任务的标识
  */
-- (void)viewModelSendingNotifyForTask:(HZSessionTask *)task type:(nullable NSString *)type;
+- (void)viewModel:(HZViewModel *)viewModel taskSending:(HZSessionTask *)task type:(nullable NSString *)type;
 
 /**
- *  无网下调用(有缓存，无缓存，不尝试导入缓存)
+ *  task请求无法连接时调用此时task的状态可能为无法连接取得缓存成功,无法连接取得缓存失败,无法连接不尝试导入缓存
+ *	@param task  请求任务
+ *  @param type  请求任务的标识
  */
-- (void)viewModelLostedNotifyForTask:(HZSessionTask *)task type:(nullable NSString *)type;
+- (void)viewModel:(HZViewModel *)viewModel taskDidLose:(HZSessionTask *)task type:(nullable NSString *)type;
 
 @end
 
@@ -56,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param type  请求任务的标识
  *
  */
-- (void)loadDataWithTask:(HZSessionTask *)task type:(nullable NSString *)type;
+- (void)taskDidFetchData:(HZSessionTask *)task type:(NSString *)type;
 
 /**
  *	请求失败，无法连接取得缓存失败时调用,在这里做一些失败处理，自定义时不需要调用父类的该方法
@@ -65,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param type  请求任务的标识
  *
  */
-- (void)requestFailWithTask:(HZSessionTask *)task type:(nullable NSString *)type;
+- (void)taskDidFail:(HZSessionTask *)task type:(NSString *)type;
 
 @end
 

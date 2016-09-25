@@ -65,7 +65,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
 {
 [super loadViewModel];
 
-_recTask = [HZSessionTask taskWithMethod:@"GET" path:@"/party/pooks-rank" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@1,kNetworkPage,MC_PAGE_SIZE,kNetworkPageSize, nil] delegate:self requestType:@"rank"];
+_recTask = [HZSessionTask taskWithMethod:@"GET" path:@"/party/pooks-rank" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@1,kNetworkPage,MC_PAGE_SIZE,kNetworkPageSize, nil] delegate:self requestType:@"rank"];  //
 self.recTask.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取
 self.recTask.pathkeys = @[kNetworkPage,kNetworkPageSize];   //设置后支持支持http://baseURL/path/value1/value2类型请求
 
@@ -73,15 +73,15 @@ _recArray = [NSMutableArray arrayWithCapacity:UD_DEFAULT_PAGE_SIZE];
 }
 
 //请求任务请求成功，请求中取得缓存成功，无法连接取得缓存成功时调用，在这里设置数据模型，自定义时不需要调用父类的该方法
-- (void)loadDataWithTask:(HZSessionTask *)task type:(NSString *)type
+- (void)taskDidFetchData:(HZSessionTask *)task type:(NSString *)type
 {
 if([type isEqualToString:@"rank"]) {
 [self.recArray appendPageArray:[task.responseObject objectForKeyPath:@"data.list"] pageNumber:task.page pageSize:task.pageSize];//追加分页数据  
 }
 }
-
+taskDidFail
 //请求失败，无法连接取得缓存失败时调用,在这里做一些失败处理，自定义时不需要调用父类的该方法
-- (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type
+- (void)taskDidFail:(HZSessionTask *)task type:(NSString *)type
 {
 [self pageDecrease:task]; //将当前页减一
 }

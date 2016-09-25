@@ -23,6 +23,7 @@
     viewModel.delegate = delegate;
     return viewModel;
 }
+
 - (instancetype)init
 {
     self = [super init];
@@ -33,8 +34,8 @@
 }
 
 - (void)loadViewModel {}
-- (void)loadDataWithTask:(HZSessionTask *)task type:(NSString *)type {}
-- (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type {}
+- (void)taskDidFetchData:(HZSessionTask *)task type:(NSString *)type {}
+- (void)taskDidFail:(HZSessionTask *)task type:(NSString *)type {}
 
 #pragma mark - Network
 - (void)sendTask:(HZSessionTask *)sessionTask
@@ -56,38 +57,38 @@
 /**
  *  主要实现了回调
  */
-- (void)taskConnected:(HZSessionTask *)task
+- (void)taskComplted:(HZSessionTask *)task
 {
     if (task.succeed) {
-        [self loadDataWithTask:task type:task.requestType];
+        [self taskDidFetchData:task type:task.requestType];
     }else {
-        [self requestFailWithTask:task type:task.requestType];
+        [self taskDidFail:task type:task.requestType];
     }
     
     if ([self.delegate respondsToSelector:@selector(viewModelConnetedNotifyForTask:type:)]) {
-        [self.delegate viewModelConnetedNotifyForTask:task type:task.requestType];
+        [self.delegate viewModel:self taskDidCompleted:task type:task.requestType];
     }
 }
 
 - (void)taskSending:(HZSessionTask *)task
 {
-    if (task.cacheSuccess) [self loadDataWithTask:task type:task.requestType];
+    if (task.cacheSuccess) [self taskDidFetchData:task type:task.requestType];
     
     if ([self.delegate respondsToSelector:@selector(viewModelSendingNotifyForTask:type:)]) {
-        [self.delegate viewModelSendingNotifyForTask:task type:task.requestType];
+        [self.delegate viewModel:self taskSending:task type:task.requestType];
     }
 }
 
 - (void)taskLosted:(HZSessionTask *)task
 {
     if (task.cacheSuccess) {
-        [self loadDataWithTask:task type:task.requestType];
+        [self taskDidFetchData:task type:task.requestType];
     }else if(task.cacheFail) {
-        [self requestFailWithTask:task type:task.requestType];
+        [self taskDidFail:task type:task.requestType];
     }
     
     if ([self.delegate respondsToSelector:@selector(viewModelLostedNotifyForTask:type:)]) {
-        [self.delegate viewModelLostedNotifyForTask:task type:task.requestType];
+        [self.delegate viewModel:self taskDidLose:task type:task.requestType];
     }
 }
 

@@ -9,9 +9,7 @@
 #import "HZNetwork.h"
 #import "HZMacro.h"
 #import "NSDictionary+HZExtend.h"
-#import "HZUploadSessionTask.h"
 #import "NSString+HZExtend.h"
-#import "HZNetworkConst.h"
 
 #import <AFNetworking/AFNetworking.h>
 #import <TMCache/TMCache.h>

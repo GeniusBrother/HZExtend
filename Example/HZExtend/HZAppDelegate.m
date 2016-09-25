@@ -43,7 +43,7 @@
      */
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
-    [[HZNetworkConfig sharedConfig] setupBaseURL:@"https://jz.wacai.com" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
+    [[HZNetworkConfig sharedConfig] setupBaseURL:@"http://v4.api.maichong.me" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
     
     [HZURLManageConfig sharedConfig].config = @{
                                                 @"hz://network":@"ViewController",
