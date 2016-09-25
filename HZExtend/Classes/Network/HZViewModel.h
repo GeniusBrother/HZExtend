@@ -38,26 +38,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)viewModelWithDelegate:(id<HZViewModelDelegate>)delegate;
 
-/**********发送请求**********/
+#pragma mark - 操作请求
 - (void)sendTask:(HZSessionTask *)task;    //GET或POST
 - (void)uploadTask:(HZSessionTask *)task progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;   //upload
 - (void)cancelTask:(HZSessionTask *)task;
 
-/**********子类重写回调**********/
-
+#pragma mark - 子类重写回调
 /**
- *  初始化ViewModel,可在这里初始化task
+ *  初始化ViewModel时调用,可以在这里对数据进行初始化
  */
 - (void)loadViewModel;
 
 /**
- *  加载数据模型，数据返回时会调用(请求数据，缓存数据)
- *  type:即task的任务标识，requestType
+ *	请求任务请求成功，请求中取得缓存成功，无法连接取得缓存成功时调用，在这里设置数据模型，自定义时不需要调用父类的该方法
+ *
+ *	@param task  对应的请求任务
+ *  @param type  请求任务的标识
+ *
  */
 - (void)loadDataWithTask:(HZSessionTask *)task type:(nullable NSString *)type;
 
 /**
- *  做一些失败处理,如页数减一,请求失败或者无网无缓存时调用
+ *	请求失败，无法连接取得缓存失败时调用,在这里做一些失败处理，自定义时不需要调用父类的该方法
+ *
+ *	@param task  对应的请求任务
+ *  @param type  请求任务的标识
+ *
  */
 - (void)requestFailWithTask:(HZSessionTask *)task type:(nullable NSString *)type;
 

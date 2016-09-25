@@ -15,14 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  @{ @“person”:@{@"name":@"GeniusBrotherHZExtend"}}
- *  keyPath = @"person/name" 返回@“GeniusBrotherHZExtend”;
+ *  keyPath = @"person.name" 返回@“GeniusBrotherHZExtend”;
  */
-- (nullable id)objectAtKeyPath:(NSString *)keyPath;
+- (nullable id)objectForKeyPath:(NSString *)keyPath;
 
 /**
  *  不存在,则返回other
  */
-- (nullable id)objectAtKeyPath:(NSString *)path otherwise:(NSObject *)other;
+- (nullable id)objectForKeyPath:(NSString *)path otherwise:(NSObject *)other;
 
 /**
  *	查询字符串

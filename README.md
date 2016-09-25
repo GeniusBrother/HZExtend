@@ -61,25 +61,26 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
 @end
 
 @implementation FrameworkViewModel
-- (void)loadViewModel //子类重写
+- (void)loadViewModel //初始化ViewModel时调用,可以在这里对数据进行初始化
 {
 [super loadViewModel];
 
 _recTask = [HZSessionTask taskWithMethod:@"GET" path:@"/party/pooks-rank" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@1,kNetworkPage,MC_PAGE_SIZE,kNetworkPageSize, nil] delegate:self requestType:@"rank"];
 self.recTask.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取
 self.recTask.pathkeys = @[kNetworkPage,kNetworkPageSize];   //设置后支持支持http://baseURL/path/value1/value2类型请求
+
+_recArray = [NSMutableArray arrayWithCapacity:UD_DEFAULT_PAGE_SIZE];
 }
 
-//加载数据的回调
+//请求任务请求成功，请求中取得缓存成功，无法连接取得缓存成功时调用，在这里设置数据模型，自定义时不需要调用父类的该方法
 - (void)loadDataWithTask:(HZSessionTask *)task type:(NSString *)type
 {
 if([type isEqualToString:@"rank"]) {
-_pageData = [PageModel modelWithDic:task.responseObject]; //设置当前页的数据模型
-[self pageArray:@"recArray" appendArray:self.pageData.list task:task];  //追加分页数据
+[self.recArray appendPageArray:[task.responseObject objectForKeyPath:@"data.list"] pageNumber:task.page pageSize:task.pageSize];//追加分页数据  
 }
 }
 
-//请求失败的回调,请求失败，无网失败
+//请求失败，无法连接取得缓存失败时调用,在这里做一些失败处理，自定义时不需要调用父类的该方法
 - (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type
 {
 [self pageDecrease:task]; //将当前页减一
@@ -350,14 +351,14 @@ UIColor *alphaBlackColor = RGBA(0,0,0,0.5);
 ```objective-c
 /**
 *  @{ @“person”:@{@"name":@"GeniusBrotherHZExtend"}}
-*  keyPath = @"person/name" 返回@“GeniusBrotherHZExtend”;
+*  keyPath = @"person.name" 返回@“GeniusBrotherHZExtend”;
 */
-- (id)objectAtKeyPath:(NSString *)keyPath;
+- (id)objectForKeyPath:(NSString *)keyPath;
 
 /**
 *  不存在,则返回other
 */
-- (id)objectAtKeyPath:(NSString *)path  otherwise:(NSObject *)other;
+- (id)objectForKeyPath:(NSString *)path  otherwise:(NSObject *)other;
 ```
 
 ####NSMutableArray+HZExtend.h
@@ -366,6 +367,16 @@ UIColor *alphaBlackColor = RGBA(0,0,0,0.5);
 *  若下标越界时,则什么也不做
 */
 - (void)safeRemoveObjectAtIndex:(NSInteger)index;
+
+/**
+*	追加分页数据,若currentPageNumber=1,则receiver的元素跟pageArray元素相同,否则都追加到后面。不会追加重复的缓存数据
+*
+*	@param pageArray  需要追加的分页数据
+*  @param currentPageNumber 当前页数
+*  @param pageSize 每页数据的数量
+*/
+- (void)appendPageArray:(NSArray *)pageArray pageNumber:(NSInteger)currentPageNumber pageSize:(NSInteger)pageSize;
+
 ```
 
 ####NSString+HZExtend.h

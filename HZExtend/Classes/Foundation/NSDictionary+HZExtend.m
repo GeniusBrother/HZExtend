@@ -10,7 +10,7 @@
 
 @implementation NSDictionary (HZExtend)
 
-- (id)objectAtKeyPath:(NSString *)keyPath
+- (id)objectForKeyPath:(NSString *)keyPath
 {
     if (!keyPath.isNoEmpty) return nil;
     
@@ -18,9 +18,9 @@
     return result;
 }
 
-- (id)objectAtKeyPath:(NSString *)keyPath otherwise:(NSObject *)other
+- (id)objectForKeyPath:(NSString *)keyPath otherwise:(NSObject *)other
 {
-    NSObject *obj = [self objectAtKeyPath:keyPath];
+    NSObject *obj = [self objectForKeyPath:keyPath];
     
     if ([obj isKindOfClass:[NSNull class]] || obj == nil) {
         return other;

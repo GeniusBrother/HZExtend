@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
 #import <Foundation/Foundation.h>
-#import "MJExtension.h"
+#import <MJExtension/MJExtension.h>
 
 /****************     与数据库中的元组映射     ****************/
 

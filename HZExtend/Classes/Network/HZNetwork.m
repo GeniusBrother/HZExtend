@@ -115,7 +115,7 @@ singleton_m(Network)
         
         [self sucess:sessionTask response:responseObject];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+        HZLog(@"%@",error);
         [self fail:sessionTask error:error];
     }];
     [dataTask resume];
@@ -207,7 +207,6 @@ singleton_m(Network)
  */
 - (void)fail:(HZSessionTask *)sessionTask error:(NSError *)error
 {
-    HZLog(@"%@",error);
     [self.dataTasks removeObjectForKey:sessionTask.cacheKey];
     [sessionTask responseSessionWithResponseObject:nil error:error];
 }

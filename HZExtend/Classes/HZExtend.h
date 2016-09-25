@@ -13,7 +13,6 @@
 #import "NSMutableArray+HZExtend.h"
 #import "NSURL+HZExtend.h"
 #import "HZSystem.h"
-#import "MJExtension.h"
 #import "HZViewModel.h"
 #import "HZModel.h"
 #import "UIColor+HZExtend.h"
@@ -22,4 +21,7 @@
 #import "UIViewController+HZHUD.h"
 #import "HZURLManager.h"
 #import "HZMacro.h"
+
+#import <MJExtension/MJExtension.h>
+
 

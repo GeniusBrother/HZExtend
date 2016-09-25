@@ -118,6 +118,7 @@
             _absoluteURL = @"";
         }else {
             NSString *baseURL = self.baseURL?:[HZNetworkConfig sharedConfig].baseURL;
+            NSAssert(baseURL, @"请设置请求任务的baseURL,推荐使用HZNetworkConfig来设置");
             _absoluteURL = [baseURL stringByAppendingString:self.path];
             if (self.params.isNoEmpty) {
                 if([self.method isEqualToString:@"GET"] && self.pathkeys.isNoEmpty) {
@@ -143,7 +144,7 @@
     
     NSString * msgKeyPath = [HZNetworkConfig sharedConfig].msgKeyPath;
     if (msgKeyPath.isNoEmpty) {
-        _message = [responseObject objectAtKeyPath:msgKeyPath]?:@"";
+        _message = [responseObject objectForKeyPath:msgKeyPath]?:@"";
     }else {
         _message = @"";
     }
@@ -290,16 +291,16 @@
                 if (responseObject.isNoEmpty) {
                     self.responseObject = responseObject;
                     self.state = self.state | HZSessionTaskStateCacheSuccess;
-                    self.error = [HZNetworkConfig sharedConfig].reachable?nil:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
+                    self.error = [HZNetworkConfig sharedConfig].reachable?nil:[NSError errorWithDomain:@"com.HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
                 }else {
                     self.state = self.state | HZSessionTaskStateCacheFail;
-                    self.error = [HZNetworkConfig sharedConfig].reachable?nil:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
+                    self.error = [HZNetworkConfig sharedConfig].reachable?nil:[NSError errorWithDomain:@"com.HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
                 }
                 _hasImportCache = YES;
             }
         }else {
             self.state = self.state | HZSessionTaskStateCacheNoTry;
-            self.error = [HZNetworkConfig sharedConfig].reachable?[NSError errorWithDomain:@"HZNetwork" code:0 userInfo:@{@"NSLocalizedDescription":@"error"}]:[NSError errorWithDomain:@"HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
+            self.error = [HZNetworkConfig sharedConfig].reachable?[NSError errorWithDomain:@"com.HZNetwork" code:0 userInfo:@{@"NSLocalizedDescription":@"error"}]:[NSError errorWithDomain:@"com.HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
         }
     }
 
@@ -317,12 +318,18 @@
 - (void)responseSessionWithResponseObject:(NSDictionary *)responseObject error:(NSError *)error
 {
     /**************success**************/
-    if (responseObject.isNoEmpty) {
+    if (!error) {
         /**************设置输出**************/
         self.responseObject = responseObject;
         BOOL codeRight = [self checkCode];
-        self.state = codeRight?HZSessionTaskStateSuccess:HZSessionTaskStateFail;
-        self.error = codeRight?nil:[NSError errorWithDomain:@"HZNetwork" code:3 userInfo:@{@"NSLocalizedDescription":self.message}];
+        if (codeRight) {
+            self.state = HZSessionTaskStateSuccess;
+            self.error = nil;
+        }else {
+            self.state = HZSessionTaskStateFail;
+            self.error = [NSError errorWithDomain:@"com.HZNetwork" code:3 userInfo:@{@"NSLocalizedDescription":self.message}];;
+
+        }
         
         /**************通知**************/
         [self notifyDataState];
@@ -365,7 +372,7 @@
     if (!codeKeyPath.isNoEmpty) return true;
     
     if (self.shouldCheckCode) {
-        self.codeKey = [[self.responseObject objectAtKeyPath:codeKeyPath] integerValue];
+        self.codeKey = [[self.responseObject objectForKeyPath:codeKeyPath] integerValue];
         if(self.codeKey == [HZNetworkConfig sharedConfig].rightCode) {
             return true;
         }else {

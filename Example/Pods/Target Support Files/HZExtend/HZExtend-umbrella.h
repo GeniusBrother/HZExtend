@@ -13,6 +13,7 @@
 #import "HZModel.h"
 #import "HZNetwork.h"
 #import "HZNetworkConfig.h"
+#import "HZNetworkConst.h"
 #import "HZSessionTask.h"
 #import "HZUploadSessionTask.h"
 #import "HZViewModel.h"
