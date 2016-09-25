@@ -65,7 +65,7 @@
         [self taskDidFail:task type:task.requestType];
     }
     
-    if ([self.delegate respondsToSelector:@selector(viewModelConnetedNotifyForTask:type:)]) {
+    if ([self.delegate respondsToSelector:@selector(viewModel:taskDidCompleted:type:)]) {
         [self.delegate viewModel:self taskDidCompleted:task type:task.requestType];
     }
 }
@@ -74,7 +74,7 @@
 {
     if (task.cacheSuccess) [self taskDidFetchData:task type:task.requestType];
     
-    if ([self.delegate respondsToSelector:@selector(viewModelSendingNotifyForTask:type:)]) {
+    if ([self.delegate respondsToSelector:@selector(viewModel:taskSending:type:)]) {
         [self.delegate viewModel:self taskSending:task type:task.requestType];
     }
 }
@@ -87,7 +87,7 @@
         [self taskDidFail:task type:task.requestType];
     }
     
-    if ([self.delegate respondsToSelector:@selector(viewModelLostedNotifyForTask:type:)]) {
+    if ([self.delegate respondsToSelector:@selector(viewModel:taskDidLose:type:)]) {
         [self.delegate viewModel:self taskDidLose:task type:task.requestType];
     }
 }

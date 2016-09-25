@@ -78,7 +78,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   }
 
   //请求任务请求成功，请求中取得缓存成功，无法连接取得缓存成功时调用，在这里设置数据模型，自定义时不需要调用父类的该方法
-  - (void)loadDataWithTask:(HZSessionTask *)task type:(NSString *)type
+  - (void)taskDidFetchData:(HZSessionTask *)task type:(NSString *)type
   {
       if([type isEqualToString:@"rank"]) {
       [self.recArray appendPageArray:[task.responseObject objectForKeyPath:@"data.list"] pageNumber:task.page pageSize:task.pageSize];//追加分页数据  
@@ -86,7 +86,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   }
 
   //请求失败，无法连接取得缓存失败时调用,在这里做一些失败处理，自定义时不需要调用父类的该方法
-  - (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type
+  - (void)taskDidFail:(HZSessionTask *)task type:(NSString *)type
   {
       [self pageDecrease:task]; //将当前页减一
   }
@@ -101,9 +101,9 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
       [self.viewModel sendTask:self.viewModel]; //发送请求
   }
 
-  //网络状态回调
-  //最终的请求结果到来调用(失败或成功)
-  - (void)viewModelConnetedNotifyForTask:(HZSessionTask *)task type:(NSString *)type
+  //viewModel的回调
+  //task请求完成时调用,此时task的状态可能成功或失败
+  - (void)viewModel:(HZViewModel *)viewModel taskDidCompleted:(HZSessionTask *)task type:(nullable NSString *)type
   {
       if (task.succeed) {
         [self.tableView reloadData];
@@ -112,14 +112,14 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
       }
   }
 
-  //本地缓存数据到来调用(多种状态)(第一次再页面显示之前就会回调)
-  - (void)viewModelSendingNotifyForTask:(HZSessionTask *)task type:(NSString *)type
+  //task进入请求中调用,此时task的状态可能为请求中取得缓存成功,请求中取得缓存失败,请求中不尝试导入缓存,请求中取消请求
+  - (void)viewModel:(HZViewModel *)viewModel taskSending:(HZSessionTask *)task type:(nullable NSString *)type
   {
       if (task.cacheSuccess) [self.tableView reloadData];
   }
 
-  //无网情况下缓存数据到来调用(多种状态)(第一次再页面显示之前就会回调)
-  - (void)viewModelLostedNotifyForTask:(HZSessionTask *)task type:(NSString *)type
+  //task请求无法连接时调用此时task的状态可能为无法连接取得缓存成功,无法连接取得缓存失败,无法连接不尝试导入缓存
+  - (void)viewModel:(HZViewModel *)viewModel taskDidLose:(HZSessionTask *)task type:(nullable NSString *)type
   {
       if (task.cacheSuccess) {
         [self.tableView reloadData];
