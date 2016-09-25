@@ -11,7 +11,10 @@
 #import "HZNetworkConfig.h"
 #import "NSString+HZExtend.h"
 #import "NSDictionary+HZExtend.h"
-#import "TMCache.h"
+#import "HZNetworkConst.h"
+
+#import <TMCache/TMCache.h>
+
 @interface HZSessionTask ()
 #pragma mark - Input
 @property(nonatomic, strong) NSMutableDictionary *httpRequestFields;
@@ -328,7 +331,7 @@
         }else {
             self.state = HZSessionTaskStateFail;
             self.error = [NSError errorWithDomain:@"com.HZNetwork" code:3 userInfo:@{@"NSLocalizedDescription":self.message}];;
-
+            HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
         }
         
         /**************通知**************/

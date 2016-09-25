@@ -10,9 +10,12 @@
 #import "HZMacro.h"
 #import "NSDictionary+HZExtend.h"
 #import "HZUploadSessionTask.h"
-#import "AFNetworking.h"
-#import "TMCache.h"
 #import "NSString+HZExtend.h"
+#import "HZNetworkConst.h"
+
+#import <AFNetworking/AFNetworking.h>
+#import <TMCache/TMCache.h>
+
 @interface HZNetwork ()
 
 @property(nonatomic, strong) NSMutableDictionary<NSString *, id> *defaultFields;   //默认添加的请求头，以便还原
@@ -77,10 +80,8 @@ singleton_m(Network)
     }];
 }
 
-#pragma mark- Action
-/**
- *  发送GET/POST任务
- */
+#pragma mark - Action
+
 - (void)send:(HZSessionTask *)sessionTask
 {
     NSString *path = sessionTask.path;
@@ -102,9 +103,6 @@ singleton_m(Network)
     }
 }
 
-/**
- *  GET
- */
 - (void)GET:(HZSessionTask *)sessionTask
 {
     /**************启动任务**************/
@@ -112,10 +110,10 @@ singleton_m(Network)
     id params = pathSchema?nil:sessionTask.params;
     NSString *urlstring = pathSchema?sessionTask.absoluteURL:sessionTask.absoluteURL.allPath;
     NSURLSessionDataTask *dataTask = [self.sessionManager GET:urlstring parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
+
         [self sucess:sessionTask response:responseObject];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        HZLog(@"%@",error);
+        
         [self fail:sessionTask error:error];
     }];
     [dataTask resume];
@@ -123,9 +121,6 @@ singleton_m(Network)
     [sessionTask startSession];
 }
 
-/**
- *  POST
- */
 - (void)POST:(HZSessionTask *)sessionTask
 {
     /**************启动任务**************/
@@ -144,9 +139,6 @@ singleton_m(Network)
     [sessionTask startSession];
 }
 
-/**
- *  upload
- */
 - (void)upload:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock
 {
 //    if (sessionTask.fileName.isEmpty || sessionTask.formName.isEmpty) return; AFN已经做了
@@ -207,6 +199,8 @@ singleton_m(Network)
  */
 - (void)fail:(HZSessionTask *)sessionTask error:(NSError *)error
 {
+    HZLog(HZ_REQUEST_LOG_FORMAT,sessionTask.absoluteURL,error.localizedDescription);
+    
     [self.dataTasks removeObjectForKey:sessionTask.cacheKey];
     [sessionTask responseSessionWithResponseObject:nil error:error];
 }
