@@ -10,7 +10,7 @@
 
 
 #import "TestViewController.h"
-#import "HZExtend.h"
+#import <HZExtend/HZExtend.h>
 #import "SubjectItem.h"
 static NSString *str = @"ENsjdhakjdhsadsdkj";
 static CGFloat count = 0;

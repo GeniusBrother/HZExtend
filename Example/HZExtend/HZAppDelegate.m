@@ -54,14 +54,14 @@
     self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
-    NSArray *array = @[];
-    NSLog(@"%@",array.reversedArray);
-    
-    NSLog(@"%@",array.jsonString);
-
+    [self test];
     
     return YES;
+}
+
+- (void)test
+{
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

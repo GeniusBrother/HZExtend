@@ -17,6 +17,7 @@
     _task = [HZSessionTask taskWithMethod:@"GET" path:@"/api/book/totalSpent/list" params:nil delegate:self requestType:@"subject"];
     self.task.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取
     self.task.pathkeys = @[kNetworkPage,kNetworkPageSize];//设置后支持支持http://baseURL/path/value1/value2类型请求
+    _subjectArray = [NSMutableArray arrayWithCapacity:20];
 }
 
 //加载数据的回调
@@ -24,14 +25,14 @@
 {
     if([type isEqualToString:@"subject"]) {
         _subjectList = [SubjectList modelWithDic:[task.responseObject objectForKey:@"data"]];
-        [self pageArray:@"subjectArray" appendArray:self.subjectList.list task:task];  //追加分页数据
+        [self.subjectArray appendPageArray:self.subjectList.list pageNumber:task.page pageSize:task.pageSize];
     }
 }
 
 //请求失败的回调,请求失败，无网失败<br/>
 - (void)requestFailWithTask:(HZSessionTask *)task type:(NSString *)type
 {
-    [self pageDecrease:task]; //将当前页减一
+    [task minusPage];//将当前页减一
 }
 
 - (void)saveSubject

@@ -101,7 +101,7 @@
 - (void)sendTask:(id)sender
 {
     if (self.viewModel.task.runable) {
-        [self.viewModel pageIncrease:self.viewModel.task];
+        [self.viewModel.task addPage];
         [self.viewModel sendTask:self.viewModel.task];
     }
     

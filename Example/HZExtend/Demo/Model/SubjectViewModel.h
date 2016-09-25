@@ -6,7 +6,7 @@
 //  Copyright © 2016年 xzh. All rights reserved.
 //
 
-#import "HZViewModel.h"
+#import <HZExtend/HZExtend.h>
 #import "SubjectList.h"
 @interface SubjectViewModel : HZViewModel
 @property(nonatomic, strong) HZSessionTask *task;
