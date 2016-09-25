@@ -88,7 +88,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   //请求失败，无法连接取得缓存失败时调用,在这里做一些失败处理，自定义时不需要调用父类的该方法
   - (void)taskDidFail:(HZSessionTask *)task type:(NSString *)type
   {
-      [self pageDecrease:task]; //将当前页减一
+      [task minusPage];//将当前页减一
   }
   @end
 

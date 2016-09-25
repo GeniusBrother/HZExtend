@@ -72,10 +72,11 @@
  */
 - (void)viewModel:(HZViewModel *)viewModel taskDidCompleted:(HZSessionTask *)task type:(nullable NSString *)type
 {
+    HZNETWORK_CONVERT_VIEWMODEL(SubjectViewModel);
     if (task.succeed) {
         [self showSuccessWithText:@"请求成功" image:@"success"];
-        self.pageLabel.text = [NSString stringWithFormat:@"当前分页数为:%ld",self.viewModel.subjectList.pagination.page.integerValue];
-        
+        self.pageLabel.text = [NSString stringWithFormat:@"当前分页数为:%ld",selfViewModel.subjectList.pagination.page.integerValue];
+
         //数据处理均在viewModel处理
         [self.viewModel saveSubject];
     }else {

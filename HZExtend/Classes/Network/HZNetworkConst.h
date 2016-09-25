@@ -26,6 +26,6 @@
     @"\n"
 
 //使用在Ctrl里viewModel的回调方法里，将HZViewModel装换成自身的viewModel类型,
-#define CONVERT_VIEWMODEL(ClassForToViewModel) ClassForToViewModel *selfViewModel = (HZViewModel *)viewModel
+#define HZNETWORK_CONVERT_VIEWMODEL(ClassForToViewModel) ClassForToViewModel *selfViewModel = (ClassForToViewModel *)viewModel
 
 #endif /* HZNetworkConst_h */
