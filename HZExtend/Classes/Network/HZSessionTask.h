@@ -56,14 +56,14 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
                           path:(NSString *)path
                         params:(nullable NSMutableDictionary<NSString *, id> *)params
                       delegate:(id<HZSessionTaskDelegate>)delegate
-                   requestType:(nullable NSString *)type;
+                   taskIdentifier:(NSString *)taskIdentifier;
 
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
                         params:(nullable NSMutableDictionary<NSString *, id> *)params
                       pathKeys:(NSArray<NSString *> *)keys
                       delegate:(id<HZSessionTaskDelegate>)delegate
-                   requestType:(nullable NSString *)type;
+                   taskIdentifier:(NSString *)taskIdentifier;
 
 @property(nonatomic, weak) id<HZSessionTaskDelegate> delegate;
 
@@ -114,7 +114,7 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
 /**
  *  任务标识
  */
-@property(nullable, nonatomic, copy) NSString *requestType;
+@property(nonatomic, copy) NSString *taskIdentifier;
 
 /**
  *  返回数据模型

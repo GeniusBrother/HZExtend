@@ -9,8 +9,11 @@
 #import "HZViewModel.h"
 #import "HZUploadSessionTask.h"
 #import "NSObject+HZExtend.h"
+
 @interface HZViewModel ()
 
+/** 发送失败的原因字典*/
+@property(nonatomic, strong) NSMutableDictionary *reasonDic;
 
 @end
 
@@ -33,24 +36,65 @@
     return self;
 }
 
-- (void)loadViewModel {}
-- (void)taskDidFetchData:(HZSessionTask *)task type:(NSString *)type {}
-- (void)taskDidFail:(HZSessionTask *)task type:(NSString *)type {}
-
-#pragma mark - Network
-- (void)sendTask:(HZSessionTask *)sessionTask
-{    
-    [[HZNetwork sharedNetwork] send:sessionTask];
+- (void)loadViewModel
+{
+    _reasonDic = [NSMutableDictionary dictionary];
 }
 
-- (void)uploadTask:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *))uploadProgressBlock
+- (void)taskDidFetchData:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier {}
+- (void)taskDidFail:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier {}
+- (NSString *)networkLostErrorMsg { return nil; }
+
+- (BOOL)shouldSendTask:(HZSessionTask *)task reasonDic:(NSMutableDictionary *)reasonDic
 {
-    return [[HZNetwork sharedNetwork] upload:sessionTask progress:uploadProgressBlock];
+    if (![HZNetworkConfig sharedConfig].reachable) {
+        NSString *errorMsg = [self networkLostErrorMsg]?:([HZNetworkConfig sharedConfig].networkLostErrorMsg?:@"");
+        [reasonDic setObject:errorMsg forKey:task.taskIdentifier];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark - Public Method
+- (void)sendTask:(HZSessionTask *)sessionTask handle:(HZNetworkSendTaskHandleBlock)handleBlock
+{
+    NSAssert(sessionTask, @"%@不能发送空的请求任务",self);
+    BOOL result = [self shouldSendTask:sessionTask reasonDic:self.reasonDic];
+    if (!result) {
+        [[HZNetwork sharedNetwork] send:sessionTask];
+        if (handleBlock) handleBlock(nil);
+    }else {
+        if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}]);
+    }
+}
+
+- (void)sendTaskWithName:(NSString *)taskName handle:(nonnull HZNetworkSendTaskHandleBlock)handleBlock
+{
+    NSAssert([self respondsToSelector:NSSelectorFromString(taskName)], @"%@:无该请求任务%@",self,taskName);
+    HZSessionTask *task = [self valueForKey:taskName];
+    [self sendTask:task handle:handleBlock];
+}
+
+- (void)sendUploadTask:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *))uploadProgressBlock handle:(nonnull HZNetworkSendTaskHandleBlock)handleBlock
+{
+    NSAssert(sessionTask, @"%@不能发送空的请求任务",self);
+    BOOL result = [self shouldSendTask:sessionTask reasonDic:self.reasonDic];
+    if (!result) {
+        [[HZNetwork sharedNetwork] upload:sessionTask progress:uploadProgressBlock];
+        if (handleBlock) handleBlock(nil);
+    }else {
+        if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}]);
+    }
 }
 
 - (void)cancelTask:(HZSessionTask *)sessionTask
 {
     [[HZNetwork sharedNetwork] cancel:sessionTask];
+}
+
+- (NSString *)failSendReasonForTask:(HZSessionTask *)task
+{
+    return [self.reasonDic objectForKey:task.taskIdentifier];
 }
 
 #pragma mark - SessionTaskDelegate
@@ -60,35 +104,35 @@
 - (void)taskComplted:(HZSessionTask *)task
 {
     if (task.succeed) {
-        [self taskDidFetchData:task type:task.requestType];
+        [self taskDidFetchData:task taskIdentifier:task.taskIdentifier];
     }else {
-        [self taskDidFail:task type:task.requestType];
+        [self taskDidFail:task taskIdentifier:task.taskIdentifier];
     }
     
     if ([self.delegate respondsToSelector:@selector(viewModel:taskDidCompleted:type:)]) {
-        [self.delegate viewModel:self taskDidCompleted:task type:task.requestType];
+        [self.delegate viewModel:self taskDidCompleted:task taskIdentifier:task.taskIdentifier];
     }
 }
 
 - (void)taskSending:(HZSessionTask *)task
 {
-    if (task.cacheSuccess) [self taskDidFetchData:task type:task.requestType];
+    if (task.cacheSuccess) [self taskDidFetchData:task taskIdentifier:task.taskIdentifier];
     
     if ([self.delegate respondsToSelector:@selector(viewModel:taskSending:type:)]) {
-        [self.delegate viewModel:self taskSending:task type:task.requestType];
+        [self.delegate viewModel:self taskSending:task taskIdentifier:task.taskIdentifier];
     }
 }
 
 - (void)taskLosted:(HZSessionTask *)task
 {
     if (task.cacheSuccess) {
-        [self taskDidFetchData:task type:task.requestType];
+        [self taskDidFetchData:task taskIdentifier:task.taskIdentifier];
     }else if(task.cacheFail) {
-        [self taskDidFail:task type:task.requestType];
+        [self taskDidFail:task taskIdentifier:task.taskIdentifier];
     }
     
     if ([self.delegate respondsToSelector:@selector(viewModel:taskDidLose:type:)]) {
-        [self.delegate viewModel:self taskDidLose:task type:task.requestType];
+        [self.delegate viewModel:self taskDidLose:task taskIdentifier:task.taskIdentifier];
     }
 }
 

@@ -82,6 +82,8 @@ singleton_m(Network)
 
 - (void)send:(HZSessionTask *)sessionTask
 {
+    if (!sessionTask) return;
+    
     NSString *path = sessionTask.path;
     HZAssertNoReturn(!path.isNoEmpty, @"path nil")
     HZAssertNoReturn(sessionTask.state != HZSessionTaskStateRunable, @"task has run already")

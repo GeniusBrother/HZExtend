@@ -58,6 +58,9 @@ singleton_h(Config)
 /** 验证证书方式，默认为HZSSLPinningModeNone */
 @property(nonatomic, assign) HZSSLPinningMode SSLPinningMode;
 
+/** 网络无法连接,默认提示的文案 */
+@property(nonatomic, copy) NSString *networkLostErrorMsg;
+
 /**
  *  网络是否通(程序启动时检测网络状态有0.05左右的延迟,故需延迟0.05秒请求)
  */

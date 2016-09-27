@@ -40,8 +40,8 @@
 #define HZRGBA(R,G,B,A)	[UIColor colorWithRed:R/255.0f green:G/255.0f blue:B/255.0f alpha:A]
 
 //屏幕信息
-#define HZDeviceWidth [[UIScreen mainScreen] bounds].size.width
-#define HZDeviceHeight [[UIScreen mainScreen] bounds].size.height
+#define HZDeviceWidth ([[UIScreen mainScreen] bounds].size.width)
+#define HZDeviceHeight ([[UIScreen mainScreen] bounds].size.height)
 
 //断言
 #define HZAssertNoReturn(condition, msg) \

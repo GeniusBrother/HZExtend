@@ -37,7 +37,7 @@
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
                         params:(NSMutableDictionary *)params
-                      delegate:(id<HZSessionTaskDelegate>)delegate requestType:(NSString *)type
+                      delegate:(id<HZSessionTaskDelegate>)delegate taskIdentifier:(NSString *)taskIdentifier
 {
 
     HZSessionTask *task = [[self alloc] init];
@@ -45,7 +45,7 @@
     task.path = path;
     task.params = params;
     task.delegate = delegate;
-    task.requestType = type;
+    task.taskIdentifier = taskIdentifier;
     return task;
 }
 
@@ -54,9 +54,9 @@
                         params:(NSMutableDictionary *)params
                       pathKeys:(NSArray *)keys
                       delegate:(id<HZSessionTaskDelegate>)delegate
-                   requestType:(NSString *)type
+                   taskIdentifier:(NSString *)taskIdentifier
 {
-    HZSessionTask *task = [self taskWithMethod:method path:path params:params delegate:delegate requestType:type];
+    HZSessionTask *task = [self taskWithMethod:method path:path params:params delegate:delegate taskIdentifier:taskIdentifier];
     task.pathkeys = keys;
     return task;
 }
