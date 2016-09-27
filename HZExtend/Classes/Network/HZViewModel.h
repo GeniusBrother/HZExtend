@@ -12,7 +12,7 @@
 @class HZViewModel;
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^HZNetworkSendTaskHandleBlock)(NSError *);
+typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error);
 @protocol HZViewModelDelegate<NSObject>
 @optional
 /**
@@ -60,7 +60,7 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *);
  *	@param task  请求任务
  *  @param handleBlock handleBlock会回调是否成功发送任务，即task是否已经交给HZNetwork处理
  */
-- (void)sendTask:(HZSessionTask *)task handle:(HZNetworkSendTaskHandleBlock)handleBlock;
+- (void)sendTask:(HZSessionTask *)task handle:(nullable HZNetworkSendTaskHandleBlock)handleBlock;
 
 /**
  *	发送请求任务
@@ -68,7 +68,7 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *);
  *	@param taskName  请求任务的名称
  *  @param handleBlock handleBlock会回调是否成功发送任务，即task是否已经交给HZNetwork处理
  */
-- (void)sendTaskWithName:(NSString *)taskName handle:(HZNetworkSendTaskHandleBlock)handleBlock;
+- (void)sendTaskWithName:(NSString *)taskName handle:(nullable HZNetworkSendTaskHandleBlock)handleBlock;
 
 /**
  *	发送上传的请求任务
@@ -77,7 +77,7 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *);
  *  @param uploadProgressBlock  进度回调block
  *  @param handleBlock handleBlock会回调是否成功发送任务，即task是否已经交给HZNetwork处理
  */
-- (void)sendUploadTask:(HZSessionTask *)task progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock  handle:(HZNetworkSendTaskHandleBlock)handleBlock;
+- (void)sendUploadTask:(HZSessionTask *)task progress:(nullable void (^)(NSProgress *uploadProgress))uploadProgressBlock  handle:(nullable HZNetworkSendTaskHandleBlock)handleBlock;
 
 /**
  *	取消请求任务

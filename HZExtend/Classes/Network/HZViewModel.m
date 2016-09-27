@@ -68,14 +68,14 @@
     }
 }
 
-- (void)sendTaskWithName:(NSString *)taskName handle:(nonnull HZNetworkSendTaskHandleBlock)handleBlock
+- (void)sendTaskWithName:(NSString *)taskName handle:(HZNetworkSendTaskHandleBlock)handleBlock
 {
     NSAssert([self respondsToSelector:NSSelectorFromString(taskName)], @"%@:无该请求任务%@",self,taskName);
     HZSessionTask *task = [self valueForKey:taskName];
     [self sendTask:task handle:handleBlock];
 }
 
-- (void)sendUploadTask:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *))uploadProgressBlock handle:(nonnull HZNetworkSendTaskHandleBlock)handleBlock
+- (void)sendUploadTask:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *))uploadProgressBlock handle:(HZNetworkSendTaskHandleBlock)handleBlock
 {
     NSAssert(sessionTask, @"%@不能发送空的请求任务",self);
     BOOL result = [self shouldSendTask:sessionTask reasonDic:self.reasonDic];
