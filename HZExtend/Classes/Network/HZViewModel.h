@@ -12,7 +12,7 @@
 @class HZViewModel;
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error);
+typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionTask *task);
 @protocol HZViewModelDelegate<NSObject>
 @optional
 /**

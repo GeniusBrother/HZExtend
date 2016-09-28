@@ -47,7 +47,7 @@
 
 - (BOOL)shouldSendTask:(HZSessionTask *)task reasonDic:(NSMutableDictionary *)reasonDic
 {
-    if (![HZNetworkConfig sharedConfig].reachable) {
+    if (![HZNetworkConfig sharedConfig].reachable && !task.cached) {
         NSString *errorMsg = [self networkLostErrorMsg]?:([HZNetworkConfig sharedConfig].networkLostErrorMsg?:@"");
         [reasonDic setObject:errorMsg forKey:task.taskIdentifier];
         return NO;
@@ -60,11 +60,11 @@
 {
     NSAssert(sessionTask, @"%@不能发送空的请求任务",self);
     BOOL result = [self shouldSendTask:sessionTask reasonDic:self.reasonDic];
-    if (!result) {
+    if (result) {
         [[HZNetwork sharedNetwork] send:sessionTask];
-        if (handleBlock) handleBlock(nil);
+        if (handleBlock) handleBlock(nil,sessionTask);
     }else {
-        if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}]);
+        if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}],sessionTask);
     }
 }
 
@@ -79,11 +79,11 @@
 {
     NSAssert(sessionTask, @"%@不能发送空的请求任务",self);
     BOOL result = [self shouldSendTask:sessionTask reasonDic:self.reasonDic];
-    if (!result) {
+    if (result) {
         [[HZNetwork sharedNetwork] upload:sessionTask progress:uploadProgressBlock];
-        if (handleBlock) handleBlock(nil);
+        if (handleBlock) handleBlock(nil,sessionTask);
     }else {
-        if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}]);
+        if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}],sessionTask);
     }
 }
 
@@ -109,7 +109,7 @@
         [self taskDidFail:task taskIdentifier:task.taskIdentifier];
     }
     
-    if ([self.delegate respondsToSelector:@selector(viewModel:taskDidCompleted:type:)]) {
+    if ([self.delegate respondsToSelector:@selector(viewModel:taskDidCompleted:taskIdentifier:)]) {
         [self.delegate viewModel:self taskDidCompleted:task taskIdentifier:task.taskIdentifier];
     }
 }
@@ -118,7 +118,7 @@
 {
     if (task.cacheSuccess) [self taskDidFetchData:task taskIdentifier:task.taskIdentifier];
     
-    if ([self.delegate respondsToSelector:@selector(viewModel:taskSending:type:)]) {
+    if ([self.delegate respondsToSelector:@selector(viewModel:taskSending:taskIdentifier:)]) {
         [self.delegate viewModel:self taskSending:task taskIdentifier:task.taskIdentifier];
     }
 }
@@ -131,7 +131,7 @@
         [self taskDidFail:task taskIdentifier:task.taskIdentifier];
     }
     
-    if ([self.delegate respondsToSelector:@selector(viewModel:taskDidLose:type:)]) {
+    if ([self.delegate respondsToSelector:@selector(viewModel:taskDidLose:taskIdentifier:)]) {
         [self.delegate viewModel:self taskDidLose:task taskIdentifier:task.taskIdentifier];
     }
 }
