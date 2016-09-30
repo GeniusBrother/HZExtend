@@ -109,7 +109,7 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
 /**
  *  判断请求成功的业务逻辑是否正确,deafult YES,适用于有返回code码
  */
-@property(nonatomic, assign, getter=isCached) BOOL shouldCheckCode;
+@property(nonatomic, assign) BOOL shouldCheckCode;
 
 /**
  *  任务标识

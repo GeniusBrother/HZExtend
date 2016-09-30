@@ -58,9 +58,23 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionT
  *	发送请求任务
  *
  *	@param task  请求任务
+ */
+- (void)sendTask:(HZSessionTask *)task;
+
+/**
+ *	发送请求任务
+ *
+ *	@param task  请求任务
  *  @param handleBlock handleBlock会回调是否成功发送任务，即task是否已经交给HZNetwork处理
  */
 - (void)sendTask:(HZSessionTask *)task handle:(nullable HZNetworkSendTaskHandleBlock)handleBlock;
+
+/**
+ *	发送请求任务
+ *
+ *	@param taskName  请求任务的名称
+ */
+- (void)sendTaskWithName:(NSString *)taskName;
 
 /**
  *	发送请求任务

@@ -370,20 +370,12 @@
  */
 - (BOOL)checkCode
 {
-    //没有设置状态码路径则不需要检查
+    //没有设置状态码路径或者不需要checkCode返回YES
     NSString *codeKeyPath = [HZNetworkConfig sharedConfig].codeKeyPath;
-    if (!codeKeyPath.isNoEmpty) return true;
-    
-    if (self.shouldCheckCode) {
-        self.codeKey = [[self.responseObject objectForKeyPath:codeKeyPath] integerValue];
-        if(self.codeKey == [HZNetworkConfig sharedConfig].rightCode) {
-            return true;
-        }else {
-            return false;
-        }
-    }else {
-        return true;
-    }
+    if (!codeKeyPath.isNoEmpty || !self.shouldCheckCode) return YES;
+
+    self.codeKey = [[self.responseObject objectForKeyPath:codeKeyPath] integerValue];
+    return self.codeKey == [HZNetworkConfig sharedConfig].rightCode;
 }
 
 

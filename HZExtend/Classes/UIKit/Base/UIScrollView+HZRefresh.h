@@ -26,8 +26,8 @@
 
 /**
  *  3.结束全部刷新,并指定是否有更多数据
- *  isEnd:1YES 0NO
+ *  isEnd:
  */
-- (void)endAllRefreshWithFooterEnd:(NSInteger)isEnd;
+- (void)endAllRefreshWithExistMoreData:(BOOL)existMoreData;
 
 @end

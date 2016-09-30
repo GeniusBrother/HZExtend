@@ -33,12 +33,12 @@
     }
 }
 
-- (void)endAllRefreshWithFooterEnd:(NSInteger)isEnd
+- (void)endAllRefreshWithExistMoreData:(BOOL)existMoreData
 {
     [self.mj_header endRefreshing];
     [self.mj_footer endRefreshing];
     
-    if (isEnd != 0) [self.mj_footer endRefreshingWithNoMoreData];
+    if (!existMoreData) [self.mj_footer endRefreshingWithNoMoreData];
 }
 
 - (void)endFooterRefreshWithEnd:(NSInteger)isEnd

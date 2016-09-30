@@ -56,6 +56,12 @@
 }
 
 #pragma mark - Public Method
+- (void)sendTask:(HZSessionTask *)task
+{
+    NSAssert(task, @"%@不能发送空的请求任务",self);
+    [[HZNetwork sharedNetwork] send:task];
+}
+
 - (void)sendTask:(HZSessionTask *)sessionTask handle:(HZNetworkSendTaskHandleBlock)handleBlock
 {
     NSAssert(sessionTask, @"%@不能发送空的请求任务",self);
@@ -66,6 +72,13 @@
     }else {
         if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}],sessionTask);
     }
+}
+
+- (void)sendTaskWithName:(NSString *)taskName
+{
+    NSAssert([self respondsToSelector:NSSelectorFromString(taskName)], @"%@:无该请求任务%@",self,taskName);
+    HZSessionTask *task = [self valueForKey:taskName];
+    [self sendTask:task];
 }
 
 - (void)sendTaskWithName:(NSString *)taskName handle:(HZNetworkSendTaskHandleBlock)handleBlock
