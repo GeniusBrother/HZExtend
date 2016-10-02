@@ -22,12 +22,14 @@ static CGFloat referenceScreenHeight;
 + (CGFloat)xFitDataForReferenceValue:(CGFloat)xReferenceValue
 {
     NSAssert(referenceScreenWidth != 0 && referenceScreenHeight != 0, @"请调用configReferenceScreenSize来指定参照的屏幕尺寸");
+    if (referenceScreenWidth == 0) return xReferenceValue;
     return xReferenceValue * (HZDeviceWidth / referenceScreenWidth);
 }
 
 + (CGFloat)yFitDataForReferenceValue:(CGFloat)yReferenceValue
 {
     NSAssert(referenceScreenWidth != 0 && referenceScreenHeight != 0, @"请调用configReferenceScreenSize来指定参照的屏幕尺寸");
+    if (referenceScreenHeight == 0) return yReferenceValue;
     return yReferenceValue * (HZDeviceHeight / referenceScreenHeight);
 }
 
