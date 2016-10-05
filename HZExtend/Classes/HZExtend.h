@@ -21,7 +21,7 @@
 #import "UIViewController+HZHUD.h"
 #import "HZURLManager.h"
 #import "HZMacro.h"
-
+#import "HZFit.h"
 #import <MJExtension/MJExtension.h>
 
 
