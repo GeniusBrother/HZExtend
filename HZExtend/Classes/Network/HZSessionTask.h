@@ -89,6 +89,8 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
  */
 @property(nullable, nonatomic, strong) NSMutableDictionary<NSString *, id> *params;
 
+@property(nullable, nonatomic, readonly) NSDictionary <NSString *, NSString *> *requestHeader;
+
 /**
  *  分页模型中的快捷参数
  */
@@ -154,8 +156,8 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
 /**
  *  请求头设置，或者在HZNetworkConfig设置全局的
  */
-- (void)setValue:(id)value forHeaderField:(NSString *)key;
-- (NSDictionary<NSString *, id> *)httpRequestFields;
+- (void)setValue:(NSString *)value forHeaderField:(NSString *)key;
+
 
 - (BOOL)runable;                //表明任务可运行
 - (BOOL)succeed;                //网络请求数据成功

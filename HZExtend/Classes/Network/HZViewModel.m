@@ -59,7 +59,7 @@
 - (void)sendTask:(HZSessionTask *)task
 {
     NSAssert(task, @"%@不能发送空的请求任务",self);
-    [[HZNetwork sharedNetwork] send:task];
+    [[HZNetwork sharedNetwork] performTask:task];
 }
 
 - (void)sendTask:(HZSessionTask *)sessionTask handle:(HZNetworkSendTaskHandleBlock)handleBlock
@@ -67,7 +67,7 @@
     NSAssert(sessionTask, @"%@不能发送空的请求任务",self);
     BOOL result = [self shouldSendTask:sessionTask reasonDic:self.reasonDic];
     if (result) {
-        [[HZNetwork sharedNetwork] send:sessionTask];
+        [[HZNetwork sharedNetwork] performTask:sessionTask];
         if (handleBlock) handleBlock(nil,sessionTask);
     }else {
         if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}],sessionTask);
@@ -93,7 +93,7 @@
     NSAssert(sessionTask, @"%@不能发送空的请求任务",self);
     BOOL result = [self shouldSendTask:sessionTask reasonDic:self.reasonDic];
     if (result) {
-        [[HZNetwork sharedNetwork] upload:sessionTask progress:uploadProgressBlock];
+        [[HZNetwork sharedNetwork] performUploadTask:sessionTask progress:uploadProgressBlock];
         if (handleBlock) handleBlock(nil,sessionTask);
     }else {
         if (handleBlock) handleBlock([NSError errorWithDomain:@"com.HZNetwork" code:400 userInfo:@{@"NSLocalizedDescription":[self failSendReasonForTask:sessionTask]?:@"error"}],sessionTask);
@@ -102,7 +102,7 @@
 
 - (void)cancelTask:(HZSessionTask *)sessionTask
 {
-    [[HZNetwork sharedNetwork] cancel:sessionTask];
+    [[HZNetwork sharedNetwork] cancelTask:sessionTask];
 }
 
 - (NSString *)failSendReasonForTask:(HZSessionTask *)task

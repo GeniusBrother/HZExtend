@@ -17,7 +17,7 @@
 
 @interface HZSessionTask ()
 #pragma mark - Input
-@property(nonatomic, strong) NSMutableDictionary *httpRequestFields;
+@property(nonatomic, strong) NSMutableDictionary <NSString *, NSString *> *mutableRequestHeader;
 
 #pragma mark - Output
 @property(nonatomic, strong) NSDictionary *responseObject;
@@ -66,7 +66,7 @@
     self = [super init];
     if (self) {
         [self restAllOutput];
-        _httpRequestFields = [NSMutableDictionary dictionary];
+        _mutableRequestHeader = [NSMutableDictionary dictionary];
         _cached = YES;
         _importCacheOnce = YES;
         _shouldCheckCode = YES;
@@ -103,10 +103,6 @@
     return _cacheKey;
 }
 
-- (NSDictionary *)httpRequestFields
-{
-    return _httpRequestFields;
-}
 
 /** 配置sessionAddress & absoluteURL
  *  正常模式:baseURL+path
@@ -162,12 +158,17 @@
     }
 }
 
-- (void)setValue:(id)value forHeaderField:(NSString *)key
+- (void)setValue:(NSString *)value forHeaderField:(NSString *)key
 {
     BOOL resulte = !key.isNoEmpty || (value == nil);
     HZAssertNoReturn(resulte, @"header error")
     
-    [self.httpRequestFields setValue:value forKey:key];
+    [self.mutableRequestHeader setValue:value forKey:key];
+}
+
+- (NSDictionary<NSString *,NSString *> *)requestHeader
+{
+    return [NSDictionary dictionaryWithDictionary:self.mutableRequestHeader];
 }
 
 #pragma mark - Param

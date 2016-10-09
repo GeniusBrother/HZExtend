@@ -20,19 +20,25 @@ NS_ASSUME_NONNULL_BEGIN
 singleton_h(Network)
 
 /**
- *  GET或POST
+ *	执行普通请求任务
+ *
+ *	@param task  普通请求任务
  */
-- (void)send:(HZSessionTask *)sessionTask;
+- (void)performTask:(HZSessionTask *)task;
 
 /**
- *  上传任务
+ *	执行上传请求任务
+ *
+ *	@param uploadTask  上传类型的请求任务
  */
-- (void)upload:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;
+- (void)performUploadTask:(HZUploadSessionTask *)uploadTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;
 
 /**
- *  取消
+ *	取消执行请求任务
+ *
+ *	@param task  请求任务
  */
-- (void)cancel:(HZSessionTask *)sessionTask;
+- (void)cancelTask:(HZSessionTask *)task;
 
 @end
 

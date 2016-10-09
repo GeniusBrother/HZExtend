@@ -19,6 +19,7 @@
 #import "HZViewModel.h"
 #import "HZMacro.h"
 #import "HZSystem.h"
+#import "HZFit.h"
 #import "HZScrollView.h"
 #import "UIColor+HZExtend.h"
 #import "UIImage+HZExtend.h"

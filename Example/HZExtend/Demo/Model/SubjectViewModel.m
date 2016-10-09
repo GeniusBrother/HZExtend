@@ -14,7 +14,7 @@
 {
     [super loadViewModel];
     
-    _task = [HZSessionTask taskWithMethod:@"GET" path:@"/subject/recommend" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@0,kNetworkPage,@1,kNetworkPageSize, nil] delegate:self requestType:@"subject"];
+    _task = [HZSessionTask taskWithMethod:@"GET" path:@"/subject/recommend" params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@0,kNetworkPage,@1,kNetworkPageSize, nil] delegate:self taskIdentifier:@"subject"];
     self.task.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取
     self.task.pathkeys = @[kNetworkPage,kNetworkPageSize];//设置后支持支持http://baseURL/path/value1/value2类型请求
     _subjectArray = [NSMutableArray arrayWithCapacity:20];
