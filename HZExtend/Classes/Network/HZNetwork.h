@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "HZSingleton.h"
-#import "HZUploadSessionTask.h"
 
-@class HZNetwork;
-
+@class HZNetwork,HZSessionTask;
 /****************     任务的执行器     ****************/
 
 NS_ASSUME_NONNULL_BEGIN
@@ -23,15 +21,18 @@ singleton_h(Network)
  *	执行普通请求任务
  *
  *	@param task  普通请求任务
+ *  @param completion 请求完成后的回调
  */
-- (void)performTask:(HZSessionTask *)task;
+- (void)performTask:(HZSessionTask *)task completion:(void(^)(HZNetwork *performer, id __nullable responseObject, NSError * __nullable error))completion;
 
 /**
  *	执行上传请求任务
  *
  *	@param uploadTask  上传类型的请求任务
+ *	@param uploadProgressBlock  上传过程的回调
+ *  @param completion 请求完成后的回调
  */
-- (void)performUploadTask:(HZUploadSessionTask *)uploadTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock;
+- (void)performUploadTask:(HZSessionTask *)uploadTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock completion:(void(^)(HZNetwork *performer, id __nullable responseObject, NSError * __nullable error))completion;
 
 /**
  *	取消执行请求任务

@@ -12,6 +12,7 @@
 #import "TestViewController.h"
 #import <HZExtend/HZExtend.h>
 #import "SubjectItem.h"
+#import <AFNetworking/AFNetworking.h>
 static NSString *str = @"ENsjdhakjdhsadsdkj";
 static CGFloat count = 0;
 static NSInteger h = 1;
@@ -34,6 +35,13 @@ static NSInteger h = 1;
     [btn setBackgroundColor:[UIColor purpleColor]];
     [self.view addSubview:btn];
     
+    
+    [[AFHTTPSessionManager manager] dataTaskWithRequest:<#(nonnull NSURLRequest *)#> completionHandler:<#^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error)completionHandler#>]
+    NSError *error;
+    AFHTTPRequestSerializer *serializer = [AFHTTPRequestSerializer serializer];
+    NSMutableURLRequest *request = [serializer requestWithMethod:@"GET" URLString:@"http://www.baidu.com" parameters:@[@"a",@"b"] error:&error];
+    NSLog(@"%@",[request.URL.absoluteString urlDecode]);
+
 }
 
 - (void)click:(UIButton *)sender

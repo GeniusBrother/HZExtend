@@ -18,7 +18,7 @@
 + (void)configReferenceScreenSize:(CGSize)size;
 
 /**
- *	将参照值转换为x轴方向上适配后的数据
+ *	将参照值转换为当前屏幕下x轴方向上适配后的数据
  *
  *	@param refernceValue  x轴上的参照数据
  *
@@ -27,7 +27,7 @@
 + (CGFloat)xFitDataForReferenceValue:(CGFloat)xReferenceValue;
 
 /**
- *	将参照值转换为y轴方向上适配后的数据
+ *	将参照值转换为当前屏幕下y轴方向上适配后的数据
  *
  *	@param refernceValue  y轴上的参照数据
  *

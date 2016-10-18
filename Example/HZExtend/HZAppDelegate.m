@@ -51,7 +51,7 @@
                                                 @"hz://urlItem":@"URLItemViewController"
                                                 };
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
+    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[TestViewController alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [self test];

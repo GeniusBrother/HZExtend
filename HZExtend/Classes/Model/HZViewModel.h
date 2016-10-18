@@ -10,6 +10,7 @@
 #import "HZNetwork.h"
 
 @class HZViewModel;
+@protocol HZSessionTaskDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionTask *task);
@@ -44,62 +45,6 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionT
 
 + (instancetype)viewModelWithDelegate:(id<HZViewModelDelegate>)delegate;
 
-/**
- *	返回task发送失败的原因
- *
- *	@param task  请求任务
- *
- *  @return 若task成功发送或者未执行发送，则返回nil,否则返回失败发送的原因
- */
-- (NSString *)failSendReasonForTask:(HZSessionTask *)task;
-
-#pragma mark - 操作请求
-/**
- *	发送请求任务
- *
- *	@param task  请求任务
- */
-- (void)sendTask:(HZSessionTask *)task;
-
-/**
- *	发送请求任务
- *
- *	@param task  请求任务
- *  @param handleBlock handleBlock会回调是否成功发送任务，即task是否已经交给HZNetwork处理
- */
-- (void)sendTask:(HZSessionTask *)task handle:(nullable HZNetworkSendTaskHandleBlock)handleBlock;
-
-/**
- *	发送请求任务
- *
- *	@param taskName  请求任务的名称
- */
-- (void)sendTaskWithName:(NSString *)taskName;
-
-/**
- *	发送请求任务
- *
- *	@param taskName  请求任务的名称
- *  @param handleBlock handleBlock会回调是否成功发送任务，即task是否已经交给HZNetwork处理
- */
-- (void)sendTaskWithName:(NSString *)taskName handle:(nullable HZNetworkSendTaskHandleBlock)handleBlock;
-
-/**
- *	发送上传的请求任务
- *
- *	@param task  请求任务
- *  @param uploadProgressBlock  进度回调block
- *  @param handleBlock handleBlock会回调是否成功发送任务，即task是否已经交给HZNetwork处理
- */
-- (void)sendUploadTask:(HZSessionTask *)task progress:(nullable void (^)(NSProgress *uploadProgress))uploadProgressBlock  handle:(nullable HZNetworkSendTaskHandleBlock)handleBlock;
-
-/**
- *	取消请求任务
- *
- *	@param task  请求任务
- */
-- (void)cancelTask:(HZSessionTask *)task;
-
 #pragma mark - 子类重写回调
 /**
  *  初始化ViewModel时调用,可以在这里对数据进行初始化
@@ -123,22 +68,6 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionT
  *
  */
 - (void)taskDidFail:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier;
-
-
-/**
- *  子类返回网络无法连接时提示的文案
- */
-- (NSString *)networkLostErrorMsg;
-
-/**
- *  是否发送请求任务,父类的默认实现为若网络无法连接返回NO
- *
- *	@param task 请求任务
- *  @param reasonDic 如果不能发送,利用reasonDic设置不能发送的原因 即key=taskIdentifier,value = msg
- *
- *  @return 一个bool值，YES可以发送请求任务
- */
-- (BOOL)shouldSendTask:(HZSessionTask *)task reasonDic:(NSMutableDictionary *)reasonDic;
 
 @end
 

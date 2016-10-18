@@ -10,19 +10,20 @@
 #import "HZMacro.h"
 #import "NSDictionary+HZExtend.h"
 #import "NSString+HZExtend.h"
+#import "HZSessionTask.h"
 
 #import <AFNetworking/AFNetworking.h>
 #import <TMCache/TMCache.h>
 
 @interface HZNetwork ()
 
-@property(nonatomic, strong) NSMutableDictionary<NSString *, id> *defaultFields;   //默认添加的请求头，以便还原
 @property(nonatomic, strong) AFHTTPSessionManager *sessionManager;
 @property(nonatomic, strong) NSMutableDictionary<NSString *, __kindof NSURLSessionTask *> *dataTasks;    //任务集合
 @end
 
 @implementation HZNetwork
 #pragma mark - Initializtion
+
 singleton_m(Network)
 
 - (instancetype)init
@@ -40,163 +41,135 @@ singleton_m(Network)
 - (void)setup
 {   
     _dataTasks = [NSMutableDictionary dictionary];
-    _defaultFields = [NSMutableDictionary dictionary];
-    [self.defaultFields addEntriesFromDictionary:[HZNetworkConfig sharedConfig].defaultHeaderFields];
-    
     _sessionManager = [AFHTTPSessionManager manager];
+    
+    //设置通用请求头
+    [[HZNetworkConfig sharedConfig].defaultHeaderFields enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [self.sessionManager.requestSerializer setValue:obj forHTTPHeaderField:key];
+    }];
+    
+    //设置证书验证方式配置模型
     AFSecurityPolicy *securityConfigModel = [AFSecurityPolicy policyWithPinningMode:[HZNetworkConfig sharedConfig].SSLPinningMode];
     securityConfigModel.allowInvalidCertificates = [HZNetworkConfig sharedConfig].allowInvalidCertificates;
     self.sessionManager.securityPolicy = securityConfigModel;
 }
 
 #pragma mark - Public Method
-- (void)performTask:(HZSessionTask *)sessionTask
+- (void)performTask:(HZSessionTask *)task completion:(nonnull void (^)(HZNetwork * _Nonnull, id _Nullable, NSError * _Nullable))completion
 {
-    HZAssertNoReturn(sessionTask.state != HZSessionTaskStateRunable, @"task has run already")
-    HZAssertNoReturn(!sessionTask.path.isNoEmpty, @"path nil")
-    
-    
-    //启动前还原配置
-    [self configRequestHeaderForTask:sessionTask];
-    
-    if ([HZNetworkConfig sharedConfig].reachable) {
-        NSString *method = sessionTask.method?:@"GET";
-        if ([method caseInsensitiveCompare:@"GET"] == NSOrderedSame) {
-            [self GET:sessionTask];
-        }else if ([method caseInsensitiveCompare:@"POST"] == NSOrderedSame) {
-            [self POST:sessionTask];
-        }
-    }else {
-        [sessionTask noReach];
+    NSString *method = task.method?:@"GET";
+    if ([method caseInsensitiveCompare:@"GET"] == NSOrderedSame) {
+        [self GET:task completion:completion];
+    }else if ([method caseInsensitiveCompare:@"POST"] == NSOrderedSame) {
+        [self POST:task completion:completion];
     }
 }
 
-- (void)performUploadTask:(HZUploadSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock
+- (void)performUploadTask:(HZSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock completion:(nonnull void (^)(HZNetwork * _Nonnull, id _Nullable, NSError * _Nullable))completion
 {
-    //    if (sessionTask.fileName.isEmpty || sessionTask.formName.isEmpty) return; AFN已经做了
-    NSString *path = sessionTask.path;
-    HZAssertNoReturn(!path.isNoEmpty, @"path nil")
-    HZAssertNoReturn(sessionTask.state != HZSessionTaskStateRunable, @"task has run already")
-    
-    //启动前参数配置
-    [self configRequestHeaderForTask:sessionTask];
-    
+    NSError *serializationError = nil;
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:sessionTask.absoluteURL parameters:sessionTask.params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         if (sessionTask.fileData) {
             [formData appendPartWithFileData:sessionTask.fileData name:sessionTask.formName fileName:sessionTask.fileName mimeType:sessionTask.mimeType];
         }else {
-            [formData appendPartWithFileURL:sessionTask.fileURL name:sessionTask.formName fileName:sessionTask.fileName mimeType:sessionTask.mimeType error:nil];
+            NSURL *fileURL = [[NSBundle mainBundle] URLForResource:sessionTask.fileName withExtension:nil];
+            [formData appendPartWithFileURL:fileURL name:sessionTask.formName fileName:sessionTask.fileName mimeType:sessionTask.mimeType error:nil];
         }
-    } error:nil];
-    
+    } error:&serializationError];
+    if (serializationError) {
+        if (completion) {
+            completion(self,nil,serializationError);
+        }
+        return;
+    }
+
+    [sessionTask.requestHeader enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        [request setValue:obj forHTTPHeaderField:key];
+    }];
+    HZWeakObj(self);
     NSURLSessionUploadTask *dataTask = [self.sessionManager uploadTaskWithStreamedRequest:request progress:uploadProgressBlock completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-        if (error) {
-            [self fail:sessionTask error:error];
-        }else {
-            [self sucess:sessionTask response:responseObject];
+        HZStrongObj(self);
+        if (completion) {
+            completion(strong_self,responseObject,error);
         }
+        
+        if (sessionTask.taskIdentifier) {
+            [strong_self.dataTasks removeObjectForKey:sessionTask.taskIdentifier];
+        }
+
     }];
     
     //开始请求
     [dataTask resume];
-    [self.dataTasks setObject:dataTask forKey:sessionTask.cacheKey];
-    [sessionTask startSession];
+    [self.dataTasks setObject:dataTask forKey:sessionTask.taskIdentifier];
 }
 
 - (void)cancelTask:(HZSessionTask *)sessionTask
 {
-    NSURLSessionTask *task = [self.dataTasks objectForKey:sessionTask.cacheKey];
+    NSURLSessionTask *task = [self.dataTasks objectForKey:sessionTask.taskIdentifier];
     if(task) [task cancel];
 }
 
 #pragma mark - Private Method
-- (void)configRequestHeaderForTask:(HZSessionTask *)task
+//开始GET请求
+- (void)GET:(HZSessionTask *)sessionTask completion:(void(^)(HZNetwork *performer, id __nullable responseObject, NSError * __nullable error))completion;
 {
-    NSDictionary *fields = task.requestHeader;
-    
-    //1.创建请求数据模型
-    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
-    [self.defaultFields enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [self.sessionManager.requestSerializer setValue:obj forHTTPHeaderField:key];
-    }];
-    //2.配置新数据
-    /**
-     *  httpRequestFields
-     */
-        if (fields.isNoEmpty) {
-        [fields enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [self.sessionManager.requestSerializer setValue:obj forHTTPHeaderField:key];
-        }];
-    }
-    
-    self.sessionManager.requestSerializer = requestSerializer;
-    
-    //3.清空原任务数据
-    [task restAllOutput];
-    [task absoluteURL];  //刷新absoluteURL
-}
-
-
-- (void)GET:(HZSessionTask *)sessionTask
-{
-    /**************启动任务**************/
+    //创建请求
     BOOL pathSchema = sessionTask.pathkeys.isNoEmpty;
-    id params = pathSchema?nil:sessionTask.params;
-    NSString *urlstring = pathSchema?sessionTask.absoluteURL:sessionTask.absoluteURL.allPath;
-    NSURLSessionDataTask *dataTask = [self.sessionManager GET:urlstring parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
-        [self sucess:sessionTask response:responseObject];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        [self fail:sessionTask error:error];
-    }];
+    NSString *URLString = @"";
+    id params = nil;
+    if (pathSchema) {
+        URLString = sessionTask.absoluteURL;
+    }else {
+        URLString = sessionTask.absoluteURL.allPath;
+        params = sessionTask.params;
+    }
+    NSURLSessionDataTask *dataTask = [self dataTaskWithMethod:@"GET" URLString:URLString params:params task:sessionTask completion:completion];
     [dataTask resume];
-    [self.dataTasks setObject:dataTask forKey:sessionTask.cacheKey];
-    [sessionTask startSession];
+    [self.dataTasks setObject:dataTask forKey:sessionTask.taskIdentifier];
 }
 
-- (void)POST:(HZSessionTask *)sessionTask
+//开始POST请求
+- (void)POST:(HZSessionTask *)sessionTask completion:(void(^)(HZNetwork *performer, id __nullable responseObject, NSError * __nullable error))completion;
 {
-    /**************启动任务**************/
-    NSString *urlstring = sessionTask.absoluteURL.allPath;
-    NSURLSessionDataTask *dataTask = [self.sessionManager POST:urlstring parameters:sessionTask.params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        [self sucess:sessionTask response:responseObject];
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-        [self fail:sessionTask error:error];
+    NSString *URLString = sessionTask.absoluteURL;
+    NSURLSessionDataTask *dataTask = [self dataTaskWithMethod:@"POST" URLString:URLString params:sessionTask.params task:sessionTask completion:completion];
+    [dataTask resume];
+    [self.dataTasks setObject:dataTask forKey:sessionTask.taskIdentifier];
+}
+
+//创建NSURLSessionTask
+- (NSURLSessionDataTask *)dataTaskWithMethod:(NSString *)method URLString:(NSString *)URLString params:(NSDictionary *)params task:(HZSessionTask *)sessionTask completion:(void(^)(HZNetwork *performer, id __nullable responseObject, NSError * __nullable error))completion;
+{
+    NSError *serializationError = nil;
+    NSMutableURLRequest *request = [self.sessionManager.requestSerializer requestWithMethod:method URLString:URLString parameters:params error:&serializationError];
+    if (serializationError) {
+        if (completion) {
+            completion(self,nil,serializationError);
+        }
+        return nil;
+    }
+    [sessionTask.requestHeader enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        [request setValue:obj forHTTPHeaderField:key];
     }];
     
-    //开始请求
-    [dataTask resume];
-    [self.dataTasks setObject:dataTask forKey:sessionTask.cacheKey];
-    [sessionTask startSession];
-}
-
-
-
-#pragma mark - CallBack
-/**
- *  成功后的默认处理
- */
-- (void)sucess:(HZSessionTask *)sessionTask response:(id)responseObject
-{
-    //移掉该任务
-    [self.dataTasks removeObjectForKey:sessionTask.cacheKey];
-    
-    //配置输出
-    [sessionTask responseSessionWithResponseObject:responseObject error:nil];
-}
-
-/**
- *  失败后的默认处理
- */
-- (void)fail:(HZSessionTask *)sessionTask error:(NSError *)error
-{
-    HZLog(HZ_REQUEST_LOG_FORMAT,sessionTask.absoluteURL,error.localizedDescription);
-    
-    [self.dataTasks removeObjectForKey:sessionTask.cacheKey];
-    [sessionTask responseSessionWithResponseObject:nil error:error];
+    HZWeakObj(self);
+    NSURLSessionDataTask *dataTask = [self.sessionManager dataTaskWithRequest:request
+                                                               uploadProgress:nil
+                                                             downloadProgress:nil
+                                                            completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
+                                                                
+                                                                HZStrongObj(self);
+                                                                if (completion) {
+                                                                    completion(strong_self,responseObject,error);
+                                                                }
+                                                                
+                                                                if (sessionTask.taskIdentifier) {
+                                                                    [strong_self.dataTasks removeObjectForKey:sessionTask.taskIdentifier];
+                                                                }
+                                                                
+                                                            }];
+    return dataTask;
 }
 
 @end
