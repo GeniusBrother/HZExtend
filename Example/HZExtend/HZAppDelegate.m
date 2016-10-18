@@ -39,9 +39,6 @@
         }
     }];
     
-    /**
-     *  要使请求框架正常工作，必须要监听
-     */
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     [[HZNetworkConfig sharedConfig] setupBaseURL:@"http://v4.api.maichong.me" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
@@ -51,17 +48,6 @@
                                                 @"hz://urlmanager":@"URLViewController",
                                                 @"hz://urlItem":@"URLItemViewController"
                                                 };
-    
-    SubjectViewModel *viewModel = [SubjectViewModel viewModelWithDelegate:self];
-    viewModel.task.page++;
-    [viewModel.task startWithCompletionCallBack:^(HZSessionTask * _Nonnull task) {
-        NSLog(@"请求完成%@",task.taskIdentifier);
-    } sendingCallBack:^(HZSessionTask * _Nonnull task) {
-        NSLog(@"请求中%@",task.taskIdentifier);
-    } lostCallBack:^(HZSessionTask * _Nonnull task) {
-        NSLog(@"请求无法连接%@",task.taskIdentifier);
-    }];
-    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];

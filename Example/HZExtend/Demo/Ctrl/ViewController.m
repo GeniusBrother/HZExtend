@@ -60,16 +60,13 @@
     
 }
 
-/**
- *  task请求完成时调用,此时task的状态可能成功或失败
- */
 - (void)viewModel:(HZViewModel *)viewModel taskDidCompleted:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier
 {
-//    NSLog(@"%s",__func__);
+    NSLog(@"%s",__func__);
     HZNETWORK_CONVERT_VIEWMODEL(SubjectViewModel);
-    if (task.isSuccess) {
+    if (task.state == HZSessionTaskStateSuccess) {
         [self showSuccessWithText:@"请求成功" image:@"success"];
-        self.pageLabel.text = [NSString stringWithFormat:@"当前分页数为:%ld",selfViewModel.subjectList.pagination.page.integerValue];
+        self.pageLabel.text = [NSString stringWithFormat:@"当前分页数为:%ld",(long)selfViewModel.subjectList.pagination.page.integerValue];
 
         //数据处理均在viewModel处理
         [self.viewModel saveSubject];
@@ -78,44 +75,42 @@
     }
 }
 
-/**
- *  task进入请求中调用,此时task的状态可能为请求中取得缓存成功,请求中取得缓存失败,请求中不尝试导入缓存,请求中取消请求
- */
 - (void)viewModel:(HZViewModel *)viewModel taskSending:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier
 {
-//    NSLog(@"%s",__func__);
-    if (task.isCacheSuccess) {
+    NSLog(@"%s",__func__);
+    if (task.cacheImportState == HZSessionTaskCacheImportStateSuccess) {
         [self showSuccessWithText:@"获得缓存" image:@"success"];
 //        NSLog(@"%@",task.responseObject);
     }
 }
 
-/**
- *  task请求无法连接时调用此时task的状态可能为无法连接取得缓存成功,无法连接取得缓存失败,无法连接不尝试导入缓存
- */
 - (void)viewModel:(HZViewModel *)viewModel taskDidLose:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier
 {
-//    NSLog(@"%s",__func__);
-    if (task.isCacheSuccess) {
+    NSLog(@"%s",__func__);
+    if (task.cacheImportState == HZSessionTaskCacheImportStateSuccess) {
         [self showSuccessWithText:@"获得缓存" image:@"success"];
-        NSLog(@"%@",task.responseObject);
+//        NSLog(@"%@",task.responseObject);
     }
 }
 
-//- (void)sendTask:(id)sender
-//{
-//    if (self.viewModel.task.state == HZSessionTaskStateRunable) {
-//        self.viewModel.task.page++;
-//        [self.viewModel.task startWithCompletionCallBack:^(HZSessionTask * _Nonnull task) {
-//            NSLog(@"请求完成%@",task.taskIdentifier);
-//        } sendingCallBack:^(HZSessionTask * _Nonnull task) {
-//            NSLog(@"请求中%@",task.taskIdentifier);
-//        } lostCallBack:^(HZSessionTask * _Nonnull task) {
-//            NSLog(@"请求无法连接%@",task.taskIdentifier);
-//        }];
-//    }
-//    
-//}
+- (void)viewModel:(HZViewModel *)viewModel taskDidCancel:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier
+{
+    [self showFailWithText:task.message image:@"error" yOffset:0];
+}
+
+- (void)sendTask:(id)sender
+{
+    if (self.viewModel.task.state == HZSessionTaskStateRunable) {
+        self.viewModel.task.page++;
+        [self.viewModel.task startWithCompletionCallBack:^(HZSessionTask * _Nonnull task) {
+            NSLog(@"comple%@",task.state ==  HZSessionTaskStateSuccess?@"YES":@"NO");
+        } sendingCallBack:^(HZSessionTask * _Nonnull task) {
+            NSLog(@"sending %@",task.cacheImportState == HZSessionTaskCacheImportStateSuccess?@"YES":@"NO");
+        } lostCallBack:^(HZSessionTask * _Nonnull task) {
+            NSLog(@"lost %@",task.cacheImportState == HZSessionTaskCacheImportStateSuccess?@"YES":@"NO");
+        }];
+    }
+}
 
 - (void)listSubject:(id)sender {
     

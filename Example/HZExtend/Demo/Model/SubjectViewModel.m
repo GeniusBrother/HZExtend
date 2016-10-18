@@ -16,33 +16,29 @@
 {
     [super loadViewModel];
     
-    _task = [HZSessionTask taskWithMethod:@"GET" path:kRecommendPath params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@0,kNetworkPage,@1,kNetworkPageSize, nil] delegate:self taskIdentifier:kRecommendPath];
+    _task = [HZSessionTask taskWithMethod:@"POST" path:kRecommendPath params:[NSMutableDictionary dictionaryWithObjectsAndKeys:@0,kNetworkPage,@1,kNetworkPageSize, nil] delegate:self taskIdentifier:kRecommendPath];
     self.task.importCacheOnce = NO;  //默认为导入一次,但在分页模型中多次尝试导入缓存来使每次分页数据都能从缓存中读取
-    self.task.pathkeys = @[kNetworkPage,kNetworkPageSize];//设置后支持支持http://baseURL/path/value1/value2类型请求
+//    self.task.pathkeys = @[kNetworkPage,kNetworkPageSize];//设置后支持支持http://baseURL/path/value1/value2类型请求
     _subjectArray = [NSMutableArray arrayWithCapacity:20];
 }
 
-//加载数据的回调
 - (void)taskDidFetchData:(HZSessionTask *)task taskIdentifier:(nonnull NSString *)taskIdentifier
 {
-    NSLog(@"%s",__func__);
     if([taskIdentifier isEqualToString:kRecommendPath]) {
         _subjectList = [SubjectList modelWithDic:[task.responseObject objectForKey:@"data"]];
         [self.subjectArray appendPageArray:self.subjectList.list pageNumber:task.page pageSize:task.pageSize];
     }
 }
 
-//请求失败的回调,请求失败，无网失败<br/>
 - (void)taskDidFail:(HZSessionTask *)task taskIdentifier:(nonnull NSString *)taskIdentifier
 {
-    NSLog(@"%s",__func__);
     [task minusPage];//将当前页减一
 }
 
-//- (BOOL)taskShouldPerform:(HZSessionTask *)task
-//{
-//    
-//}
+- (NSString *)taskShouldPerform:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier
+{
+    return task.page == 3?@"第三页的时候我就会拦截你":nil;
+}
 
 - (void)saveSubject
 {

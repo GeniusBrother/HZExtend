@@ -62,11 +62,6 @@ singleton_h(Config)
 @property(nonatomic, copy) NSString *networkLostErrorMsg;
 
 /**
- *  网络是否通(程序启动时检测网络状态有0.05左右的延迟,故需延迟0.05秒请求)
- */
-@property(nonatomic, assign, readonly) BOOL reachable;
-
-/**
  *  配置公共参数
  *  只设置共同URL等
  */

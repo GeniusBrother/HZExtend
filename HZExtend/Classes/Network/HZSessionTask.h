@@ -20,40 +20,49 @@ typedef void(^HZSessionTaskSendingBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskDidLoseBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskDidCancelBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskUploadProgressBlock)(HZSessionTask *task, NSProgress *progress);
-typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
-    HZSessionTaskStateRunable            = 1 <<  0,//初始状态
-    HZSessionTaskStateRunning            = 1 <<  1,//请求中状态
-    HZSessionTaskStateCompleted          = 1 <<  2,//完成状态
-    HZSessionTaskStateLost               = 1 <<  3,//无法连接状态
-    HZSessionTaskStateCancel             = 1 <<  4,//任务取消
-    HZSessionTaskStateSuccess            = 1 <<  5,//任务成功
-    HZSessionTaskStateFail               = 1 <<  6,//业务错误||请求失败
-    HZSessionTaskStateCacheSuccess       = 1 <<  7,//获取到正确数据的缓存
-    HZSessionTaskStateCacheFail          = 1 <<  8,//无缓存数据
-    HZSessionTaskStateCacheNoTry         = 1 <<  9,//不导入缓存
+typedef NS_ENUM(NSUInteger, HZSessionTaskState) {   //请求状态
+    HZSessionTaskStateRunable = 0,                  //可运行状态
+    HZSessionTaskStateRunning = 1,                  //请求中状态
+    HZSessionTaskStateLost = 2,                     //请求无法连接状态
+    HZSessionTaskStateCancel = 3,                   //请求取消
+    HZSessionTaskStateSuccess = 4,                  //请求成功
+    HZSessionTaskStateFail = 5,                     //业务错误||请求失败
 };
+
+typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状态
+    HZSessionTaskCacheImportStateNone = 0,          //初始状态
+    HZSessionTaskCacheImportStateSuccess = 1,       //缓存导入成功状态
+    HZSessionTaskCacheImportStateFail = 2,          //缓存导入失败状态
+    HZSessionTaskCacheImportStateNoTry = 3,
+};
+
 
 @protocol HZSessionTaskDelegate<NSObject>
 
 /**
- *  task请求完成后调用,此时state:SessionTaskStateSuccess 或 SessionTaskStateFail
+ *  task请求完成后调用,此时请求状态可能为:HZSessionTaskStateSuccess 或 HZSessionTaskStateFail
  */
 - (void)taskDidCompleted:(HZSessionTask *)task;
 
 /**
- *  task进入请求中调用 此时state:SessionTaskStateRunning|SessionTaskStateCacheSuccess 或 SessionTaskStateRunning|SessionTaskStateCacheFail 或 SessionTaskStateRunning|SessionTaskStateCacheNoTry 或 SessionTaskStateCancel
+ *  task进入请求中调用 此时请求状态为:SessionTaskStateRunning
  */
 - (void)taskSending:(HZSessionTask *)task;
 
 /**
- *  task无法连接时调用 此时state:SessionTaskStateNoReach|SessionTaskStateCacheSuccess 或 SessionTaskStateNoReach| SessionTaskStateCacheFail 或 SessionTaskStateNoReach| SessionTaskStateCacheNoTry
+ *  task无法连接时调用 此时请求状态为:HZSessionTaskStateLost
  */
 - (void)taskDidLose:(HZSessionTask *)task;
 
 /**
- *  task将要请求时调用,返回NO则取消请求,在该方法里需要设置取消原因error
+ *  task被取消时调用 此时请求状态为:HZSessionTaskStateCancel
  */
-- (BOOL)taskShouldPerform:(HZSessionTask *)task;
+- (void)taskDidCancel:(HZSessionTask *)task;
+
+/**
+ *  task将要请求时调用,需要返回取消信息,return nil则不取消
+ */
+- (NSString *)taskShouldPerform:(HZSessionTask *)task;
 
 @end
 
@@ -95,20 +104,8 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
 /** 请求状态 */
 @property(nonatomic, assign, readonly) HZSessionTaskState state;
 
-/** 表示请求是否成功*/
-@property(nonatomic, assign, readonly) BOOL isSuccess;
-
-/** 表示请求是否请求中 */
-@property(nonatomic, assign, readonly) BOOL isRunning;
-
-/** 表示请求是否失败 */
-@property(nonatomic, assign, readonly) BOOL isFail;
-
-/** 表示请求是否取得缓存成功 */
-@property(nonatomic, assign, readonly) BOOL isCacheSuccess;
-
-/** 表示请求是否取得缓存失败*/
-@property(nonatomic, assign, readonly) BOOL isCacheFail;
+/** 缓存导入状态 */
+@property(nonatomic, assign, readonly) HZSessionTaskCacheImportState cacheImportState;
 
 @property(nonatomic, weak) id<HZSessionTaskDelegate> delegate;
 
@@ -122,7 +119,7 @@ typedef NS_OPTIONS(NSUInteger, HZSessionTaskState) {
 @property(nonatomic, copy) HZSessionTaskDidLoseBlock taskDidLoseBlock;
 
 /** task取消请求时调用 */
-@property(nonatomic, copy) HZSessionTaskDidCancelBlock taskDidCancleBlock;
+@property(nonatomic, copy) HZSessionTaskDidCancelBlock taskDidCancelBlock;
 
 /** 上传过程中会调用 */
 @property(nonatomic, copy) HZSessionTaskUploadProgressBlock uploadProgressBlock;

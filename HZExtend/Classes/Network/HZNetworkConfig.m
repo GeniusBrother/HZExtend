@@ -69,10 +69,4 @@ singleton_m(Config)
 {
     return self.headerFields;
 }
-
-- (BOOL)reachable
-{
-    return !([AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable);
-}
-
 @end

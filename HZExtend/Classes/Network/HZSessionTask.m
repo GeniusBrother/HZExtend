@@ -21,6 +21,7 @@
 @property(nonatomic, copy) NSString *taskIdentifier;
 @property(nonatomic, assign) BOOL isUpload; //标识是否为上传任务
 @property(nonatomic, assign) HZSessionTaskState state;
+@property(nonatomic, assign) HZSessionTaskCacheImportState cacheImportState;
 
 @property(nonatomic, copy) NSString *method;
 @property(nonatomic, copy) NSString *path;
@@ -85,6 +86,7 @@
         _mutableRequestHeader = [NSMutableDictionary dictionary];
         _importCacheOnce = YES;
         _state = HZSessionTaskStateRunable;
+        _cacheImportState = HZSessionTaskCacheImportStateNone;
     }
     return self;
 }
@@ -120,12 +122,13 @@
     HZAssertNoReturn(self.state != HZSessionTaskStateRunable, @"task has run already");
     
     [self resetAllOutputData];
-    BOOL shouldPerform = YES;
+    NSString *cancelMsg = nil;
     if ([self.delegate respondsToSelector:@selector(taskShouldPerform:)]) {
-        shouldPerform = [self.delegate taskShouldPerform:self];
+        cancelMsg = [self.delegate taskShouldPerform:self];
     }
-    if (!shouldPerform) {
-        self.state = HZSessionTaskStateRunning | HZSessionTaskStateCancel;
+    if (cancelMsg) {
+        self.state = HZSessionTaskStateCancel;
+        self.error = [NSError errorWithDomain:@"com.HZNetwork" code:NSURLErrorBadURL userInfo:@{@"NSLocalizedDescription":cancelMsg}];
         [self callBackTaskStatus];
         [self prepareToRunable];
         return;
@@ -174,8 +177,8 @@
 - (void)cancel
 {
     [[HZNetwork sharedNetwork] cancelTask:self];
-    self.state = HZSessionTaskStateRunning | HZSessionTaskStateCancel;
-    self.error = [NSError errorWithDomain:@"com.HZNetwork" code:3 userInfo:@{@"NSLocalizedDescription":@"用户取消"}];
+    self.state = HZSessionTaskStateCancel;
+    self.error = [NSError errorWithDomain:@"com.HZNetwork" code:NSURLErrorCancelled userInfo:nil];
     [self callBackTaskStatus];
     [self prepareToRunable];
 }
@@ -199,7 +202,7 @@
 {
     //没有缓存数据就不导入缓存
     if (!self.isCached) {
-        self.state = self.state | HZSessionTaskStateCacheNoTry;
+        self.cacheImportState = HZSessionTaskCacheImportStateNoTry;
         return;
     }
     //在没有导过缓存和可以多次导入缓存的情况下尝试导入缓存
@@ -207,23 +210,33 @@
         NSDictionary *responseObject = [[TMCache sharedCache] objectForKey:self.cacheKey];
         if (responseObject.isNoEmpty) {
             self.responseObject = responseObject;
-            self.state = self.state | HZSessionTaskStateCacheSuccess;
+            self.cacheImportState =  HZSessionTaskCacheImportStateSuccess;
         }else {
-            self.state = self.state | HZSessionTaskStateCacheFail;
+            self.cacheImportState = HZSessionTaskCacheImportStateFail;
         }
         _hasImportCache = YES;
     }else {
-        self.state = self.state | HZSessionTaskStateCacheNoTry;
+        self.cacheImportState = HZSessionTaskCacheImportStateNoTry;
     }
 }
 
 - (void)taskCompletionWithResponseObject:(id)responseObject error:(NSError *)error
 {
-    if (!self.error) {
+    if (error) {
+        self.error = error;
+        NSInteger errorCode = error.code;
+        if (errorCode == NSURLErrorNotConnectedToInternet) {
+            self.state = HZSessionTaskStateLost;
+        }else {
+            self.state = HZSessionTaskStateFail;
+        }
+        HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
+        
+    }else {
         self.responseObject = responseObject;
         BOOL codeRight = [self codeIsRight];
         if (codeRight) {
-            self.state = HZSessionTaskStateCompleted | HZSessionTaskStateSuccess;
+            self.state = HZSessionTaskStateSuccess;
             self.error = nil;
             //对有效数据进行缓存
             if (self.isCached && self.cacheKey.isNoEmpty) {
@@ -232,20 +245,10 @@
                 }];
             }
         }else {
-            self.state = HZSessionTaskStateCompleted | HZSessionTaskStateFail;
+            self.state = HZSessionTaskStateFail;
             self.error = [NSError errorWithDomain:@"com.HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":self.message}];;
             HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
         }
-    }else {
-        self.error = error;
-        NSInteger errorCode = error.code;
-        if (errorCode == NSURLErrorNotConnectedToInternet) {
-            self.state = HZSessionTaskStateLost;
-            [self loadCacheData];
-        }else {
-            self.state = HZSessionTaskStateCompleted | HZSessionTaskStateFail;
-        }
-        HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
     }
     [self callBackTaskStatus];
     [self prepareToRunable];
@@ -258,69 +261,40 @@
     NSString *codeKeyPath = [HZNetworkConfig sharedConfig].codeKeyPath;
     if (!codeKeyPath.isNoEmpty) return YES;
     
-    return [[self.responseObject objectForKeyPath:codeKeyPath] integerValue] == [HZNetworkConfig sharedConfig].rightCode;
+    return self.responseObject.isNoEmpty && [[self.responseObject objectForKeyPath:codeKeyPath] integerValue] == [HZNetworkConfig sharedConfig].rightCode;
 }
 
 - (void)callBackTaskStatus
 {
-    if ([self isLost]) {
-        if ([self.delegate respondsToSelector:@selector(taskDidLose:)]) {
-            [self.delegate taskDidLose:self];
-        }
-        if (self.taskDidLoseBlock) {
-            self.taskDidLoseBlock(self);
-        }
-    }else if (self.isRunning) {
+    if (self.state == HZSessionTaskStateRunning) {
         if ([self.delegate respondsToSelector:@selector(taskSending:)]) {
             [self.delegate taskSending:self];
         }
         if (self.taskSendingBlock) {
             self.taskSendingBlock(self);
         }
-    }else if([self isCompleted]) {
+    }else if(self.state == HZSessionTaskStateSuccess || self.state == HZSessionTaskStateFail) {
         if ([self.delegate respondsToSelector:@selector(taskDidCompleted:)]) {
             [self.delegate taskDidCompleted:self];
         }
         if (self.taskDidCompletedBlock) {
             self.taskDidCompletedBlock(self);
         }
+    }else if (self.state == HZSessionTaskStateLost) {
+        if ([self.delegate respondsToSelector:@selector(taskDidLose:)]) {
+            [self.delegate taskDidLose:self];
+        }
+        if (self.taskDidLoseBlock) {
+            self.taskDidLoseBlock(self);
+        }
+    }else if (self.state == HZSessionTaskStateCancel) {
+        if ([self.delegate respondsToSelector:@selector(taskDidCancel:)]) {
+            [self.delegate taskDidCancel:self];
+        }
+        if (self.taskDidCancelBlock) {
+            self.taskDidCancelBlock(self);
+        }
     }
-}
-
-#pragma mark - State
-- (BOOL)isSuccess
-{
-    return self.state & HZSessionTaskStateSuccess;
-}
-
-- (BOOL)isFail
-{
-    return self.state & HZSessionTaskStateFail;
-}
-
-- (BOOL)isCompleted
-{
-    return self.state & HZSessionTaskStateCompleted;
-}
-
-- (BOOL)isRunning
-{
-    return self.state & HZSessionTaskStateRunning;
-}
-
-- (BOOL)isLost
-{
-    return self.state & HZSessionTaskStateLost;
-}
-
-- (BOOL)isCacheSuccess
-{
-    return self.state & HZSessionTaskStateCacheSuccess;
-}
-
-- (BOOL)isCacheFail
-{
-    return self.state & HZSessionTaskStateCacheFail;
 }
 
 #pragma mark - Setter
