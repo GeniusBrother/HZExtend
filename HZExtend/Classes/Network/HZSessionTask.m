@@ -117,7 +117,7 @@
 - (void)start
 {
     NSAssert(self.path.isNoEmpty, @"path nil");
-    HZAssertNoReturn(self.state == HZSessionTaskStateRunable, @"task has run already");
+    HZAssertNoReturn(self.state != HZSessionTaskStateRunable, @"task has run already");
     
     [self resetAllOutputData];
     BOOL shouldPerform = YES;
@@ -131,34 +131,26 @@
         return;
     }
     
-    if ([HZNetworkConfig sharedConfig].reachable) {
-        HZWeakObj(self);
-        if (self.isUpload) {
-            [[HZNetwork sharedNetwork] performUploadTask:self progress:^(NSProgress * _Nonnull uploadProgress) {
-                HZStrongObj(self);
-                if (strong_self.uploadProgressBlock) {
-                    strong_self.uploadProgressBlock(strong_self, uploadProgress);
-                }
-            } completion:^(HZNetwork * _Nonnull performer, id  _Nullable responseObject, NSError * _Nullable error) {
-                HZStrongObj(self);
-                [strong_self taskCompletionWithResponseObject:responseObject error:error];
-            }];
-        }else {
-            [[HZNetwork sharedNetwork] performTask:self completion:^(HZNetwork * _Nonnull performer, id  _Nullable responseObject, NSError * _Nullable error) {
-                HZStrongObj(self);
-                [strong_self taskCompletionWithResponseObject:responseObject error:error];
-            }];
-        }
-        self.state = HZSessionTaskStateRunning;
-        [self loadCacheData];
-        [self callBackTaskStatus];
+    HZWeakObj(self);
+    if (self.isUpload) {
+        [[HZNetwork sharedNetwork] performUploadTask:self progress:^(NSProgress * _Nonnull uploadProgress) {
+            HZStrongObj(self);
+            if (strong_self.uploadProgressBlock) {
+                strong_self.uploadProgressBlock(strong_self, uploadProgress);
+            }
+        } completion:^(HZNetwork * _Nonnull performer, id  _Nullable responseObject, NSError * _Nullable error) {
+            HZStrongObj(self);
+            [strong_self taskCompletionWithResponseObject:responseObject error:error];
+        }];
     }else {
-        self.state = HZSessionTaskStateLost;
-        self.error = [NSError errorWithDomain:@"com.HZNetwork" code:2 userInfo:@{@"NSLocalizedDescription":@"似乎已断开与互联网的连接"}];
-        [self loadCacheData];
-        [self callBackTaskStatus];
-        [self prepareToRunable];
+        [[HZNetwork sharedNetwork] performTask:self completion:^(HZNetwork * _Nonnull performer, id  _Nullable responseObject, NSError * _Nullable error) {
+            HZStrongObj(self);
+            [strong_self taskCompletionWithResponseObject:responseObject error:error];
+        }];
     }
+    self.state = HZSessionTaskStateRunning;
+    [self loadCacheData];
+    [self callBackTaskStatus];
 }
 
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
@@ -207,7 +199,7 @@
 {
     //没有缓存数据就不导入缓存
     if (!self.isCached) {
-        self.state = HZSessionTaskStateLost | HZSessionTaskStateCacheNoTry;
+        self.state = self.state | HZSessionTaskStateCacheNoTry;
         return;
     }
     //在没有导过缓存和可以多次导入缓存的情况下尝试导入缓存
@@ -227,11 +219,7 @@
 
 - (void)taskCompletionWithResponseObject:(id)responseObject error:(NSError *)error
 {
-    if (self.error) {
-        self.state = HZSessionTaskStateCompleted | HZSessionTaskStateFail;
-        self.error = error;
-        HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
-    }else {
+    if (!self.error) {
         self.responseObject = responseObject;
         BOOL codeRight = [self codeIsRight];
         if (codeRight) {
@@ -248,6 +236,16 @@
             self.error = [NSError errorWithDomain:@"com.HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":self.message}];;
             HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
         }
+    }else {
+        self.error = error;
+        NSInteger errorCode = error.code;
+        if (errorCode == NSURLErrorNotConnectedToInternet) {
+            self.state = HZSessionTaskStateLost;
+            [self loadCacheData];
+        }else {
+            self.state = HZSessionTaskStateCompleted | HZSessionTaskStateFail;
+        }
+        HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
     }
     [self callBackTaskStatus];
     [self prepareToRunable];

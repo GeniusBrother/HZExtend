@@ -14,7 +14,8 @@
 #import "ExampleItemViewController.h"
 #import "TestViewController.h"
 #import "ViewController.h"
-#import "HZExtend.h"
+#import <HZExtend/HZNavigationController.h>
+#import "SubjectViewModel.h"
 @implementation HZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -50,8 +51,19 @@
                                                 @"hz://urlmanager":@"URLViewController",
                                                 @"hz://urlItem":@"URLItemViewController"
                                                 };
+    
+    SubjectViewModel *viewModel = [SubjectViewModel viewModelWithDelegate:self];
+    viewModel.task.page++;
+    [viewModel.task startWithCompletionCallBack:^(HZSessionTask * _Nonnull task) {
+        NSLog(@"请求完成%@",task.taskIdentifier);
+    } sendingCallBack:^(HZSessionTask * _Nonnull task) {
+        NSLog(@"请求中%@",task.taskIdentifier);
+    } lostCallBack:^(HZSessionTask * _Nonnull task) {
+        NSLog(@"请求无法连接%@",task.taskIdentifier);
+    }];
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[TestViewController alloc] init]];
+    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [self test];

@@ -24,6 +24,8 @@
 		289676741D69913800A2C62D /* error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 289676721D69913800A2C62D /* error@2x.png */; };
 		289676751D69913800A2C62D /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 289676731D69913800A2C62D /* success@2x.png */; };
 		289676781D69A38C00A2C62D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 289676761D69A38C00A2C62D /* LaunchScreen.storyboard */; };
+		28F4D73D1DB5CA82008B307D /* HZSessionTask+Params.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4D73C1DB5CA82008B307D /* HZSessionTask+Params.m */; };
+		28F4D7401DB5CF04008B307D /* NetworkPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 28F4D73F1DB5CF04008B307D /* NetworkPath.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -81,6 +83,10 @@
 		289676721D69913800A2C62D /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
 		289676731D69913800A2C62D /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		289676771D69A38C00A2C62D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = HZExtend/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		28F4D73B1DB5CA82008B307D /* HZSessionTask+Params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HZSessionTask+Params.h"; sourceTree = "<group>"; };
+		28F4D73C1DB5CA82008B307D /* HZSessionTask+Params.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HZSessionTask+Params.m"; sourceTree = "<group>"; };
+		28F4D73E1DB5CDAF008B307D /* NetworkPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkPath.h; sourceTree = "<group>"; };
+		28F4D73F1DB5CF04008B307D /* NetworkPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkPath.m; sourceTree = "<group>"; };
 		3957D90FEDFB896F566815B2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* HZExtend_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HZExtend_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -136,6 +142,7 @@
 		289676461D69912A00A2C62D /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				28F4D73A1DB5CA2F008B307D /* Tool */,
 				289676471D69912A00A2C62D /* Ctrl */,
 				289676501D69912A00A2C62D /* Model */,
 			);
@@ -196,6 +203,17 @@
 				289676731D69913800A2C62D /* success@2x.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		28F4D73A1DB5CA2F008B307D /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				28F4D73B1DB5CA82008B307D /* HZSessionTask+Params.h */,
+				28F4D73C1DB5CA82008B307D /* HZSessionTask+Params.m */,
+				28F4D73E1DB5CDAF008B307D /* NetworkPath.h */,
+				28F4D73F1DB5CF04008B307D /* NetworkPath.m */,
+			);
+			path = Tool;
 			sourceTree = "<group>";
 		};
 		6003F581195388D10070C39A = {
@@ -501,12 +519,14 @@
 				289676671D69912A00A2C62D /* ViewController.m in Sources */,
 				289676641D69912A00A2C62D /* ExampleItemViewController.m in Sources */,
 				289676681D69912A00A2C62D /* BaseModel.m in Sources */,
+				28F4D7401DB5CF04008B307D /* NetworkPath.m in Sources */,
 				6003F59E195388D20070C39A /* HZAppDelegate.m in Sources */,
 				2896766F1D69912A00A2C62D /* SubjectViewModel.m in Sources */,
 				289676661D69912A00A2C62D /* URLViewController.m in Sources */,
 				2896766A1D69912A00A2C62D /* Pagination.m in Sources */,
 				2896766C1D69912A00A2C62D /* SubjectItem.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				28F4D73D1DB5CA82008B307D /* HZSessionTask+Params.m in Sources */,
 				2896766D1D69912A00A2C62D /* SubjectList.m in Sources */,
 				2896766E1D69912A00A2C62D /* SubjectModel.m in Sources */,
 				2896766B1D69912A00A2C62D /* SubjectDay.m in Sources */,

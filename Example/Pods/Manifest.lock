@@ -31,7 +31,7 @@ PODS:
     - SDWebImage
     - TMCache
   - Kiwi (2.4.0)
-  - Masonry (1.0.1)
+  - Masonry (1.0.2)
   - MBProgressHUD (1.0.0)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.12)
@@ -55,7 +55,7 @@ SPEC CHECKSUMS:
   FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
   HZExtend: 3f798b31e42252ebfb66faf2688fa2d7b8debc32
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
-  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806

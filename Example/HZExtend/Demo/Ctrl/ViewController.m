@@ -10,22 +10,15 @@
 #import "SubjectViewModel.h"
 #import "UIViewController+HZHUD.h"
 #import "SubjectDay.h"
-#import "HZExtend.h"
+#import <HZExtend/HZExtend.h>
 #import "Masonry.h"
+#import "NetworkPath.h"
 @interface ViewController () <HZViewModelDelegate>
 @property (weak, nonatomic) UILabel *pageLabel;
 @property(nonatomic, strong)  SubjectViewModel*viewModel;
 @end
 
 @implementation ViewController
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    [super viewDidAppear:animated];
-//    
-//    for (UIView *view in self.view.subviews) {
-//        NSLog(@"%@",view);
-//    }
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];    
@@ -70,10 +63,11 @@
 /**
  *  task请求完成时调用,此时task的状态可能成功或失败
  */
-- (void)viewModel:(HZViewModel *)viewModel taskDidCompleted:(HZSessionTask *)task type:(nullable NSString *)type
+- (void)viewModel:(HZViewModel *)viewModel taskDidCompleted:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier
 {
+//    NSLog(@"%s",__func__);
     HZNETWORK_CONVERT_VIEWMODEL(SubjectViewModel);
-    if (task.succeed) {
+    if (task.isSuccess) {
         [self showSuccessWithText:@"请求成功" image:@"success"];
         self.pageLabel.text = [NSString stringWithFormat:@"当前分页数为:%ld",selfViewModel.subjectList.pagination.page.integerValue];
 
@@ -87,32 +81,41 @@
 /**
  *  task进入请求中调用,此时task的状态可能为请求中取得缓存成功,请求中取得缓存失败,请求中不尝试导入缓存,请求中取消请求
  */
-- (void)viewModel:(HZViewModel *)viewModel taskSending:(HZSessionTask *)task type:(nullable NSString *)type
+- (void)viewModel:(HZViewModel *)viewModel taskSending:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier
 {
-    if (task.cacheSuccess) {
+//    NSLog(@"%s",__func__);
+    if (task.isCacheSuccess) {
         [self showSuccessWithText:@"获得缓存" image:@"success"];
-        NSLog(@"%@",task.responseObject);
+//        NSLog(@"%@",task.responseObject);
     }
 }
 
 /**
  *  task请求无法连接时调用此时task的状态可能为无法连接取得缓存成功,无法连接取得缓存失败,无法连接不尝试导入缓存
  */
-- (void)viewModel:(HZViewModel *)viewModel taskDidLose:(HZSessionTask *)task type:(nullable NSString *)type;{
-    if (task.cacheSuccess) {
+- (void)viewModel:(HZViewModel *)viewModel taskDidLose:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier
+{
+//    NSLog(@"%s",__func__);
+    if (task.isCacheSuccess) {
         [self showSuccessWithText:@"获得缓存" image:@"success"];
         NSLog(@"%@",task.responseObject);
     }
 }
 
-- (void)sendTask:(id)sender
-{
-    if (self.viewModel.task.runable) {
-        [self.viewModel.task addPage];
-        [self.viewModel sendTask:self.viewModel.task];
-    }
-    
-}
+//- (void)sendTask:(id)sender
+//{
+//    if (self.viewModel.task.state == HZSessionTaskStateRunable) {
+//        self.viewModel.task.page++;
+//        [self.viewModel.task startWithCompletionCallBack:^(HZSessionTask * _Nonnull task) {
+//            NSLog(@"请求完成%@",task.taskIdentifier);
+//        } sendingCallBack:^(HZSessionTask * _Nonnull task) {
+//            NSLog(@"请求中%@",task.taskIdentifier);
+//        } lostCallBack:^(HZSessionTask * _Nonnull task) {
+//            NSLog(@"请求无法连接%@",task.taskIdentifier);
+//        }];
+//    }
+//    
+//}
 
 - (void)listSubject:(id)sender {
     

@@ -8,7 +8,6 @@
 
 #import "HZViewModel.h"
 #import "NSObject+HZExtend.h"
-#import "HZSessionTask.h"
 
 @interface HZViewModel ()
 
