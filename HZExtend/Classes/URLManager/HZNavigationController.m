@@ -21,8 +21,6 @@
     _swipeEnable = YES;
     self.delegate = self;
     [self configGestureRecognizer];
-    
-    _countOfNoPanChild = 1;
 }
 
 /**
@@ -56,7 +54,7 @@
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    return !(self.viewControllers.count == self.countOfNoPanChild) && ![[self valueForKey:@"_isTransitioning"] boolValue] && self.swipeEnable;
+    return (self.viewControllers.count > 1) && ![[self valueForKey:@"_isTransitioning"] boolValue] && self.swipeEnable;
 }
 
 #pragma mark - UINavigationControllerDelegate

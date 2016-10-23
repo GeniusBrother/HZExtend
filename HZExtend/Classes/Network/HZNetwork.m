@@ -67,13 +67,21 @@ singleton_m(Network)
 
 - (void)performUploadTask:(HZSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock completion:(nonnull void (^)(HZNetwork * _Nonnull, id _Nullable, NSError * _Nullable))completion
 {
+    NSDictionary *fileDic = sessionTask.fileParams;
+    NSData *fileData = [fileDic objectForKey:HZ_FILE_MIME_TYPE_KEY];
+    NSString *fileName = [fileDic objectForKey:HZ_FILE_NAME_KEY];
+    NSAssert( fileName || fileData , @"HZNetwork 上传文件不能为空");
+    
+    NSString *mineType = [fileDic objectForKey:HZ_FILE_MIME_TYPE_KEY];
+    NSString *formName = [fileDic objectForKey:HZ_FILE_FORM_NAME_KEY];
+    
     NSError *serializationError = nil;
     NSMutableURLRequest *request = [self.sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:sessionTask.absoluteURL parameters:sessionTask.params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        if (sessionTask.fileData) {
-            [formData appendPartWithFileData:sessionTask.fileData name:sessionTask.formName fileName:sessionTask.fileName mimeType:sessionTask.mimeType];
+        if (fileData.isNoEmpty) {
+            [formData appendPartWithFileData:fileData name:formName fileName:fileName mimeType:mineType];
         }else {
-            NSURL *fileURL = [[NSBundle mainBundle] URLForResource:sessionTask.fileName withExtension:nil];
-            [formData appendPartWithFileURL:fileURL name:sessionTask.formName fileName:sessionTask.fileName mimeType:sessionTask.mimeType error:nil];
+            NSURL *fileURL = [[NSBundle mainBundle] URLForResource:fileName.isNoEmpty?fileName:@"" withExtension:nil];
+            [formData appendPartWithFileURL:fileURL name:formName fileName:fileName mimeType:mineType error:nil];
         }
     } error:&serializationError];
     if (serializationError) {

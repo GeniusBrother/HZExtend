@@ -28,4 +28,12 @@
 //使用在Ctrl里viewModel的回调方法里，将HZViewModel装换成自身的viewModel类型,
 #define HZNETWORK_CONVERT_VIEWMODEL(ClassForToViewModel) ClassForToViewModel *selfViewModel = (ClassForToViewModel *)viewModel
 
+#define HZ_FILE_MIME_TYPE_KEY @"mimeType"
+
+#define HZ_FILE_NAME_KEY @"fileName"
+
+#define HZ_FILE_FORM_NAME_KEY @"formName"
+
+#define HZ_FILE_DATA_KEY @"fileData"
+
 #endif /* HZNetworkConst_h */

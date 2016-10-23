@@ -124,7 +124,6 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 /** 上传过程中会调用 */
 @property(nonatomic, copy) HZSessionTaskUploadProgressBlock uploadProgressBlock;
 
-
 /** 不设置则每个session默认为HZNetworkConfig的baseURL为基本的路径 */
 @property(nullable, nonatomic, copy) NSString *baseURL;
 
@@ -134,6 +133,10 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 /** 请求参数 */
 @property(nullable, nonatomic, strong) NSMutableDictionary<NSString *, id> *params;
 
+/** 文件参数 */
+@property(nullable, nonatomic, strong) NSMutableDictionary<NSString *, id> *fileParams;
+
+/** 请求方法 */
 @property(nonatomic, copy, readonly) NSString *method;
 
 /** 请求头 */
@@ -142,27 +145,11 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 /** pathKeys不为空则URL为http://abc/a/value1/value2/...的格式。pathkeys=@[key1,key2....] value1,value2通过params设置*/
 @property(nullable, nonatomic, copy) NSArray *pathkeys;
 
-/** 分页模型中的快捷参数 */
-@property(nonatomic, assign) NSUInteger page;
-@property(nonatomic, assign) NSUInteger pageSize;
-
 /** 是否对正确返回数据缓存 默认为为YES,HZUploadSessionTask默认为NO */
 @property(nonatomic, assign, getter=isCached) BOOL cached;
 
 /** 设置每次只导入缓存一次，默认为YES,分页时应设置成NO来解决上拉加载来导入缓存 */
 @property(nonatomic, assign) BOOL importCacheOnce;
-
-/** 上传文件的类型 */
-@property(nonatomic, copy, nullable) NSString *mimeType;
-
-/** 上传文件的名称 */
-@property(nonatomic, copy, nullable) NSString *fileName;
-
-/** 上传文件的表单名称 */
-@property(nonatomic, copy, nullable) NSString *formName;
-
-/** 上传文件的二进制数据 */
-@property(nonatomic, strong, nullable) NSData *fileData;
 
 /** 服务器返回的json对象 */
 @property(nullable, nonatomic, strong, readonly) NSDictionary *responseObject;
@@ -180,20 +167,9 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
  */
 - (void)setValue:(NSString *)value forHeaderField:(NSString *)key;
 
-/**
- *  文件参数设置
- */
-- (void)setFileName:(NSString *)fileName
-           formName:(NSString *)formName
-           mimeType:(NSString *)mimeType;
-
-- (void)setFileData:(NSData *)fileData
-           formName:(NSString *)formName
-           fileName:(NSString *)fileName
-           mimeType:(NSString *)mimeType;
 
 /**
- *	开始请求任务
+ *	开始请求
  *
  *	@param completionCallBack  task完成时的回调
  *	@param sendingCallBack  task进入请求中状态时回调
@@ -204,9 +180,15 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
                     sendingCallBack:(HZSessionTaskSendingBlock)sendingCallBack
                        lostCallBack:(HZSessionTaskDidLoseBlock)lostCallBack;
+/**
+ *	开始请求
+ *
+ *	@param handler  将要执行请求任务时调用,如果error不会nil会被拦截请求
+ */
+- (void)startWithHandler:(void(^)(HZSessionTask *task, NSError  * _Nullable error))handler;
 
 /**
- *	开始上传请求任务
+ *	开始上传请求
  *  上传请求任务请用该方法启动
  *	@param completionCallBack  task完成时的回调
  *  @param uploadCallBack task上传过程中的回调

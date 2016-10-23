@@ -9,14 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface HZNavigationController : UINavigationController
-/**
- *  是否开启侧滑
- */
-@property(nonatomic, assign) BOOL swipeEnable;
 
-/**
- *  当子控制器的数量<=改值时不触发侧滑手势,默认为1
- */
-@property(nonatomic, assign) NSUInteger countOfNoPanChild;
+/** 是否开启侧滑,默认为YES */
+@property(nonatomic, assign) BOOL swipeEnable;
 
 @end

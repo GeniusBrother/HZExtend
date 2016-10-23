@@ -12,7 +12,7 @@
 #import "HZMacro.h"
 @interface HZObserver ()
 
-@property(nonatomic, weak) id object;
+@property(nonatomic, strong) id object;
 @property(nonatomic, copy) NSString *objectKeyPath;
 
 @end

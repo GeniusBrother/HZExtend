@@ -5,9 +5,6 @@
 //  Created by xzh on 16/3/21.
 //  Copyright © 2016年 xzh. All rights reserved.
 //
-/**
- *  若被观察者先消失,注意提前移除通知即使观察者为nil
- */
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -18,7 +15,7 @@ typedef void (^DidChangeBlock)(id object, id value);
 /**
  *  被观察的对象
  */
-@property(nonatomic, weak, readonly) id object;
+@property(nonatomic, strong, readonly) id object;
 
 /**
  *  被观察的属性

@@ -101,22 +101,7 @@
 }
 
 #pragma mark - Public Method
-- (void)setFileName:(NSString *)fileName formName:(NSString *)formName mimeType:(NSString *)mimeType
-{
-    self.formName = formName;
-    self.fileName = fileName;
-    self.mimeType = mimeType;
-}
-
-- (void)setFileData:(NSData *)fileData formName:(NSString *)formName fileName:(NSString *)fileName mimeType:(NSString *)mimeType
-{
-    self.fileData = fileData;
-    self.formName = formName;
-    self.fileName = fileName;
-    self.mimeType = mimeType;
-}
-
-- (void)start
+- (void)startWithHandler:(void (^)(HZSessionTask * _Nonnull, NSError * _Nullable))handler
 {
     NSAssert(self.path.isNoEmpty, @"path nil");
     HZAssertNoReturn(self.state != HZSessionTaskStateRunable, @"task has run already");
@@ -127,13 +112,13 @@
         cancelMsg = [self.delegate taskShouldPerform:self];
     }
     if (cancelMsg) {
-        self.state = HZSessionTaskStateCancel;
         self.error = [NSError errorWithDomain:@"com.HZNetwork" code:NSURLErrorBadURL userInfo:@{@"NSLocalizedDescription":cancelMsg}];
-        [self callBackTaskStatus];
+        if (handler) { handler(self, self.error); }
         [self prepareToRunable];
         return;
     }
     
+    if (handler) { handler(self, self.error); }
     HZWeakObj(self);
     if (self.isUpload) {
         [[HZNetwork sharedNetwork] performUploadTask:self progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -154,6 +139,11 @@
     self.state = HZSessionTaskStateRunning;
     [self loadCacheData];
     [self callBackTaskStatus];
+}
+
+- (void)start
+{
+    [self startWithHandler:nil];
 }
 
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
