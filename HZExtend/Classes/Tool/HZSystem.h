@@ -39,6 +39,9 @@
 
 /********APP Info********/
 + (NSString *)appVersion;
++ (NSString *)appBuild;
++ (NSString *)appDisplayName;
++ (NSString *)appBundleName;
 + (NSString *)appIdentifier;
 + (NSString *)systemInfo;
 

@@ -258,11 +258,30 @@ static const char * __jb_app = NULL;
 #pragma mark - App Info
 + (NSString *)appVersion
 {
-    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    
-    if (0 == version.length ) version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersion"];
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     
     return version;
+}
+
++ (NSString *)appBuild
+{
+    NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    
+    return build;
+}
+
++ (NSString *)appBundleName
+{
+    NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+    
+    return bundleName;
+    
+}
+
++ (NSString *)appDisplayName
+{
+    NSString *displayName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    return displayName;
 }
 
 + (NSString *)appIdentifier

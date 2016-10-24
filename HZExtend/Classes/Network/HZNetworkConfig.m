@@ -17,10 +17,12 @@ NSString *const kNetworkPageSize = @"pageSize";
 @interface HZNetworkConfig ()
 
 @property(nonatomic, copy) NSMutableDictionary *headerFields;
+@property(nonatomic, copy) NSString *userAgent;
 
 @end
 
 @implementation HZNetworkConfig
+#pragma mark - Initialization
 singleton_m(Config)
 
 - (instancetype)init
@@ -37,6 +39,7 @@ singleton_m(Config)
     return self;
 }
 
+#pragma mark - Public Method
 - (void)setupBaseURL:(NSString *)baseURL
            userAgent:(NSString *)userAgent
 {
@@ -53,7 +56,7 @@ singleton_m(Config)
     _codeKeyPath = codeKeyPath;
     _msgKeyPath = msgKeyPath;
     _rightCode = rightCode;
-    _userAgent = userAgent;
+    self.userAgent = userAgent;
     
     if (userAgent.isNoEmpty)
         [self.headerFields setObject:userAgent forKey:@"User-Agent"];
@@ -61,12 +64,25 @@ singleton_m(Config)
 
 - (void)addDefaultHeaderFields:(NSDictionary *)headerFields
 {
-    if (headerFields.isNoEmpty)
-    [self.headerFields addEntriesFromDictionary:headerFields];
+    if (headerFields.isNoEmpty) {
+        [self.headerFields addEntriesFromDictionary:headerFields];
+        self.userAgent = [self.headerFields objectForKey:@"User-Agent"];
+    }
+    
 }
 
 - (NSDictionary *)defaultHeaderFields
 {
     return self.headerFields;
+}
+
+#pragma mark - Setter
+- (void)setUserAgent:(NSString *)userAgent
+{
+    _userAgent = userAgent;
+    
+    if (userAgent.isNoEmpty) {
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":userAgent}];
+    }
 }
 @end
