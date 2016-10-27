@@ -30,11 +30,12 @@
 @property(nonatomic, assign) CGFloat width;
 
 /********有了父视图，且在同一个视图树才能使用********/
-- (void)alignRight:(CGFloat)rightOffset;    //右边距离父视图rightOffset为负值
-- (void)alignBottom:(CGFloat)bottomOffset;  //下边距离父视图bottomOffset为负值
-- (void)alignCenter;                        //与父视图中心对齐
-- (void)alignCenterX;                       //与父视图的中心x对齐
-- (void)alignCenterY;                       
+- (void)alignRight:(CGFloat)rightOffset;        //右边距离父视图rightOffset为负值
+- (void)alignBottom:(CGFloat)bottomOffset;      //下边距离父视图bottomOffset为负值
+- (void)alignCenter;                            //与父视图中心对齐
+- (void)alignCenterX;                           //与父视图的中心x对齐
+- (void)alignCenterY;
+
 
 /**
  *  底部在参照视图(frame已经确定)顶部offset距离 offset为负值，需先设置Height

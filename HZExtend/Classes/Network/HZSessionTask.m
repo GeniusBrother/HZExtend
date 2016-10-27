@@ -236,7 +236,7 @@
             }
         }else {
             self.state = HZSessionTaskStateFail;
-            self.error = [NSError errorWithDomain:@"com.HZNetwork" code:1 userInfo:@{@"NSLocalizedDescription":self.message}];;
+            self.error = [NSError errorWithDomain:@"com.HZNetwork" code:NSURLErrorBadServerResponse userInfo:@{@"NSLocalizedDescription":self.message}];;
             HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
         }
     }
@@ -346,6 +346,14 @@
             }
     }
     return absoluteURL;
+}
+
+- (NSMutableDictionary<NSString *,id> *)params
+{
+    if (!_params) {
+        _params = [NSMutableDictionary dictionary];
+    }
+    return _params;
 }
 
 - (void)dealloc
