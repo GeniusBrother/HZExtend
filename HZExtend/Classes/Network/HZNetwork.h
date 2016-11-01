@@ -18,6 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
 singleton_h(Network)
 
 /**
+ *	配置默认的请求头
+ *  所有的请求任务都会被追加默认的请求头
+ *
+ *	@param requestHeaders  默认的请求头
+ */
+- (void)configDefaultRequestHeader:(NSDictionary<NSString *, NSString *> *)requestHeaders;
+
+/**
  *	执行普通请求任务
  *
  *	@param task  普通请求任务

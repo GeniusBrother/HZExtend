@@ -50,7 +50,7 @@ singleton_h(Config)
 /**
  *  默认的公共请求头
  */
-@property(nonatomic, copy, readonly) NSDictionary<NSString *, id> *defaultHeaderFields;
+@property(nonatomic, copy, readonly) NSDictionary<NSString *, NSString *> *defaultHeaderFields;
 
 /** 是否允许信任非信任机构的证书，默认为NO */
 @property(nonatomic, assign) BOOL allowInvalidCertificates;
@@ -81,7 +81,7 @@ singleton_h(Config)
 /**
  *  添加公共请求头
  */
-- (void)addDefaultHeaderFields:(NSDictionary<NSString *, id> *)headerFields;
+- (void)addDefaultHeaderFields:(NSDictionary<NSString *, NSString *> *)headerFields;
 
 @end
 

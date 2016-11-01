@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import "NSDictionary+HZExtend.h"
 #import "NSString+HZExtend.h"
-
+#import "HZNetwork.h"
 NSString *const kNetworkPage = @"page";
 NSString *const kNetworkPageSize = @"pageSize";
 
@@ -58,8 +58,9 @@ singleton_m(Config)
     _rightCode = rightCode;
     self.userAgent = userAgent;
     
-    if (userAgent.isNoEmpty)
-        [self.headerFields setObject:userAgent forKey:@"User-Agent"];
+    if (userAgent.isNoEmpty) {
+        [self addDefaultHeaderFields:@{@"User-Agent":userAgent}];
+    }
 }
 
 - (void)addDefaultHeaderFields:(NSDictionary *)headerFields
@@ -67,8 +68,9 @@ singleton_m(Config)
     if (headerFields.isNoEmpty) {
         [self.headerFields addEntriesFromDictionary:headerFields];
         self.userAgent = [self.headerFields objectForKey:@"User-Agent"];
+        
+        [[HZNetwork sharedNetwork] configDefaultRequestHeader:headerFields];
     }
-    
 }
 
 - (NSDictionary *)defaultHeaderFields

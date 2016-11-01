@@ -43,11 +43,6 @@ singleton_m(Network)
     _dataTasks = [NSMutableDictionary dictionary];
     _sessionManager = [AFHTTPSessionManager manager];
     
-    //设置通用请求头
-    [[HZNetworkConfig sharedConfig].defaultHeaderFields enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        [self.sessionManager.requestSerializer setValue:obj forHTTPHeaderField:key];
-    }];
-    
     //设置证书验证方式配置模型
     AFSecurityPolicy *securityConfigModel = [AFSecurityPolicy policyWithPinningMode:[HZNetworkConfig sharedConfig].SSLPinningMode];
     securityConfigModel.allowInvalidCertificates = [HZNetworkConfig sharedConfig].allowInvalidCertificates;
@@ -55,6 +50,16 @@ singleton_m(Network)
 }
 
 #pragma mark - Public Method
+- (void)configDefaultRequestHeader:(NSDictionary<NSString *,NSString *> *)requestHeaders
+{
+    if (!requestHeaders.isNoEmpty) return;
+    
+    //设置默认的请求头
+    [requestHeaders enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
+        [self.sessionManager.requestSerializer setValue:[obj urlEncode] forHTTPHeaderField:key];
+    }];
+}
+
 - (void)performTask:(HZSessionTask *)task completion:(nonnull void (^)(HZNetwork * _Nonnull, id _Nullable, NSError * _Nullable))completion
 {
     NSString *method = task.method?:@"GET";
