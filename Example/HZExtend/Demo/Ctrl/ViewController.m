@@ -13,6 +13,7 @@
 #import <HZExtend/HZExtend.h>
 #import "Masonry.h"
 #import "NetworkPath.h"
+#import "HZSessionTask+Params.h"
 @interface ViewController () <HZViewModelDelegate>
 @property (weak, nonatomic) UILabel *pageLabel;
 @property(nonatomic, strong)  SubjectViewModel*viewModel;
