@@ -6,60 +6,60 @@
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
 
-#import "HzSystem.h"
+#import "HZSystem.h"
 #import <UIKit/UIKit.h>
 #include <sys/sysctl.h>
 @implementation HZSystem
 
 #pragma mark - Sytem Version
-+ (BOOL)isIOS6Later
++ (BOOL)isIOS6OrLater
 {
-    return ( [[[UIDevice currentDevice] systemVersion] compare:@"6.0"] != NSOrderedAscending );
+    return [[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0;
 }
 
-+ (BOOL)isIOS7Later
++ (BOOL)isIOS7OrLater
 {
-    return ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending );
+    return [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0;
 }
 
-+ (BOOL)isIOS8Later
++ (BOOL)isIOS8OrLater
 {
-    return ( [[[UIDevice currentDevice] systemVersion] compare:@"8.0"] != NSOrderedAscending );
+    return [[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0;
 }
 
-+ (BOOL)isIOS9Later
++ (BOOL)isIOS9OrLater
 {
-    return ( [[[UIDevice currentDevice] systemVersion] compare:@"9.0"] != NSOrderedAscending );
+    return [[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0;
 }
 
-+ (BOOL)isIOS10Later
++ (BOOL)isIOS10OrLater
 {
-    return ( [[[UIDevice currentDevice] systemVersion] compare:@"10.0"] != NSOrderedAscending );
+    return [[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0;
 }
 
 + (BOOL)isIOS6Early
 {
-   return ![self isIOS6Later];
+   return ![self isIOS6OrLater];
 }
 
 + (BOOL)isIOS7Early
 {
-    return ![self isIOS7Later];
+    return ![self isIOS7OrLater];
 }
 
 + (BOOL)isIOS8Early
 {
-    return ![self isIOS8Later];
+    return ![self isIOS8OrLater];
 }
 
 + (BOOL)isIOS9Early
 {
-    return ![self isIOS9Later];
+    return ![self isIOS9OrLater];
 }
 
 + (BOOL)isIOS10Early
 {
-    return ![self isIOS10Later];
+    return ![self isIOS10OrLater];
 }
 
 #pragma mark - Device Size

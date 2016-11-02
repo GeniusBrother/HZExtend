@@ -10,11 +10,11 @@
 @interface HZSystem : NSObject
 
 /********系统********/
-+ (BOOL)isIOS6Later;    //包括IOS6,下同
-+ (BOOL)isIOS7Later;
-+ (BOOL)isIOS8Later;
-+ (BOOL)isIOS9Later;
-+ (BOOL)isIOS10Later;
++ (BOOL)isIOS6OrLater;    //包括IOS6,下同
++ (BOOL)isIOS7OrLater;
++ (BOOL)isIOS8OrLater;
++ (BOOL)isIOS9OrLater;
++ (BOOL)isIOS10OrLater;
 
 + (BOOL)isIOS6Early;    //不包括IOS6,下同
 + (BOOL)isIOS7Early;
