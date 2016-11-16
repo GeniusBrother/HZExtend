@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void(^HZViewTapBlock)(UIView *view);
 @interface UIView (HZAction)
-- (void)tapPeformBlock:(void(^)())block;
+
+- (void)tapPeformBlock:(HZViewTapBlock)block;
 
 @end

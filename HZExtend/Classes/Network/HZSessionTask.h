@@ -131,7 +131,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 @property(nonatomic, copy, readonly) NSString *path;
 
 /** 请求参数 */
-@property(nullable, nonatomic, strong) NSMutableDictionary<NSString *, id> *params;
+@property(nonatomic, strong) NSMutableDictionary<NSString *, id> *params;
 
 /** 文件参数 */
 @property(nullable, nonatomic, strong) NSMutableDictionary<NSString *, id> *fileParams;
@@ -178,7 +178,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
  */
 - (void)start;
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
-                    sendingCallBack:(HZSessionTaskSendingBlock)sendingCallBack
+                    sendingCallBack:(nullable HZSessionTaskSendingBlock)sendingCallBack
                        lostCallBack:(HZSessionTaskDidLoseBlock)lostCallBack;
 /**
  *	开始请求

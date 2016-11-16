@@ -12,7 +12,7 @@
 static const char kBlock = '\0';
 @implementation UIView (HZAction)
 
-- (void)tapPeformBlock:(void(^)())block
+- (void)tapPeformBlock:(HZViewTapBlock)block
 {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self addGestureRecognizer:tap];
@@ -21,20 +21,20 @@ static const char kBlock = '\0';
 
 - (void)tap:(UITapGestureRecognizer *)tap
 {
-    void(^voidBlock)() = [self block];
-    if (voidBlock) {
-        voidBlock();
+    HZViewTapBlock block = [self block];
+    if (block) {
+        block(self);
     }
 }
 
-- (void)setBlock:(void(^)())block
+- (void)setBlock:(HZViewTapBlock)block
 {
     if (block) {
         objc_setAssociatedObject(self, &kBlock, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
     }
 }
 
-- (void(^)())block
+- (HZViewTapBlock)block
 {
     return objc_getAssociatedObject(self, &kBlock);
 }
