@@ -49,7 +49,7 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionT
 
 @property(nonatomic, weak) id<HZViewModelDelegate> delegate;
 
-+ (instancetype)viewModelWithDelegate:(id<HZViewModelDelegate>)delegate;
++ (instancetype)viewModelWithDelegate:(nullable id<HZViewModelDelegate>)delegate;
 
 #pragma mark - 子类重写回调
 /**
