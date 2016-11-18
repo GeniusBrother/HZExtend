@@ -365,9 +365,6 @@ static FMDatabase *DATA_BASE;
     while ([rs next]) {
         
         NSMutableDictionary *dic = (NSMutableDictionary *)rs.resultDictionary;
-        if ([dic objectForKey:@"primarykey"]) {
-            [dic removeObjectForKey:@"primarykey"];
-        }
 
         if (isModel)
         {
