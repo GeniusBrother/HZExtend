@@ -80,15 +80,15 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
                         params:(nullable NSMutableDictionary<NSString *, id> *)params
-                      delegate:(id<HZSessionTaskDelegate>)delegate
-                   taskIdentifier:(NSString *)taskIdentifier;
+                      delegate:(nullable id<HZSessionTaskDelegate>)delegate
+                taskIdentifier:(nullable NSString *)taskIdentifier;
 
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
                         params:(nullable NSMutableDictionary<NSString *, id> *)params
                       pathKeys:(NSArray<NSString *> *)keys
-                      delegate:(id<HZSessionTaskDelegate>)delegate
-                   taskIdentifier:(NSString *)taskIdentifier;
+                      delegate:(nullable id<HZSessionTaskDelegate>)delegate
+                taskIdentifier:(nullable NSString *)taskIdentifier;
 
 /**
  *	创建上传请求任务
