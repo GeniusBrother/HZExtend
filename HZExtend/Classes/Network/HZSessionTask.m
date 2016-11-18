@@ -146,6 +146,12 @@
     [self startWithHandler:nil];
 }
 
+- (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion
+{
+    [self startWithCompletionCallBack:completion sendingCallBack:nil
+                         lostCallBack:nil];
+}
+
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
                     sendingCallBack:(HZSessionTaskSendingBlock)sendingCallBack
                        lostCallBack:(HZSessionTaskDidLoseBlock)lostCallBack

@@ -177,6 +177,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
  *	@param uploadCallBack task上传过程中的回调
  */
 - (void)start;
+- (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion;
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
                     sendingCallBack:(nullable HZSessionTaskSendingBlock)sendingCallBack
                        lostCallBack:(HZSessionTaskDidLoseBlock)lostCallBack;
