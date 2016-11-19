@@ -20,6 +20,32 @@
     [self removeObjectAtIndex:index];
 }
 
+- (void)addUniqueObject:(id)object compare:(NSMutableArrayCompareBlock)compare
+{
+    __block BOOL isUnique = YES;
+    [self enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (compare) {
+            
+            NSComparisonResult result = compare(obj,object);
+            if (NSOrderedSame == result)
+            {
+                isUnique = NO;
+                *stop = YES;
+            }
+        }else if ([obj class] == [object class] && [obj respondsToSelector:@selector(compare:)]) {
+            
+            NSComparisonResult result = [obj compare:object];
+            if (NSOrderedSame == result)
+            {
+                isUnique = NO;
+                *stop = YES;
+            }
+        }
+    }];
+
+    if (isUnique) [self addObject:object];
+}
+
 - (void)appendPageArray:(NSArray *)pageArray pageNumber:(NSInteger)pageNumber pageSize:(NSInteger)pageSize
 {
     if (!pageArray.isNoEmpty) return;
