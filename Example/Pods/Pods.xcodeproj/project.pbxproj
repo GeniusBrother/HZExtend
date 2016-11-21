@@ -83,6 +83,8 @@
 		26BA3878BA3C2C1495D7D0CEBC850680 /* MJRefreshStateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 09104CB4205196AFFCB2D694FF645451 /* MJRefreshStateHeader.m */; };
 		26D5BB5FC6269E06B492F2DB1A979AFD /* MJRefreshFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DE24E44B46A9E7611484237813E45D /* MJRefreshFooter.m */; };
 		277940B09CE7EFE02528DF22E45B187B /* KiwiBlockMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = DC76451F9188B9DD0648549D8FD0A05B /* KiwiBlockMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		28C3F5451DE2D94C003BD7F3 /* UIViewController+HZExtend.h in Headers */ = {isa = PBXBuildFile; fileRef = 28C3F5431DE2D94C003BD7F3 /* UIViewController+HZExtend.h */; };
+		28C3F5461DE2D94C003BD7F3 /* UIViewController+HZExtend.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C3F5441DE2D94C003BD7F3 /* UIViewController+HZExtend.m */; };
 		299F1CF2FD8DCE55C16ACDA19D27130E /* KWChangeMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 395DD819C3007186B043441AAFFD9D62 /* KWChangeMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		29E12972FF5B8259985EFE49A250BAE0 /* KWFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E810C5F8EADB9388215AF648917CB82 /* KWFailure.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		2A14FE12B16B404ED170EBDA84ED4168 /* HZErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29438E475295844813BF9F0DC6AF2CB8 /* HZErrorViewController.m */; };
@@ -722,6 +724,8 @@
 		274CFF16F24C6C8819130CADF4636713 /* NSMethodSignature+KiwiAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSMethodSignature+KiwiAdditions.m"; path = "Classes/Core/NSMethodSignature+KiwiAdditions.m"; sourceTree = "<group>"; };
 		277B6383F75CE28D9D3BDDF0AE932994 /* UIView+MJExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+MJExtension.m"; path = "MJRefresh/UIView+MJExtension.m"; sourceTree = "<group>"; };
 		28257119DFD037AB86D82F07C44E8F66 /* MJPropertyKey.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJPropertyKey.h; path = MJExtension/MJPropertyKey.h; sourceTree = "<group>"; };
+		28C3F5431DE2D94C003BD7F3 /* UIViewController+HZExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HZExtend.h"; sourceTree = "<group>"; };
+		28C3F5441DE2D94C003BD7F3 /* UIViewController+HZExtend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HZExtend.m"; sourceTree = "<group>"; };
 		29438E475295844813BF9F0DC6AF2CB8 /* HZErrorViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = HZErrorViewController.m; sourceTree = "<group>"; };
 		2AD79B70AF3FD3529909F4D38A9C5511 /* TMMemoryCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TMMemoryCache.h; path = TMCache/TMMemoryCache.h; sourceTree = "<group>"; };
 		2B1C583518CC1FE018662B0A0CC346AA /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+MASAdditions.m"; path = "Masonry/NSArray+MASAdditions.m"; sourceTree = "<group>"; };
@@ -1890,6 +1894,8 @@
 		B7F0E439210934771F030A640BAC0B0A /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				28C3F5431DE2D94C003BD7F3 /* UIViewController+HZExtend.h */,
+				28C3F5441DE2D94C003BD7F3 /* UIViewController+HZExtend.m */,
 				FEE4C76C9F3F5161A933A277DC3CFCB0 /* HZFit.h */,
 				53D684C294A690CF1721488FE99B8CBE /* HZFit.m */,
 				97308E2F455828D019A34478E47FC454 /* HZScrollView.h */,
@@ -2331,6 +2337,7 @@
 				CAC483EF637FB4A2C2E2FC75BA631B87 /* AFAutoPurgingImageCache.h in Headers */,
 				AB39AC9746E7575D7449700475E41B0B /* AFHTTPSessionManager.h in Headers */,
 				5808B477EFF509D810B5CDCFDC944F80 /* AFImageDownloader.h in Headers */,
+				28C3F5451DE2D94C003BD7F3 /* UIViewController+HZExtend.h in Headers */,
 				1480F4923DBBF217F60572EEECB4027C /* AFNetworkActivityIndicatorManager.h in Headers */,
 				EC7CADE416A78A1CD6936018A6695126 /* AFNetworking-umbrella.h in Headers */,
 				E7988678C81F7CCB95D239375FC6986D /* AFNetworking.h in Headers */,
@@ -2978,6 +2985,7 @@
 				AF03C11A1FAC8132AD3749D8F541701A /* UIButton+AFNetworking.m in Sources */,
 				2E8A32ED46194EDBE22146271F6D26DE /* UIImageView+AFNetworking.m in Sources */,
 				5FF6453E55785669885F626B853FD2AA /* UIProgressView+AFNetworking.m in Sources */,
+				28C3F5461DE2D94C003BD7F3 /* UIViewController+HZExtend.m in Sources */,
 				174202BD6AE0E4A41F5CE66E975EAE52 /* UIRefreshControl+AFNetworking.m in Sources */,
 				A462945883F7729B185B64B679A6BFBE /* UIWebView+AFNetworking.m in Sources */,
 			);
