@@ -32,6 +32,8 @@
 
 #define HZNowTimeStamp (long long)[[[NSDate alloc] init] timeIntervalSince1970]
 
+#define HZString(...) [NSString stringWithFormat:__VA_ARGS__]
+
 //返回属性字符串，结合HZObserver使用
 #define HZKeyPath(keyPath) NSStringFromSelector(@selector(keyPath))
 
