@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)appendPageArray:(NSArray *)pageArray pageNumber:(NSInteger)currentPageNumber pageSize:(NSInteger)pageSize;
 
+- (void)removeDataForPage:(NSInteger)page pageSize:(NSInteger)pageSize;
+
 @end
 
 NS_ASSUME_NONNULL_END

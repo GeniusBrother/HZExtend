@@ -61,4 +61,13 @@
     }
 }
 
+- (void)removeDataForPage:(NSInteger)page pageSize:(NSInteger)pageSize
+{    
+    NSInteger reserverCount = (page - 1) * pageSize;
+    if (self.count > reserverCount && reserverCount >= 0) {
+        NSArray *reserveArray = [self subarrayWithRange:NSMakeRange(0, reserverCount)];
+        [self setArray:reserveArray];
+    }
+}
+
 @end

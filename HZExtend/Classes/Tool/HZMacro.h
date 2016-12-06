@@ -60,10 +60,9 @@ return returnValue;\
 
 //限内部使用
 #ifdef DEBUG
-#define HZLog(...) NSLog(__VA_ARGS__)
-#else 
-#define HZLog(...)
+#define HZLog(format,...) printf("[%s] %s %s\n", __TIME__, __FUNCTION__, [[NSString stringWithFormat:format, ## __VA_ARGS__] UTF8String])
+#else
+#define HZLog(format,...)
 #endif
-
 
 #endif /* HZMacro_h */
