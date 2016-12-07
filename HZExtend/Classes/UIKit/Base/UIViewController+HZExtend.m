@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+HZExtend.h"
-
+#import <objc/objc-runtime.h>
 static const char kDoneKey = '\0';
 
 @implementation UIViewController (HZExtend)
