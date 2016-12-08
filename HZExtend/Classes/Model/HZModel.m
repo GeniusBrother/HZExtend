@@ -378,7 +378,7 @@ static FMDatabase *DATA_BASE;
         }
         
     }
-    
+    [rs close];
     return array;
 }
 
