@@ -8,13 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "HZSingleton.h"
+
 
 /**
  *  负责跳转,获得当前viewCtrl&navgationController
  */
 @interface HZURLNavigation : NSObject
-singleton_h(Navigation)
 /**
  *  获得当前的控制器,从rootViewCtrl开始寻找
  */

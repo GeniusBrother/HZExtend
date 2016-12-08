@@ -9,7 +9,6 @@
 #import "HZURLNavigation.h"
 #import "NSArray+HZExtend.h"
 @implementation HZURLNavigation
-singleton_m(Navigation)
 
 #pragma mark - 获得控制器
 + (id<UIApplicationDelegate>)applicationDelegate

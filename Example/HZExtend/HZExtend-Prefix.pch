@@ -13,4 +13,7 @@
 #ifdef __OBJC__
     @import UIKit;
     @import Foundation;
+
+#import <HZExtend/HZExtend.h>
+
 #endif

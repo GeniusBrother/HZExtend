@@ -23,8 +23,15 @@
 
 @implementation HZNetwork
 #pragma mark - Initializtion
-
-singleton_m(Network)
+singleton_m
++ (instancetype)sharedNetwork
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[self alloc] init];
+    });
+    return _instance;
+}
 
 - (instancetype)init
 {

@@ -23,7 +23,15 @@ NSString *const kNetworkPageSize = @"pageSize";
 
 @implementation HZNetworkConfig
 #pragma mark - Initialization
-singleton_m(Config)
+singleton_m
++ (instancetype)sharedConfig
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[self alloc] init];
+    });
+    return _instance;
+}
 
 - (instancetype)init
 {

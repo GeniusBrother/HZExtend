@@ -4,7 +4,7 @@
 
 #if __has_feature(objc_arc) // ARC
 
-#define singleton_m(name) \
+#define singleton_m \
 static id _instance; \
 + (id)allocWithZone:(struct _NSZone *)zone \
 { \
@@ -15,14 +15,6 @@ static id _instance; \
     return _instance; \
 } \
  \
-+ (instancetype)shared##name \
-{ \
-    static dispatch_once_t onceToken; \
-    dispatch_once(&onceToken, ^{ \
-        _instance = [[self alloc] init]; \
-    });\
-    return _instance; \
-} \
 + (id)copyWithZone:(struct _NSZone *)zone \
 { \
     return _instance; \

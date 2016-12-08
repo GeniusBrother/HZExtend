@@ -8,7 +8,7 @@
 
 #import "HZModel.h"
 #import "Pagination.h"
-@interface SubjectList : HZModel
+@interface SubjectList : NSObject
 @property(nonatomic, strong) NSArray *list;
 @property(nonatomic, strong) Pagination *pagination;    //分页模型
 

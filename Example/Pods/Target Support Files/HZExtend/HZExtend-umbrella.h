@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 
+#import "HZDatabaseManager.h"
 #import "HZObserver.h"
 #import "HZSingleton.h"
 #import "NSArray+HZExtend.h"
@@ -12,6 +13,7 @@
 #import "HZExtend.h"
 #import "HZModel.h"
 #import "HZViewModel.h"
+#import "NSObject+HZModel.h"
 #import "HZNetwork.h"
 #import "HZNetworkConfig.h"
 #import "HZNetworkConst.h"
@@ -22,11 +24,13 @@
 #import "HZScrollView.h"
 #import "UIColor+HZExtend.h"
 #import "UIImage+HZExtend.h"
+#import "UIImage+HZTool.h"
 #import "UIImageView+HZExtend.h"
 #import "UIScrollView+HZExtend.h"
 #import "UIScrollView+HZRefresh.h"
 #import "UIView+HZAction.h"
 #import "UIView+HZExtend.h"
+#import "UIViewController+HZExtend.h"
 #import "UIViewController+HZHUD.h"
 #import "HZCircleView.h"
 #import "HZRefreshAutoFooter.h"

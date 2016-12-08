@@ -9,7 +9,17 @@
 #import "HZURLManageConfig.h"
 
 @implementation HZURLManageConfig
-singleton_m(Config)
+singleton_m
+
++ (instancetype)sharedConfig
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[self alloc] init];
+    });
+    return _instance;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -19,6 +29,5 @@ singleton_m(Config)
     });
     return self;
 }
-
 
 @end

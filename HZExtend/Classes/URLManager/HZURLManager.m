@@ -9,7 +9,17 @@
 #import "HZURLManager.h"
 #import "NSObject+HZExtend.h"
 @implementation HZURLManager
-singleton_m(Manager)
+singleton_m
+
++ (instancetype)sharedManager
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[self alloc] init];
+    });
+    return _instance;
+}
+
 - (instancetype)init
 {
     self = [super init];

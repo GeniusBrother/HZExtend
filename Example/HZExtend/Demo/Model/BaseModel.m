@@ -9,14 +9,13 @@
 #import "BaseModel.h"
 
 @implementation BaseModel
-- (void)loadModel
-{
-    [super loadModel];
-    
-    [BaseModel mj_setupObjectClassInArray:^NSDictionary *{
-        return @{
-                 @"example":@"ExampleItemModel"
-                 };
-    }];
++ (void)initialize {
+    if ([BaseModel self] == self) {
+        [BaseModel mj_setupObjectClassInArray:^NSDictionary *{
+            return @{@"example":@"ExampleItemModel"};
+        }];
+        
+    }
 }
+
 @end

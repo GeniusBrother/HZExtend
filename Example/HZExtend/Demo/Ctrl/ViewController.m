@@ -115,13 +115,13 @@
 
 - (void)listSubject:(id)sender {
     
-    [SubjectDay open];
+
     //等价于[SubjectDay findAll]
     NSArray *array = [SubjectDay findWithSql:@"select *from SubjectDay" withParameters:nil];
     for (SubjectDay *day in array) {
         NSLog(@"title:%@-----------des:%@",day.title,day.desc);
     }
-    [SubjectDay close];
+
 }
 
 @end

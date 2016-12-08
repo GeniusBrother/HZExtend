@@ -43,11 +43,10 @@
 - (void)saveSubject
 {
     SubjectDay *day = [self.subjectList.list firstObject];
-    [SubjectDay open];
-    SubjectDay *existDay = [SubjectDay modelWithSql:@"select *from SubjectDay where title = ?" withParameters:@[day.title]];
+    SubjectDay *existDay = [SubjectDay modelInDBWithKey:@"title" value:day.title];
     if (!existDay) {
         [day safeSave];
     }
-    [SubjectDay close];
+
 }
 @end

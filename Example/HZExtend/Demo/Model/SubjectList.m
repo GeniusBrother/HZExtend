@@ -9,12 +9,12 @@
 #import "SubjectList.h"
 
 @implementation SubjectList
-- (void)loadModel
-{
-    [super loadModel];
-    
-    [SubjectList mj_setupObjectClassInArray:^NSDictionary *{
-        return @{@"list":@"SubjectDay"};
-    }];
++ (void)initialize {
+    if ([SubjectList self] == self) {
+        [SubjectList mj_setupObjectClassInArray:^NSDictionary *{
+            return @{@"list":@"SubjectDay"};
+        }];
+
+    }
 }
 @end
