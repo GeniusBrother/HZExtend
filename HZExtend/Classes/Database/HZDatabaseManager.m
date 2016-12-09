@@ -30,10 +30,38 @@ singleton_m
     return _instance;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self setup];
+        });
+    }
+    return self;
+}
+
+- (void)setup
+{
+    _shouldControlConnection = YES;
+    
+    [HZNotificationCenter addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
 #pragma mark - Private Method
 - (BOOL)isOpen
 {
     return [self.database goodConnection];
+}
+
+- (void)checkConnection
+{
+    if (self.shouldControlConnection) {
+        [self.database open];
+    }else {
+        NSAssert([self isOpen], @"请先打开数据库");
+    }
 }
 
 #pragma mark - Public Method
@@ -46,15 +74,14 @@ singleton_m
 
 - (BOOL)close
 {
+    if (self.shouldControlConnection) return NO;
+    
     return [self.database close];
 }
 
 - (BOOL)executeUpdate:(NSString *)sql withParams:(NSArray *)data
 {
-    if (![self isOpen])  {
-        NSAssert(NO, @"请先打开数据库");
-        return NO;
-    }
+    [self checkConnection];
     
     if (!sql.isNoEmpty) {
         NSAssert(NO, @"%s SQL语句为空",__FUNCTION__);
@@ -76,10 +103,8 @@ singleton_m
 
 - (NSArray *)executeQuery:(NSString *)sql withParams:(NSArray *)data
 {
-    if (![self isOpen]) {
-        NSAssert(NO, @"请先打开数据库");
-        return nil;
-    }
+    [self checkConnection];
+    
     if (!sql.isNoEmpty) {
         NSAssert(NO, @"%s SQL语句为空",__FUNCTION__);
         return nil;
@@ -109,10 +134,7 @@ singleton_m
 
 - (NSArray *)executeStatement:(NSString *)sql flag:(BOOL)isReturn
 {
-    if (![self isOpen]) {
-        NSAssert(NO, @"NSObject+HZModel,请先打开数据库");
-        return nil;
-    }
+    [self checkConnection];
     
     if (!sql.isNoEmpty) {
         NSAssert(NO, @"%s SQL语句为空",__FUNCTION__);
@@ -139,10 +161,7 @@ singleton_m
 
 - (long)longForQuery:(NSString *)sql
 {
-    if (![self isOpen]) {
-        NSAssert(NO, @"NSObject+HZModel,请先打开数据库");
-        return NSNotFound;
-    }
+    [self checkConnection];
     
     if (!sql.isNoEmpty) {
         NSAssert(NO, @"%s SQL语句为空",__FUNCTION__);
@@ -154,6 +173,26 @@ singleton_m
 
 - (NSUInteger)lastInsertRowId
 {
+    [self checkConnection];
+    
     return (NSUInteger)[self.database lastInsertRowId];
 }
+
+#pragma mark - Notification
+- (void)applicationDidEnterBackground:(NSNotification *)notification
+{
+    if(self.shouldControlConnection)  [self.database close];
+}
+
+#pragma mark - Setter
+- (void)setDbPath:(NSString *)dbPath
+{
+    if (dbPath.isNoEmpty && ![dbPath isEqualToString:_dbPath]) {
+        [self.database close];
+        
+        self.database = [FMDatabase databaseWithPath:dbPath];   //用到的时候去连接数据库
+    }
+    _dbPath = dbPath;
+}
+
 @end

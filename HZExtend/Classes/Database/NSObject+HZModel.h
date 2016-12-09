@@ -12,8 +12,7 @@
 /****************     与数据库中的元组映射     ****************/
 
 NS_ASSUME_NONNULL_BEGIN
-
-//数据库HZModel扩展性差,比如不想存储全部的属性
+extern NSString *const kPrimaryKeyName;
 
 @interface NSObject (HZModel)
 #pragma mark - Property
@@ -48,22 +47,22 @@ NS_ASSUME_NONNULL_BEGIN
  *  保存数据到数据库
  *  如果数据库已经存在则更新
  */
-- (BOOL)safeSave;
+- (BOOL)save;
 
 /**
  *  从数据库删除自身这条数据
  */
-- (BOOL)safeDelete;
+- (BOOL)delete;
 
 /**
  *	从数据库删除该表下的全部数据
  */
-+ (BOOL)safeDeleteAll;
++ (BOOL)deleteAll;
 
 /**
  *  删除数组中的全部元组
  */
-+ (BOOL)safeDeleteWithArray:(NSArray *)array;
++ (BOOL)deleteWithArray:(NSArray *)array;
 
 /**
  *	查找数据模型
@@ -95,22 +94,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - CallBack
 /**
- *  插入数据到数据库之前调用
+ *  向数据库插入数据之前调用
  */
 - (void)beforeInsert;
 
 /**
- *  插入数据到数据库后调用
+ *  向数据库插入数据后调用
  */
 - (void)sucessInsert;
 
 /**
- *  更新数据到数据库之前调用
+ *  向数据库更新数据之前调用
  */
 - (void)beforeUpdate;
 
 /**
- *  更新数据到数据库后调用
+ *  向数据库更新数据后调用
  */
 - (void)sucessUpdate;
 
@@ -135,6 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  子类重写该方法来返回属性与列名的映射
  */
 + (NSDictionary *)getColumnNames;
+
 @end
 
 NS_ASSUME_NONNULL_END

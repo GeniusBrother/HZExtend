@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 
 #import "HZDatabaseManager.h"
+#import "NSObject+HZModel.h"
 #import "HZObserver.h"
 #import "HZSingleton.h"
 #import "NSArray+HZExtend.h"
@@ -11,9 +12,7 @@
 #import "NSString+HZExtend.h"
 #import "NSURL+HZExtend.h"
 #import "HZExtend.h"
-#import "HZModel.h"
 #import "HZViewModel.h"
-#import "NSObject+HZModel.h"
 #import "HZNetwork.h"
 #import "HZNetworkConfig.h"
 #import "HZNetworkConst.h"

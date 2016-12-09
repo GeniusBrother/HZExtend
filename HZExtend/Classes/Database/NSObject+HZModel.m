@@ -14,7 +14,7 @@
 #import "FMDB.h"
 static const char kPrimaryKey = '\0';
 static const char kIsInDBKey = '\0';
-
+NSString *const kPrimaryKeyName = @"primaryKey";
 @interface NSObject ()
 
 @property(nonatomic, assign) BOOL isInDB;
@@ -129,15 +129,21 @@ static const char kIsInDBKey = '\0';
 
 - (BOOL)save
 {
-    if (!self.isInDB) {
-        [self insert];
-    }else {
-        [self updateSelf];
+    BOOL rs = NO;
+    if ([HZDBManager open]) {
+        if (!self.isInDB) {
+            rs = [self insert];
+        }else {
+           rs = [self updateSelf];
+        }
+        [HZDBManager close];
+        return rs;
     }
+    return NO;
 }
 
 #pragma mark - Public Method
-+ (BOOL)safeDeleteAll
++ (BOOL)deleteAll
 {
     if ([HZDBManager open]) {
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@", [self getTabelName]];
@@ -149,7 +155,7 @@ static const char kIsInDBKey = '\0';
     return NO;
 }
 
-+ (BOOL)safeDeleteWithArray:(NSArray *)array
++ (BOOL)deleteWithArray:(NSArray *)array
 {
     if (!array.isNoEmpty) return NO;
     
@@ -174,18 +180,7 @@ static const char kIsInDBKey = '\0';
     return NO;
 }
 
-- (BOOL)safeSave
-{
-    if ([HZDBManager open]) {
-        BOOL rs = [self save];
-        [HZDBManager close];
-        return rs;
-    }
-    
-    return NO;
-}
-
-- (BOOL)safeDelete
+- (BOOL)delete
 {
     if ([HZDBManager open]) {
         BOOL rs = [self deleteSelf];
