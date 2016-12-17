@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)keyValues;    //author=GeniusBrother
 - (NSDictionary *)queryDic; //@{@"author":@"GeniusBrother"}
 
+- (id)hz_jsonObject;
+
 @end
 
 NS_ASSUME_NONNULL_END

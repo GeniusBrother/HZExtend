@@ -190,6 +190,13 @@ singleton_m
     if (dbPath.isNoEmpty && ![dbPath isEqualToString:_dbPath]) {
         [self.database close];
         
+        NSString *directory = [dbPath stringByDeletingLastPathComponent];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:directory]) {
+            NSError *error;
+            [fileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:&error];
+        }
+        
         self.database = [FMDatabase databaseWithPath:dbPath];   //用到的时候去连接数据库
     }
     _dbPath = dbPath;

@@ -50,6 +50,39 @@
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
+- (NSInteger)integerValueForKey:(NSString *)key
+{
+    id value = [self objectForKey:key];
+    
+    if ([value isKindOfClass:[NSNumber class]]) {
+        return [value integerValue];
+    }else {
+        return 0;
+    }
+}
+
+- (BOOL)boolValueForKey:(NSString *)key
+{
+    id value = [self objectForKey:key];
+    
+    if ([value isKindOfClass:[NSNumber class]]) {
+        return [value boolValue];
+    }else {
+        return NO;
+    }
+}
+
+- (double)doubleValueForKey:(NSString *)key
+{
+    id value = [self objectForKey:key];
+    
+    if ([value isKindOfClass:[NSNumber class]]) {
+        return [value doubleValue];
+    }else {
+        return 0.0;
+    }
+}
+
 @end
 
 @implementation NSMutableDictionary (HZExtend)

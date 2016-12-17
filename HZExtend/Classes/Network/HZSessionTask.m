@@ -198,7 +198,7 @@
 {
     //没有缓存数据就不导入缓存
     if (!self.isCached) {
-        self.cacheImportState = HZSessionTaskCacheImportStateNoTry;
+        self.cacheImportState = HZSessionTaskCacheImportStateFail;
         return;
     }
     //在没有导过缓存和可以多次导入缓存的情况下尝试导入缓存
@@ -212,7 +212,7 @@
         }
         _hasImportCache = YES;
     }else {
-        self.cacheImportState = HZSessionTaskCacheImportStateNoTry;
+        self.cacheImportState = HZSessionTaskCacheImportStateFail;
     }
 }
 

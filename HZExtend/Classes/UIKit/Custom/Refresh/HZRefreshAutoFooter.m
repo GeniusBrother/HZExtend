@@ -33,15 +33,15 @@
     [self addSubview:circleView];
     self.circleView = circleView;
     
-    UILabel *noDataLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    noDataLabel.text = @"已经全部加载完毕";
-    noDataLabel.textColor = HZRGB(90, 90, 90);
-    noDataLabel.textAlignment = NSTextAlignmentCenter;
-    noDataLabel.font = [UIFont boldSystemFontOfSize:14];
-    noDataLabel.backgroundColor = [UIColor clearColor];
-    noDataLabel.hidden = YES;
-    [self addSubview:noDataLabel];
-    self.noDataLabel = noDataLabel;
+//    UILabel *noDataLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+//    noDataLabel.text = @"已经全部加载完毕";
+//    noDataLabel.textColor = HZRGB(90, 90, 90);
+//    noDataLabel.textAlignment = NSTextAlignmentCenter;
+//    noDataLabel.font = [UIFont boldSystemFontOfSize:14];
+//    noDataLabel.backgroundColor = [UIColor clearColor];
+//    noDataLabel.hidden = YES;
+//    [self addSubview:noDataLabel];
+//    self.noDataLabel = noDataLabel;
 }
 
 #pragma mark 在这里设置子控件的位置和尺寸

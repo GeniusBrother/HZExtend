@@ -37,6 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSString *)jsonString;
 
+- (NSInteger)integerValueForKey:(NSString *)key;
+
+- (BOOL)boolValueForKey:(NSString *)key;
+
+- (double)doubleValueForKey:(NSString *)key;
+
 @end
 
 NS_ASSUME_NONNULL_END

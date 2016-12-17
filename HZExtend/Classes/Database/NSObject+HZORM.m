@@ -6,9 +6,11 @@
 //
 //
 
-#import "NSObject+HZModel.h"
+#import "NSObject+HZORM.h"
 #import "HZMacro.h"
 #import "NSObject+HZExtend.h"
+#import "NSDictionary+HZExtend.h"
+#import "NSArray+HZExtend.h"
 
 #import <objc/runtime.h>
 #import "FMDB.h"
@@ -18,11 +20,10 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 @interface NSObject ()
 
 @property(nonatomic, assign) BOOL isInDB;
-@property(nonatomic, assign) NSUInteger primaryKey;
 
 @end
 
-@implementation NSObject (HZModel)
+@implementation NSObject (HZORM)
 #pragma mark - Initialization
 + (instancetype)modelWithDic:(NSDictionary *)dic
 {
@@ -49,7 +50,7 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     NSMutableArray *values = [NSMutableArray array];
     
     for (NSString *columnName in [[self class] getColumnNames].allValues) {
-        id value = [self valueForKey:columnName];
+        id value = [self workedValueForPropertyName:columnName];
         
         if (value != nil) {
             [values addObject:value];
@@ -58,6 +59,21 @@ NSString *const kPrimaryKeyName = @"primaryKey";
         }
     }
     return values;
+}
+
+- (id)workedValueForPropertyName:(NSString *)name
+{
+    id originalValue = [self valueForKey:name];
+    
+    if (!originalValue) return nil;
+    
+    if ([originalValue isKindOfClass:[NSArray class]]) {
+        return [(NSArray *)originalValue jsonString];
+    }else if ([originalValue isKindOfClass:[NSDictionary class]]) {
+        return [(NSDictionary *)originalValue jsonString];;
+    }else {
+        return originalValue;
+    }
 }
 
 - (BOOL)insert
@@ -97,15 +113,25 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 
 - (BOOL)updateSelf
 {
-    NSArray *propertyNames = [[self class] getColumnNames].allValues;
-    NSDictionary *data = [self dictionaryWithValuesForKeys:propertyNames];
-    if (!data.isNoEmpty) return NO;
+    NSDictionary *columnPropertyDic = [[self class] getColumnNames];
+    if (!columnPropertyDic.isNoEmpty) {
+        NSAssert(NO, @"请实现getColumnNames 指定列名");
+        return NO;
+    }
     
     [self beforeUpdate];
     
-    NSString *setValues = [[[data allKeys] componentsJoinedByString:@" = ?, "] stringByAppendingString:@" = ?"];
+    __block NSMutableString *setValues = [NSMutableString string];
+    __block NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:columnPropertyDic.count];
+    [columnPropertyDic enumerateKeysAndObjectsUsingBlock:^(NSString  *_Nonnull column, NSString  *_Nonnull property, BOOL * _Nonnull stop) {
+        [setValues appendFormat:@"%@ = ?,",column];
+        id data = [self workedValueForPropertyName:property];
+        if (data) [parameters addObject:data];
+    }];
+    [setValues deleteCharactersInRange:NSMakeRange(setValues.length - 1, 1)];
+    [parameters addObject:@(self.primaryKey)];
+    
     NSString *sql = [NSString stringWithFormat:@"UPDATE %@ SET %@ WHERE primaryKey = ?", [[self class] getTabelName], setValues];
-    NSArray *parameters = [[data allValues] arrayByAddingObject:@(self.primaryKey)];
     if ([HZDBManager executeUpdate:sql withParams:parameters]) {
         
         [self sucessUpdate];
@@ -196,8 +222,24 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     NSArray *modelArray = nil;
     if ([HZDBManager open]) {
         NSArray *results= [HZDBManager executeQuery:sql withParams:parameters];
-        modelArray = [self mj_objectArrayWithKeyValuesArray:results];
-        [modelArray setValue:[NSNumber numberWithBool:YES] forKey:@"isInDB"];
+        NSMutableArray *objArray = [NSMutableArray arrayWithCapacity:results.count];
+        NSDictionary *columnPropertyDic = [self getColumnNames];
+        [results enumerateObjectsUsingBlock:^(NSDictionary  *_Nonnull json, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSObject *obj = [[self alloc] init];
+            [json enumerateKeysAndObjectsUsingBlock:^(NSString  *_Nonnull columnName, id  _Nonnull value, BOOL * _Nonnull stop) {
+                if ([columnName isEqualToString:kPrimaryKeyName]) {
+                    [obj setValue:value forKey:columnName];
+                }else {
+                    NSString *propertyName = [columnPropertyDic objectForKey:columnName];
+                    id convertedValue =  [self convertedValueForPropertyName:propertyName value:value];
+                    NSAssert(convertedValue, @"HZORM 装换的值不能为nil");
+                    if (convertedValue) [obj setValue:convertedValue forKey:propertyName];
+                }
+            }];
+            [obj setValue:@(YES) forKey:@"isInDB"];
+            [objArray addObject:obj];
+        }];
+        modelArray = objArray;
         [HZDBManager close];
     }
 
@@ -228,6 +270,8 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 + (NSString *)getTabelName {}
 
 + (NSDictionary *)getColumnNames { return nil; }
+
++ (id)convertedValueForPropertyName:(NSString *)name value:(id)value { return value; }
 
 #pragma mark - Property
 - (BOOL)isInDB

@@ -13,6 +13,7 @@
 #import <HZExtend/HZExtend.h>
 #import "SubjectItem.h"
 #import <AFNetworking/AFNetworking.h>
+#import <FMDB/FMDB.h>
 static NSString *str = @"ENsjdhakjdhsadsdkj";
 static CGFloat count = 0;
 static NSInteger h = 1;

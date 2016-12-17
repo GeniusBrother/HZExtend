@@ -8,6 +8,7 @@
 
 #import "NSString+HZExtend.h"
 #import "NSData+HZExtend.h"
+#import <MJExtension/NSObject+MJKeyValue.h>
 @implementation NSString (HZExtend)
 
 #pragma mark - URL
@@ -164,5 +165,10 @@
     }
     
     return queryDic;
+}
+
+- (id)hz_jsonObject
+{
+    return [NSJSONSerialization JSONObjectWithData:[self dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
 }
 @end

@@ -30,10 +30,9 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskState) {   //请求状态
 };
 
 typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状态
-    HZSessionTaskCacheImportStateNone = 0,          //初始状态
+    HZSessionTaskCacheImportStateNone = 0,          //未进行过缓存导入状态,为初始状态
     HZSessionTaskCacheImportStateSuccess = 1,       //缓存导入成功状态
-    HZSessionTaskCacheImportStateFail = 2,          //缓存导入失败状态
-    HZSessionTaskCacheImportStateNoTry = 3,
+    HZSessionTaskCacheImportStateFail = 2,          //缓存导入失败状态,可能原因为没有缓存,已经导入过缓存
 };
 
 

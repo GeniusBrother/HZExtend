@@ -1,20 +1,22 @@
 //
-//  NSObject+HZModel.h
+//  NSObject+HZORM.h
 //  Pods
 //
 //  Created by xzh on 2016/12/8.
 //
 //
 
+/****************     进行ORM操作     ****************/
+
 #import <Foundation/Foundation.h>
 #import <MJExtension/MJExtension.h>
 #import "HZDatabaseManager.h"
-/****************     与数据库中的元组映射     ****************/
+#define PROPERTY_NANME_FOR_KEY(KEY) NSStringFromSelector(@selector(KEY))
 
 NS_ASSUME_NONNULL_BEGIN
 extern NSString *const kPrimaryKeyName;
 
-@interface NSObject (HZModel)
+@interface NSObject (HZORM)
 #pragma mark - Property
 /** 是否存在数据库中 */
 @property(nonatomic, assign, readonly) BOOL isInDB;
@@ -133,7 +135,14 @@ extern NSString *const kPrimaryKeyName;
 /**
  *  子类重写该方法来返回属性与列名的映射
  */
-+ (NSDictionary *)getColumnNames;
++ (NSDictionary<NSString *, NSString *> *)getColumnNames;
+
+/**
+ *	将元组值映射到属性值时调用
+ *  默认实现为返回原值,可以对数据进行处理在设置给属性,如将json字符串转出json对象再返回
+ */
++ (id)convertedValueForPropertyName:(NSString *)name value:(id)value;
+
 
 @end
 
