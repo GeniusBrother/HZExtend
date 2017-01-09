@@ -7,6 +7,7 @@
 //
 
 #import "UIViewController+HZViewController.h"
+#import <objc/runtime.h>
 static const char kNavBar = '\0';
 
 @implementation UIViewController (HZViewController)

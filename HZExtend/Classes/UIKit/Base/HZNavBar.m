@@ -7,7 +7,10 @@
 //
 
 #import "HZNavBar.h"
-
+#import "HZMacro.h"
+#import "UIView+HZExtend.h"
+#import "NSObject+HZExtend.h"
+#import "HZURLManager.h"
 @interface HZNavBar ()
 
 @property(nonatomic, weak) UILabel *titleLabel;

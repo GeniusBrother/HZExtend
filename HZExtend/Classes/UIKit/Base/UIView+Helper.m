@@ -7,6 +7,9 @@
 //
 
 #import "UIView+Helper.h"
+#import <Masonry/Masonry.h>
+#import "UIColor+HZExtend.h"
+#import <objc/runtime.h>
 static const char kLineView = '\0';
 
 @implementation UIView (Helper)
