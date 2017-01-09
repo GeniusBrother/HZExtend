@@ -74,13 +74,22 @@ singleton_h(Manager)
 - (nullable NSArray *)executeStatement:(NSString *)sql flag:(BOOL)isReturn;
 
 /**
- *  执行查询数量的SQL语句
+ *  执行返回结果为long的SQL语句
  *  需先使用‘open’来打开数据库
  *
  *	@param sql  sql语句
- *  @return 整形,查询的数量结果
+ *  @return 一个整形值
  */
 - (long)longForQuery:(NSString *)sql;
+
+/**
+ *  执行返回结果为double的sql语句
+ *  需先使用‘open’来打开数据库
+ *
+ *	@param sql  sql语句
+ *  @return 一个double值,
+ */
+- (double)doubleForQuery:(NSString *)sql;
 
 /**
  *	返回最近插入操作的Row ID

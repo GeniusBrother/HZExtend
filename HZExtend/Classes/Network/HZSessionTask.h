@@ -103,6 +103,9 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 /** 请求状态 */
 @property(nonatomic, assign, readonly) HZSessionTaskState state;
 
+/** 是否为第一次执行 */
+@property(nonatomic, assign, readonly) BOOL isFirstRequest;
+
 /** 缓存导入状态 */
 @property(nonatomic, assign, readonly) HZSessionTaskCacheImportState cacheImportState;
 
@@ -127,7 +130,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 @property(nullable, nonatomic, copy) NSString *baseURL;
 
 /** URL中的path */
-@property(nonatomic, copy, readonly) NSString *path;
+@property(nonatomic, copy) NSString *path;
 
 /** 请求参数 */
 @property(nonatomic, strong) NSMutableDictionary<NSString *, id> *params;
@@ -179,7 +182,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 - (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion;
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
                     sendingCallBack:(nullable HZSessionTaskSendingBlock)sendingCallBack
-                       lostCallBack:(HZSessionTaskDidLoseBlock)lostCallBack;
+                       lostCallBack:(nullable HZSessionTaskDidLoseBlock)lostCallBack;
 /**
  *	开始请求
  *

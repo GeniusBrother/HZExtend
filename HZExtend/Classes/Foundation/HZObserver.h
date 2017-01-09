@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^DidChangeBlock)(id object, id value);
+typedef void (^DidChangeBlock)(id object, id value, id oldValue);
 @interface HZObserver : NSObject
 
 /**
@@ -29,6 +29,15 @@ typedef void (^DidChangeBlock)(id object, id value);
 
 
 - (instancetype)init NS_UNAVAILABLE;
+
+/**
+ *  创建观察者
+ *  didChange在值改变时调用
+ */
++ (instancetype)observeObject:(id)object
+                      keyPath:(NSString *)keyPath
+                      options:(NSKeyValueObservingOptions)options
+                       change:(DidChangeBlock)didChange;
 
 /**
  *  创建观察者

@@ -159,6 +159,18 @@ singleton_m
     return array;
 }
 
+- (double)doubleForQuery:(NSString *)sql
+{
+    [self checkConnection];
+    
+    if (!sql.isNoEmpty) {
+        NSAssert(NO, @"%s SQL语句为空",__FUNCTION__);
+        return MAXFLOAT;
+    }
+    
+    return [self.database doubleForQuery:sql];
+}
+
 - (long)longForQuery:(NSString *)sql
 {
     [self checkConnection];

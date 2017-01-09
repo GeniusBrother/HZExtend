@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "HZNetwork.h"
 #import "HZSessionTask.h"
-@class HZViewModel;
 
+#define VIEWMODEL self.viewModel
+
+@class HZViewModel;
 NS_ASSUME_NONNULL_BEGIN
 typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionTask *task);
 @protocol HZViewModelDelegate<NSObject>

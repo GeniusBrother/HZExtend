@@ -64,8 +64,8 @@
 - (BOOL)boolValueForKey:(NSString *)key
 {
     id value = [self objectForKey:key];
-    
-    if ([value isKindOfClass:[NSNumber class]]) {
+
+    if ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]]) {
         return [value boolValue];
     }else {
         return NO;

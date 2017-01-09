@@ -23,7 +23,6 @@
 + (instancetype)observeObject:(id)object
                       keyPath:(NSString *)keyPath
                       options:(NSKeyValueObservingOptions)options
-                      context:(void *)context
                        change:(DidChangeBlock)didChange
 {
     if (object && !keyPath.isNoEmpty) return nil;
@@ -32,7 +31,7 @@
     observer.didChange = didChange;
     observer.object = object;
     observer.objectKeyPath = keyPath;
-    [object addObserver:observer forKeyPath:keyPath options:options context:context];
+    [object addObserver:observer forKeyPath:keyPath options:options context:NULL];
     return observer;
     
 }
@@ -41,21 +40,21 @@
                       keyPath:(NSString *)keyPath
                        change:(DidChangeBlock)didChange
 {
-    return [self observeObject:object keyPath:keyPath options:NSKeyValueObservingOptionNew context:NULL change:didChange];
+    return [self observeObject:object keyPath:keyPath options:NSKeyValueObservingOptionNew  change:didChange];
 }
 
 + (instancetype)observeOriginalObject:(id)object
                               keyPath:(NSString *)keyPath
                                change:(DidChangeBlock)didChange
 {
-    return [self observeObject:object keyPath:keyPath options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial) context:NULL change:didChange];
+    return [self observeObject:object keyPath:keyPath options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionInitial)change:didChange];
 }
 
 #pragma mark - Observer
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     if (self.didChange) {
-        self.didChange(object,[change objectForKey:NSKeyValueChangeNewKey]);
+        self.didChange(object,[change objectForKey:NSKeyValueChangeNewKey],[change objectForKey:NSKeyValueChangeOldKey]);
     }
 }
 

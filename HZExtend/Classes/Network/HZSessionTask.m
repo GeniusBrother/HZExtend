@@ -22,9 +22,7 @@
 @property(nonatomic, assign) BOOL isUpload; //标识是否为上传任务
 @property(nonatomic, assign) HZSessionTaskState state;
 @property(nonatomic, assign) HZSessionTaskCacheImportState cacheImportState;
-
 @property(nonatomic, copy) NSString *method;
-@property(nonatomic, copy) NSString *path;
 @property(nonatomic, strong) NSMutableDictionary <NSString *, NSString *> *mutableRequestHeader;
 
 @property(nonatomic, strong) NSDictionary *responseObject;
@@ -87,6 +85,7 @@
         _importCacheOnce = YES;
         _state = HZSessionTaskStateRunable;
         _cacheImportState = HZSessionTaskCacheImportStateNone;
+        _isFirstRequest = YES;
     }
     return self;
 }
@@ -183,6 +182,7 @@
 //准备重新运行
 - (void)prepareToRunable
 {
+    _isFirstRequest = NO;
     self.state = HZSessionTaskStateRunable;
 }
 
