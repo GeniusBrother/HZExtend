@@ -231,9 +231,11 @@ NSString *const kPrimaryKeyName = @"primaryKey";
                     [obj setValue:value forKey:columnName];
                 }else {
                     NSString *propertyName = [columnPropertyDic objectForKey:columnName];
-                    id convertedValue =  [self convertedValueForPropertyName:propertyName value:value];
-                    NSAssert(convertedValue, @"HZORM 装换的值不能为nil");
-                    if (convertedValue) [obj setValue:convertedValue forKey:propertyName];
+                    if (propertyName.isNoEmpty) {
+                        id convertedValue =  [self convertedValueForPropertyName:propertyName value:value];
+                        NSAssert(convertedValue, @"HZORM 装换的值不能为nil");
+                        if (convertedValue) [obj setValue:convertedValue forKey:propertyName];
+                    }
                 }
             }];
             [obj setValue:@(YES) forKey:@"isInDB"];

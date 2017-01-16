@@ -133,12 +133,12 @@ extern NSString *const kPrimaryKeyName;
 + (NSString *)getTabelName;
 
 /**
- *  子类重写该方法来返回属性与列名的映射
+ *  子类重写该方法来返回属性与列名的映射关系
  */
 + (NSDictionary<NSString *, NSString *> *)getColumnNames;
 
 /**
- *	将元组值映射到属性值时调用
+ *	子类重写该方法对映射值进行处理然后再返回赋给属性
  *  默认实现为返回原值,可以对数据进行处理在设置给属性,如将json字符串转出json对象再返回
  */
 + (id)convertedValueForPropertyName:(NSString *)name value:(id)value;

@@ -65,4 +65,16 @@ return returnValue;\
 #define HZLog(format,...)
 #endif
 
+NS_INLINE NSRange NSMakeRangeLen(NSRange range,NSInteger len) {
+    NSRange r = range;
+    r.length = len;
+    return r;
+}
+
+NS_INLINE NSRange NSMakeRangeLoc(NSRange range,NSInteger loc) {
+    NSRange r = range;
+    r.location = loc;
+    return r;
+}
+
 #endif /* HZMacro_h */

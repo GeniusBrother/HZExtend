@@ -46,7 +46,7 @@ static const char kLineView = '\0';
         if (isBottom) {
             make.bottom.equalTo(lineView.superview);
         }else {
-            make.top.equalTo(0);
+            make.top.equalTo(@0);
         }
     }];
     [self setLineView:lineView];
