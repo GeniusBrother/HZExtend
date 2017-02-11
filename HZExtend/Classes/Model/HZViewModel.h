@@ -22,28 +22,22 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionT
  *	@param task  请求任务
  *  @param taskIdentifier  请求任务的标识
  */
-- (void)viewModel:(HZViewModel *)viewModel taskDidCompleted:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier;
+- (void)viewModel:(HZViewModel *)viewModel taskDidCompleted:(HZSessionTask *)task;
 
 /**
  *  task进入请求中调用
  *	@param task  请求任务
  *  @param taskIdentifier  请求任务的标识
  */
-- (void)viewModel:(HZViewModel *)viewModel taskSending:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier;
+- (void)viewModel:(HZViewModel *)viewModel taskSending:(HZSessionTask *)task;
 
-/**
- *  task请求无法连接时调用
- *	@param task  请求任务
- *  @param taskIdentifier  请求任务的标识
- */
-- (void)viewModel:(HZViewModel *)viewModel taskDidLose:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier;
 
 /**
  *  task被取消时调用
  *	@param task  请求任务
  *  @param taskIdentifier  请求任务的标识
  */
-- (void)viewModel:(HZViewModel *)viewModel taskDidCancel:(HZSessionTask *)task taskIdentifier:(nullable NSString *)taskIdentifier;
+- (void)viewModel:(HZViewModel *)viewModel taskDidCancel:(HZSessionTask *)task;
 
 @end
 
@@ -53,47 +47,32 @@ typedef void(^HZNetworkSendTaskHandleBlock)(NSError *__nullable error,HZSessionT
 
 + (instancetype)viewModelWithDelegate:(nullable id<HZViewModelDelegate>)delegate;
 
-#pragma mark - 子类重写回调
+#pragma mark - 子类需实现的回调
 /**
  *  初始化ViewModel时调用,可以在这里对数据进行初始化
  */
 - (void)loadViewModel;
 
 /**
- *	task获取到数据时调用,此时task的状态为请求中取得缓存成功,请求成功,在这里设置数据模型，自定义时不需要调用父类的该方法
+ *	task获取到数据时调用
+ *  此时task的状态为请求成功或者缓存导入成功,在这里设置数据模型，自定义时不需要调用父类方法
  *
  *	@param task  对应的请求任务
  *  @param taskIdentifier  请求任务的标识
  *
  */
-- (void)taskDidFetchData:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier;
+- (void)taskDidFetchData:(HZSessionTask *)task;
 
 /**
- *	task请求失败时调用,此时task状态为请求失败或者无法连接,在这里做一些失败处理,自定义时不需要调用父类的该方法
+ *	task请求失败时调用
+ *  此时task状态为请求失败,在这里做一些失败处理,自定义时不需要调用父类方法
  *
  *	@param task  对应的请求任务
  *  @param taskIdentifier  请求任务的标识
  *
  */
-- (void)taskDidFail:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier;
+- (void)taskDidFail:(HZSessionTask *)task;
 
-/**
- *	task被取消时调用，自定义时不需要调用父类的该方法
- *
- *	@param task  对应的请求任务
- *  @param taskIdentifier  请求任务的标识
- *
- */
-- (void)taskDidCancel:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier;
-
-/**
- *	task将要开始执行时调用，自定义时不需要调用父类的该方法
- *
- *	@param task  对应的请求任务
- *  @param taskIdentifier  请求任务的标识
- *  @return 需要返回取消信息,return nil则不取消
- */
-- (NSString *)taskShouldPerform:(HZSessionTask *)task taskIdentifier:(NSString *)taskIdentifier;
 
 @end
 
