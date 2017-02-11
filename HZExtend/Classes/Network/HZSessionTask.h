@@ -5,6 +5,7 @@
 //  Created by xzh. on 15/8/17.
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
+/****************     具体的请求任务,配置参数,输出数据     ****************/
 
 #import <Foundation/Foundation.h>
 #import "HZNetworkConfig.h"
@@ -12,27 +13,24 @@
 
 @class HZSessionTask;
 
-/****************     具体的请求任务,配置参数,输出数据     ****************/
-
 NS_ASSUME_NONNULL_BEGIN
+
 typedef void(^HZSessionTaskDidCompletedBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskSendingBlock)(HZSessionTask *task);
-typedef void(^HZSessionTaskDidLoseBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskDidCancelBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskUploadProgressBlock)(HZSessionTask *task, NSProgress *progress);
 typedef NS_ENUM(NSUInteger, HZSessionTaskState) {   //请求状态
-    HZSessionTaskStateRunable = 0,                  //可运行状态
-    HZSessionTaskStateRunning = 1,                  //请求中状态
-    HZSessionTaskStateLost = 2,                     //请求无法连接状态
-    HZSessionTaskStateCancel = 3,                   //请求取消
-    HZSessionTaskStateSuccess = 4,                  //请求成功
-    HZSessionTaskStateFail = 5,                     //业务错误||请求失败
+    HZSessionTaskStateRunable = 0,                  //可运行
+    HZSessionTaskStateRunning = 1,                  //请求中
+    HZSessionTaskStateCancel = 2,                   //请求取消
+    HZSessionTaskStateSuccess = 3,                  //请求成功
+    HZSessionTaskStateFail = 4,                     //请求失败(业务错误||连接失败)
 };
 
 typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状态
-    HZSessionTaskCacheImportStateNone = 0,          //未进行过缓存导入状态,为初始状态
-    HZSessionTaskCacheImportStateSuccess = 1,       //缓存导入成功状态
-    HZSessionTaskCacheImportStateFail = 2,          //缓存导入失败状态,可能原因为没有缓存,已经导入过缓存
+    HZSessionTaskCacheImportStateNone = 0,          //未导入过缓存状态,为初始状态
+    HZSessionTaskCacheImportStateSuccess = 1,       //缓存导入成功
+    HZSessionTaskCacheImportStateFail = 2,          //缓存导入失败状态,可能原因为没有缓存或已经导入过缓存
 };
 
 
@@ -49,17 +47,12 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 - (void)taskSending:(HZSessionTask *)task;
 
 /**
- *  task无法连接时调用 此时请求状态为:HZSessionTaskStateLost
- */
-- (void)taskDidLose:(HZSessionTask *)task;
-
-/**
  *  task被取消时调用 此时请求状态为:HZSessionTaskStateCancel
  */
 - (void)taskDidCancel:(HZSessionTask *)task;
 
 /**
- *  task将要请求时调用,需要返回取消信息,return nil则不取消
+ *  task将要请求时调用,返回不为空,则拦截请求
  */
 - (NSString *)taskShouldPerform:(HZSessionTask *)task;
 
@@ -116,9 +109,6 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 
 /** task进入请求中调用 */
 @property(nonatomic, copy) HZSessionTaskSendingBlock taskSendingBlock;
-
-/** task无法连接时调用 */
-@property(nonatomic, copy) HZSessionTaskDidLoseBlock taskDidLoseBlock;
 
 /** task取消请求时调用 */
 @property(nonatomic, copy) HZSessionTaskDidCancelBlock taskDidCancelBlock;
@@ -181,12 +171,12 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 - (void)start;
 - (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion;
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
-                    sendingCallBack:(nullable HZSessionTaskSendingBlock)sendingCallBack
-                       lostCallBack:(nullable HZSessionTaskDidLoseBlock)lostCallBack;
+                    sendingCallBack:(nullable HZSessionTaskSendingBlock)sendingCallBack;
+
 /**
  *	开始请求
  *
- *	@param handler  将要执行请求任务时调用,如果error不会nil会被拦截请求
+ *	@param handler  将要执行请求任务时调用,如果error不为nil,说明请求被拦截
  */
 - (void)startWithHandler:(void(^)(HZSessionTask *task, NSError  * _Nullable error))handler;
 
@@ -203,6 +193,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
  *	取消请求任务
  */
 - (void)cancel;
+
 @end
 
 NS_ASSUME_NONNULL_END

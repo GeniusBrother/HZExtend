@@ -145,20 +145,18 @@
     [self startWithHandler:nil];
 }
 
-- (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion
-{
-    [self startWithCompletionCallBack:completion sendingCallBack:nil
-                         lostCallBack:nil];
-}
-
 - (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
                     sendingCallBack:(HZSessionTaskSendingBlock)sendingCallBack
-                       lostCallBack:(HZSessionTaskDidLoseBlock)lostCallBack
 {
     self.taskDidCompletedBlock = completionCallBack;
     self.taskSendingBlock = sendingCallBack;
-    self.taskDidLoseBlock = lostCallBack;
     [self start];
+}
+
+
+- (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion
+{
+    [self startWithCompletionCallBack:completion sendingCallBack:nil];
 }
 
 - (void)startUploadWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
@@ -220,14 +218,9 @@
 {
     if (error) {
         self.error = error;
-        NSInteger errorCode = error.code;
-        if (errorCode == NSURLErrorNotConnectedToInternet) {
-            self.state = HZSessionTaskStateLost;
-        }else {
-            self.state = HZSessionTaskStateFail;
-        }
+        self.state = HZSessionTaskStateFail;
+
         HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
-        
     }else {
         self.responseObject = responseObject;
         BOOL codeRight = [self codeIsRight];
@@ -275,13 +268,6 @@
         }
         if (self.taskDidCompletedBlock) {
             self.taskDidCompletedBlock(self);
-        }
-    }else if (self.state == HZSessionTaskStateLost) {
-        if ([self.delegate respondsToSelector:@selector(taskDidLose:)]) {
-            [self.delegate taskDidLose:self];
-        }
-        if (self.taskDidLoseBlock) {
-            self.taskDidLoseBlock(self);
         }
     }else if (self.state == HZSessionTaskStateCancel) {
         if ([self.delegate respondsToSelector:@selector(taskDidCancel:)]) {
