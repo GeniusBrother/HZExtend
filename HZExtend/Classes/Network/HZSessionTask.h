@@ -96,11 +96,12 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
 /** 请求状态 */
 @property(nonatomic, assign, readonly) HZSessionTaskState state;
 
+/** 缓存导入状态 */
+@property(nonatomic, assign, readonly) HZSessionTaskCacheImportState cacheImportState;
+
 /** 是否为第一次执行 */
 @property(nonatomic, assign, readonly) BOOL isFirstRequest;
 
-/** 缓存导入状态 */
-@property(nonatomic, assign, readonly) HZSessionTaskCacheImportState cacheImportState;
 
 @property(nonatomic, weak) id<HZSessionTaskDelegate> delegate;
 

@@ -217,7 +217,16 @@
 - (void)taskCompletionWithResponseObject:(id)responseObject error:(NSError *)error
 {
     if (error) {
-        self.error = error;
+        if (error.code == NSURLErrorNotConnectedToInternet) {
+            NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
+            NSString *networkLostErrorMsg = [HZNetworkConfig sharedConfig].networkLostErrorMsg;
+            if (networkLostErrorMsg.isNoEmpty) {
+                [userInfo setObject:networkLostErrorMsg forKey:NSLocalizedDescriptionKey];
+            }
+            self.error = [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
+        }else {
+            self.error = error;
+        }
         self.state = HZSessionTaskStateFail;
 
         HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
