@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.dependency 'FMDBMigrationManager'
   s.dependency 'MJExtension'
   s.dependency 'TMCache'
-  s.dependency 'SDWebImage'
+  s.dependency 'SDWebImage', '~> 3.8.2'
   s.dependency 'MJRefresh', '~> 3.1.0'
 
 

@@ -153,6 +153,20 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     return NO;
 }
 
+
+
+#pragma mark - Public Method
+- (void)checkExistWithKey:(NSString *)key value:(id)value
+{
+    if (!key.isNoEmpty || !value) return;
+    
+    NSObject *obj = [[self class] modelInDBWithKey:key value:value];
+    if (obj) {
+        self.isInDB = YES;
+        self.primaryKey = obj.primaryKey;
+    }
+}
+
 - (BOOL)save
 {
     BOOL rs = NO;
@@ -160,7 +174,7 @@ NSString *const kPrimaryKeyName = @"primaryKey";
         if (!self.isInDB) {
             rs = [self insert];
         }else {
-           rs = [self updateSelf];
+            rs = [self updateSelf];
         }
         [HZDBManager close];
         return rs;
@@ -168,7 +182,6 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     return NO;
 }
 
-#pragma mark - Public Method
 + (BOOL)deleteAll
 {
     if ([HZDBManager open]) {
@@ -232,7 +245,7 @@ NSString *const kPrimaryKeyName = @"primaryKey";
                 }else {
                     NSString *propertyName = [columnPropertyDic objectForKey:columnName];
                     if (propertyName.isNoEmpty) {
-                        id convertedValue =  [self convertedValueForPropertyName:propertyName value:value];
+                        id convertedValue =  [self getNewValueForProperty:propertyName withOriginValue:value];
                         NSAssert(convertedValue, @"HZORM 装换的值不能为nil");
                         if (convertedValue) [obj setValue:convertedValue forKey:propertyName];
                     }
@@ -273,7 +286,7 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 
 + (NSDictionary *)getColumnNames { return nil; }
 
-+ (id)convertedValueForPropertyName:(NSString *)name value:(id)value { return value; }
++ (id)getNewValueForProperty:(NSString *)name withOriginValue:(id)originValue { return originValue; }
 
 #pragma mark - Property
 - (BOOL)isInDB

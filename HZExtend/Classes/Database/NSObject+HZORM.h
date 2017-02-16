@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <MJExtension/MJExtension.h>
 #import "HZDatabaseManager.h"
-#define PROPERTY_NANME_FOR_KEY(KEY) NSStringFromSelector(@selector(KEY))
+#define PROPERTY_NANME_FOR_PROPERTY(PROPERTY) NSStringFromSelector(@selector(PROPERTY))
 
 NS_ASSUME_NONNULL_BEGIN
 extern NSString *const kPrimaryKeyName;
@@ -45,6 +45,14 @@ extern NSString *const kPrimaryKeyName;
 + (instancetype)modelInDBWithKey:(NSString *)key value:(id)value;
 
 #pragma mark - ORM操作
+/**
+ *  创建模型时调用,检查是否已经存在在数据库
+ *  若已经存在在数据库,则更新isInDB&primaryKey值
+ *
+ *  @param key  逻辑主键,如果该字段值相同,则认为为同一条数据
+ */
+- (void)checkExistWithKey:(NSString *)key value:(id)value;
+
 /**
  *  保存数据到数据库
  *  如果数据库已经存在则更新
@@ -128,20 +136,25 @@ extern NSString *const kPrimaryKeyName;
 #pragma mark - Override
 //子类重写该方法来返回相应的数据
 /**
- *  子类重写该方法来返回表名
+ *  子类实现该方法来返回表名
  */
 + (NSString *)getTabelName;
 
 /**
- *  子类重写该方法来返回属性与列名的映射关系
+ *  子类实现该方法来返回属性与列名的映射关系
  */
 + (NSDictionary<NSString *, NSString *> *)getColumnNames;
 
 /**
- *	子类重写该方法对映射值进行处理然后再返回赋给属性
- *  默认实现为返回原值,可以对数据进行处理在设置给属性,如将json字符串转出json对象再返回
+ *	子类实现该方法对数据库值进行处理,然后在将新值赋给属性
+ *  默认实现为返回原值
+ *
+ *	@param name 属性名
+ *  @param originValue  原始数据库值
+ *
+ *  @return id,处理后的新值
  */
-+ (id)convertedValueForPropertyName:(NSString *)name value:(id)value;
++ (id)getNewValueForProperty:(NSString *)name withOriginValue:(id)originValue;
 
 
 @end
