@@ -132,31 +132,15 @@ singleton_m
     return array;
 }
 
-- (NSArray *)executeStatement:(NSString *)sql flag:(BOOL)isReturn
+- (BOOL)executeStatements:(NSString *)sql withResultBlock:(HZDBExecuteStatementsCallbackBlock)block
 {
     [self checkConnection];
-    
     if (!sql.isNoEmpty) {
         NSAssert(NO, @"%s SQL语句为空",__FUNCTION__);
         return nil;
     }
-    
-    NSMutableArray *array = nil;
-    FMDBExecuteStatementsCallbackBlock blcok = nil;
-    if (isReturn) {
-        array = [NSMutableArray array];
-        blcok = ^int(NSDictionary *resultsDictionary){
-            [array addObject:resultsDictionary];
-            return SQLITE_OK;
-        };
-    }
-    BOOL result = [self.database executeStatements:sql withResultBlock:blcok];
-    if (!result) {
-        HZLog(@"sql 批处理失败:%@",self.database.lastErrorMessage);
-        return nil;
-    }
-    
-    return array;
+
+    return [self.database executeStatements:sql withResultBlock:block];
 }
 
 - (double)doubleForQuery:(NSString *)sql

@@ -13,4 +13,7 @@
 /** 自定义的导航条,默认为nil,懒加载 */
 @property(nonatomic, weak, readonly) HZNavBar *navBar;
 
+- (void)performTask:(void(^)(BOOL done))block;
+
+
 @end

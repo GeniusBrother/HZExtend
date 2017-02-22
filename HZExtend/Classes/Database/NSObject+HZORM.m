@@ -65,7 +65,7 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 {
     id originalValue = [self valueForKey:name];
     
-    if (!originalValue) return nil;
+    if (!originalValue) return [NSNull null];
     
     if ([originalValue isKindOfClass:[NSArray class]]) {
         return [(NSArray *)originalValue jsonString];

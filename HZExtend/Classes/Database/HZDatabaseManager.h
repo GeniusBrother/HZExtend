@@ -11,7 +11,7 @@
 #import "HZSingleton.h"
 
 #define HZDBManager [HZDatabaseManager sharedManager]
-
+typedef int(^HZDBExecuteStatementsCallbackBlock)(NSDictionary *resultsDictionary);
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HZDatabaseManager : NSObject
@@ -63,15 +63,15 @@ singleton_h(Manager)
 - (nullable NSArray *)executeQuery:(NSString *)sql withParams:(nullable NSArray *)data;
 
 /**
- *  执行批处理SQL语句
+ *  批处理
  *  需先使用‘open’来打开数据库
  *
  *	@param sql  sql语句
- *  @param flag YES表示执行有返回值,NO表示无返回值
+ *  @param block 如果有结果返回时被调用,如果数据正确返回SQLITE_OK继续执行,返回其它则停止执行
  *
- *  @return 字典数组,若无任何结果返回nil
+ *  @return BOOL,返回YES,表示成功执行
  */
-- (nullable NSArray *)executeStatement:(NSString *)sql flag:(BOOL)isReturn;
+- (BOOL)executeStatements:(NSString *)sql withResultBlock:(HZDBExecuteStatementsCallbackBlock)block;
 
 /**
  *  执行返回结果为long的SQL语句

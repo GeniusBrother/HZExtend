@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 //yyyy-MM-dd HH:mm:ss
 #define CURRENT_CALENDAR [NSCalendar currentCalendar]
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSDate (HZExtend)

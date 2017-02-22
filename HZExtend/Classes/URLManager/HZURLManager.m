@@ -52,6 +52,11 @@ singleton_m
     [HZURLNavigation pushViewController:viewController animated:animated];
 }
 
++ (void)pushViewController:(UIViewController *)ctrl animated:(BOOL)animated
+{
+    [HZURLNavigation pushViewController:ctrl animated:animated];
+}
+
 #pragma mark - Present
 + (void)presentViewControllerWithString:(NSString *)urlstring animated:(BOOL)animated completion:(void (^ _Nullable)(void))completion
 {
@@ -69,6 +74,11 @@ singleton_m
     UIViewController *viewController = [UIViewController viewControllerWithString:urlstring queryDic:query];
     if (viewController)
     [HZURLNavigation presentViewController:viewController animated:animated completion:completion];
+}
+
++ (void)presentViewController:(UIViewController *)ctrl animated:(BOOL)animated completion:(void (^)(void))completion
+{
+    [HZURLNavigation presentViewController:ctrl animated:animated completion:completion];
 }
 
 
