@@ -244,7 +244,12 @@
             }
         }else {
             self.state = HZSessionTaskStateFail;
-            self.error = [NSError errorWithDomain:@"com.HZNetwork" code:NSURLErrorBadServerResponse userInfo:@{@"NSLocalizedDescription":self.message}];;
+            id error = [self.responseObject objectForKeyPath:[HZNetworkConfig sharedConfig].codeKeyPath];
+            NSNumber *errorCode = @(NSURLErrorBadServerResponse);
+            if ([error isKindOfClass:[NSNumber class]]) {
+                errorCode = error;
+            }
+            self.error = [NSError errorWithDomain:@"com.HZNetwork" code:errorCode.integerValue userInfo:@{@"NSLocalizedDescription":self.message}];;
             HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
         }
     }
