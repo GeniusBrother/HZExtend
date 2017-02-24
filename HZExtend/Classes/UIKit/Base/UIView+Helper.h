@@ -13,6 +13,14 @@
 @property(nonatomic, weak, readonly) UIView *lineView;
 
 
+- (void)addBottomLineViewWithColor:(UIColor *)lineColor
+                            height:(CGFloat)height
+                             space:(CGFloat)space;
+
+- (void)addTopLineViewWithColor:(UIColor *)lineColor
+                         height:(CGFloat)height
+                          space:(CGFloat)space;
+
 - (void)addBottomLineViewWithColor:(UIColor *)lineColor height:(CGFloat)height;
 - (void)addTopLineViewWithColor:(UIColor *)lineColor height:(CGFloat)height;
 

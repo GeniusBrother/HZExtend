@@ -25,15 +25,32 @@ static const char kLineView = '\0';
 
 - (void)addTopLineViewWithColor:(UIColor *)lineColor height:(CGFloat)height
 {
-    [self addLineViewWithColor:lineColor height:height bottom:NO];
+    [self addTopLineViewWithColor:lineColor height:height space:0];
+}
+
+- (void)addTopLineViewWithColor:(UIColor *)lineColor
+                         height:(CGFloat)height
+                          space:(CGFloat)space
+{
+    [self addLineViewWithColor:lineColor height:height bottom:NO space:space];
 }
 
 - (void)addBottomLineViewWithColor:(UIColor *)lineColor height:(CGFloat)height
 {
-    [self addLineViewWithColor:lineColor height:height bottom:YES];
+    [self addBottomLineViewWithColor:lineColor height:height space:0];
 }
 
-- (void)addLineViewWithColor:(UIColor *)lineColor height:(CGFloat)height bottom:(BOOL)isBottom
+- (void)addBottomLineViewWithColor:(UIColor *)lineColor
+                            height:(CGFloat)height
+                             space:(CGFloat)space
+{
+    [self addLineViewWithColor:lineColor height:height bottom:YES space:space];
+}
+
+- (void)addLineViewWithColor:(UIColor *)lineColor
+                      height:(CGFloat)height
+                      bottom:(BOOL)isBottom
+                       space:(CGFloat)space
 {
     
     UIView *lineView = [[UIView alloc] init];
@@ -41,8 +58,8 @@ static const char kLineView = '\0';
     [self addSubview:lineView];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(height));
-        make.leading.equalTo(@0);
-        make.trailing.equalTo(@(0));
+        make.leading.equalTo(@(space));
+        make.trailing.equalTo(@(-space));
         if (isBottom) {
             make.bottom.equalTo(lineView.superview);
         }else {
