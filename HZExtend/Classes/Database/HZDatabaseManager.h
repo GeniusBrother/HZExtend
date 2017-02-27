@@ -71,7 +71,7 @@ singleton_h(Manager)
  *
  *  @return BOOL,返回YES,表示成功执行
  */
-- (BOOL)executeStatements:(NSString *)sql withResultBlock:(HZDBExecuteStatementsCallbackBlock)block;
+- (BOOL)executeStatements:(NSString *)sql withResultBlock:(nullable HZDBExecuteStatementsCallbackBlock)block;
 
 /**
  *  执行返回结果为long的SQL语句

@@ -25,5 +25,5 @@
 #import "UIImage+HZExtend.h"
 #import "UIView+HZAction.h"
 #import "UIView+HZEmptyView.h"
-
+#import "UIResponder+HZAction.h"
 
