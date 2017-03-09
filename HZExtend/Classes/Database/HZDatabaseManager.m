@@ -143,6 +143,20 @@ singleton_m
     return [self.database executeStatements:sql withResultBlock:block];
 }
 
+- (void)beginTransactionWithBlock:(BOOL (^)(HZDatabaseManager * _Nonnull obj))completion
+{
+    if (!completion) return;
+    
+    [self checkConnection];
+    [self.database beginTransaction];
+    BOOL rs = completion(self);
+    if (rs) {
+        [self.database commit];
+    }else {
+        [self.database rollback];
+    }
+}
+
 - (double)doubleForQuery:(NSString *)sql
 {
     [self checkConnection];

@@ -49,8 +49,8 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 {
     NSMutableArray *values = [NSMutableArray array];
     
-    for (NSString *columnName in [[self class] getColumnNames].allValues) {
-        id value = [self workedValueForPropertyName:columnName];
+    for (NSString *propertyName in [[self class] getColumnNames].allValues) {
+        id value = [self workedValueForPropertyName:propertyName];
         
         if (value != nil) {
             [values addObject:value];
@@ -70,8 +70,13 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     if ([originalValue isKindOfClass:[NSArray class]]) {
         return [(NSArray *)originalValue jsonString];
     }else if ([originalValue isKindOfClass:[NSDictionary class]]) {
-        return [(NSDictionary *)originalValue jsonString];;
+        return [(NSDictionary *)originalValue jsonString];
     }else {
+        
+        id obj = [originalValue mj_keyValues];
+        if ([obj isKindOfClass:[NSDictionary class]]) { //判断是否为模型类型
+            return [(NSDictionary *)obj jsonString];
+        }
         return originalValue;
     }
 }
@@ -156,12 +161,20 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 
 
 #pragma mark - Public Method
-- (void)checkExistWithKey:(NSString *)key value:(id)value
+- (void)checkExistWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values
 {
-    if (!key.isNoEmpty || !value) return;
+    if (!keys.isNoEmpty || !values) return;
     
-    NSObject *obj = [[self class] modelInDBWithKey:key value:value];
-    if (obj) {
+    NSMutableString *sql = [NSMutableString stringWithFormat:@"select primaryKey from %@ where ",[[self class] getTabelName]];
+    for (int i=0; i<[values count]; i++) {
+        NSString *key = [keys objectAtSafeIndex:i];
+        [sql appendFormat:@"%@=? AND ",key];
+    }
+    
+    [sql deleteCharactersInRange:NSMakeRange(sql.length-4, 4)];
+
+    NSObject *obj = [[[self class] findWithSql:sql withParameters:values] firstObject];
+    if (obj.isNoEmpty) {
         self.isInDB = YES;
         self.primaryKey = obj.primaryKey;
     }

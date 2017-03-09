@@ -13,17 +13,13 @@ static const CGFloat kNavBarDefaultSpace = 16.0f;
 
 @interface HZNavBar : UIView
 
+
+@property(nonatomic, readonly, nullable) UIView *leftCustomView;
+@property(nonatomic, readonly, nullable) UIView *centerCustomView;
+@property(nonatomic, readonly, nullable) UIView *rightCustomView;
+
 /** 标题label,默认为nil,懒加载 */
 @property(nonatomic, weak, readonly, nullable) UILabel *titleLabel;
-
-/** 左边自定义视图 */
-@property(nonatomic, weak, readonly, nullable) UIView *leftCustomView;
-
-/** 中间自定义视图 */
-@property(nonatomic, weak, readonly, nullable) UIView *centerCustomView;
-
-/** 右边自定义视图 */
-@property(nonatomic, weak, readonly, nullable) UIView *rightCustomView;
 
 /**
  *  创建带有标题的navBar实例
@@ -41,6 +37,13 @@ static const CGFloat kNavBarDefaultSpace = 16.0f;
 + (instancetype)navBarWithTitle:(nullable NSString *)title leftButton:(nullable NSString *)buttonName;
 
 
+- (void)addLeftCustomView:(UIView *)leftCustomView;
+
+- (void)addCenterCustomView:(UIView *)centerCustomView;
+
+- (void)addRightCustomView:(UIView *)rightCustomView;
+
+
 /**
  *	左边增加一个默认按钮
  *  默认的点击效果为dismiss当前页面
@@ -50,27 +53,6 @@ static const CGFloat kNavBarDefaultSpace = 16.0f;
  */
 - (void)addLeftButtonWithName:(NSString *)buttonName offset:(nullable NSNumber *)offset;
 
-/**
- *	左边增加自定义视图
- *
- *	@param customView  自定义视图
- */
-- (void)addLeftCustomView:(UIView *)customView;
-
-/**
- *	中间增加自定义视图
- *
- *	@param customView  自定义视图
- */
-- (void)addCenterCustomView:(UIView *)customView;
-
-/**
- *	右边增加自定义视图
- *
- *	@param customView  自定义视图
- *  @param offset 右边的间隙距离,若传入nil,则默认为16
- */
-- (void)addRightCustomView:(UIView *)customView offset:(nullable NSNumber *)offset;
 
 @end
 

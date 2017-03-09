@@ -7,7 +7,7 @@
 //
 
 #import "NSDate+HZExtend.h"
-
+#import "NSObject+HZExtend.h"
 @implementation NSDate (HZExtend)
 
 - (BOOL)isInToday
@@ -31,6 +31,49 @@
     NSDateComponents *selfComponents = [CURRENT_CALENDAR components:NSCalendarUnitYear fromDate:self];
     
     return nowComponents.year == selfComponents.year;
+}
+
++ (NSDate *)today
+{
+    NSDate *date = [NSDate date];
+    NSDateComponents *components = [CURRENT_CALENDAR components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+    
+    return [self dateForFormatterDate:[NSString stringWithFormat:@"%ld-%02ld-%02ld",components.year,components.month,components.day]];
+}
+
++ (NSInteger)currentYear
+{
+    NSDateComponents *components = [CURRENT_CALENDAR components:NSCalendarUnitYear fromDate:[NSDate today]];
+    return components.year;
+}
+
+
++ (NSDate *)dateForFormatterDate:(NSString *)fomatterStr
+{
+    if (!fomatterStr.isNoEmpty) return nil;
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    return [formatter dateFromString:fomatterStr];
+}
+
+- (NSString *)formatterDateString
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    return [formatter stringFromDate:self];
+}
+
+- (NSString *)formatterTimeString
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm"];
+    return [formatter stringFromDate:self];
+}
+
+- (NSUInteger)timeStamp
+{
+    return (NSUInteger)self.timeIntervalSince1970;
 }
 
 @end

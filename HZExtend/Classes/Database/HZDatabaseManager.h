@@ -74,6 +74,13 @@ singleton_h(Manager)
 - (BOOL)executeStatements:(NSString *)sql withResultBlock:(nullable HZDBExecuteStatementsCallbackBlock)block;
 
 /**
+ *	执行事务操作
+ *
+ *	@param completion  操作成功返回YES，进行提交，返回NO进行回滚
+ */
+- (void)beginTransactionWithBlock:(BOOL(^)(HZDatabaseManager *db))completion;
+
+/**
  *  执行返回结果为long的SQL语句
  *  需先使用‘open’来打开数据库
  *
@@ -92,7 +99,7 @@ singleton_h(Manager)
 - (double)doubleForQuery:(NSString *)sql;
 
 /**
- *	返回最近插入操作的Row ID
+ *	返回Row ID
  */
 - (NSUInteger)lastInsertRowId;
 

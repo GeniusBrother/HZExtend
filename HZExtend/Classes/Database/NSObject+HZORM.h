@@ -49,9 +49,10 @@ extern NSString *const kPrimaryKeyName;
  *  创建模型时调用,检查是否已经存在在数据库
  *  若已经存在在数据库,则更新isInDB&primaryKey值
  *
- *  @param key  逻辑主键,如果该字段值相同,则认为为同一条数据
+ *  @param keys  判断唯一性属性名称,如果该字段值相同,则认为为同一条数据
+ *  @param values 属性所对应的值，与属性顺序保持一致
  */
-- (void)checkExistWithKey:(NSString *)key value:(id)value;
+- (void)checkExistWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values;
 
 /**
  *  保存数据到数据库
@@ -141,7 +142,7 @@ extern NSString *const kPrimaryKeyName;
 + (NSString *)getTabelName;
 
 /**
- *  子类实现该方法来返回属性与列名的映射关系
+ *  子类实现该方法来返回列名属性的映射关系
  */
 + (NSDictionary<NSString *, NSString *> *)getColumnNames;
 
