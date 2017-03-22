@@ -19,4 +19,5 @@
 @property(nonatomic, assign) CGFloat insetTop;
 @property(nonatomic, assign) CGFloat insetBottom;
 
+- (UIImage *)imageRepresentation;
 @end

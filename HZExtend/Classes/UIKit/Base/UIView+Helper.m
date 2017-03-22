@@ -58,8 +58,8 @@ static const char kLineView = '\0';
     [self addSubview:lineView];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(height));
-        make.leading.equalTo(@(space));
-        make.trailing.equalTo(@(-space));
+        make.left.equalTo(@(space));
+        make.right.equalTo(@(-space));
         if (isBottom) {
             make.bottom.equalTo(lineView.superview);
         }else {

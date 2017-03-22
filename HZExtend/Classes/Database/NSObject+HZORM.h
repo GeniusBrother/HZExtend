@@ -37,12 +37,12 @@ extern NSString *const kPrimaryKeyName;
 /**
  *	从数据库加载模型
  *
- *	@param key  查找模型所用到的字段
- *  @param value 字段所对应的值
+ *	@param keys  查找模型所用到的字段数组
+ *  @param values 字段所对应的值数组，顺序保持一致
  *
  *  @return 模型
  */
-+ (instancetype)modelInDBWithKey:(NSString *)key value:(id)value;
++ (instancetype)modelInDBWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values;
 
 #pragma mark - ORM操作
 /**
@@ -52,7 +52,15 @@ extern NSString *const kPrimaryKeyName;
  *  @param keys  判断唯一性属性名称,如果该字段值相同,则认为为同一条数据
  *  @param values 属性所对应的值，与属性顺序保持一致
  */
-- (void)checkExistWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values;
+- (BOOL)checkExistWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values;
+
+/**
+ *  判断模型是否存在于数据库,若存在返回自增主键值
+ *
+ *  @param keys  判断唯一性属性名称,如果该字段值相同,则认为为同一条数据
+ *  @param values 属性所对应的值，与属性顺序保持一致
+ */
++ (NSInteger)modelExistDBWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values;
 
 /**
  *  保存数据到数据库
@@ -70,10 +78,17 @@ extern NSString *const kPrimaryKeyName;
  */
 + (BOOL)deleteAll;
 
++ (BOOL)saveArray:(NSArray *)modelArray;
+
 /**
  *  删除数组中的全部元组
  */
 + (BOOL)deleteWithArray:(NSArray *)array;
+
+/**
+ *  根据值删除元组
+ */
++ (BOOL)deleteWithKeys:(NSArray <NSString *> *)keys values:(NSArray *)values;
 
 /**
  *	查找数据模型
@@ -83,7 +98,7 @@ extern NSString *const kPrimaryKeyName;
  *
  *  @return 数据模型数组,无结果返回nil
  */
-+ (nullable NSArray *)findByColumn:(NSString *)column value:(id)value;
++ (nullable NSArray *)findByColumns:(NSArray *)columns values:(NSArray *)values;
 
 /**
  *	查找数据模型
@@ -145,6 +160,11 @@ extern NSString *const kPrimaryKeyName;
  *  子类实现该方法来返回列名属性的映射关系
  */
 + (NSDictionary<NSString *, NSString *> *)getColumnNames;
+
+/**
+ *  子类实现该方法来返回标识数据唯一性的列名
+ */
++ (NSArray *)getUniqueKeys;
 
 /**
  *	子类实现该方法对数据库值进行处理,然后在将新值赋给属性

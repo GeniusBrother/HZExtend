@@ -25,6 +25,20 @@
     return [CURRENT_CALENDAR isDateInYesterday:self];
 }
 
+- (BOOL)isInThisMonth
+{
+    NSDateComponents *nowComponents = [CURRENT_CALENDAR components:NSCalendarUnitMonth fromDate:[NSDate date]];
+    NSDateComponents *selfComponents = [CURRENT_CALENDAR components:NSCalendarUnitMonth fromDate:self];
+    return nowComponents.month == selfComponents.month;
+}
+
+- (BOOL)isInThisWeek
+{
+    NSDateComponents *nowComponents = [CURRENT_CALENDAR components:NSCalendarUnitWeekOfYear fromDate:[NSDate date]];
+    NSDateComponents *selfComponents = [CURRENT_CALENDAR components:NSCalendarUnitWeekOfYear fromDate:self];
+    return nowComponents.weekOfYear == selfComponents.weekOfYear;
+}
+
 - (BOOL)isInThisYear
 {
     NSDateComponents *nowComponents = [CURRENT_CALENDAR components:NSCalendarUnitYear fromDate:[NSDate date]];

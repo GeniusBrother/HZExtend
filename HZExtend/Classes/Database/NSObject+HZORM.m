@@ -31,17 +31,9 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     return model;
 }
 
-+ (instancetype)modelInDBWithKey:(NSString *)key value:(id)value
++ (instancetype)modelInDBWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values
 {
-    if (!key.isNoEmpty || !value) return nil;
-    
-    NSObject * model = nil;
-    if ([HZDBManager open]) {
-        NSString *sql = [NSString stringWithFormat:@"select * from %@ where %@ = ?",[self getTabelName],key];
-        model = [[self findWithSql:sql withParameters:@[value]] firstObject];
-        [HZDBManager close];
-    }
-    return model;
+    return [[self findByColumns:keys values:values] firstObject];
 }
 
 #pragma mark - Private Method
@@ -158,32 +150,46 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     return NO;
 }
 
++ (NSString *)whereStrWithKeys:(NSArray *)keys values:(NSArray *)values
+{
+    NSMutableString *str = [NSMutableString stringWithString:@"where "];
+    for (int i=0; i<[values count]; i++) {
+        NSString *key = [keys objectAtSafeIndex:i];
+        [str appendFormat:@"%@=? AND ",key];
+    }
+    
+    [str deleteCharactersInRange:NSMakeRange(str.length-4, 4)];
+    return str;
+}
 
 
 #pragma mark - Public Method
-- (void)checkExistWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values
++ (NSInteger)modelExistDBWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values
 {
-    if (!keys.isNoEmpty || !values) return;
+    if (!keys.isNoEmpty || !values) return NO;
     
-    NSMutableString *sql = [NSMutableString stringWithFormat:@"select primaryKey from %@ where ",[[self class] getTabelName]];
-    for (int i=0; i<[values count]; i++) {
-        NSString *key = [keys objectAtSafeIndex:i];
-        [sql appendFormat:@"%@=? AND ",key];
-    }
-    
-    [sql deleteCharactersInRange:NSMakeRange(sql.length-4, 4)];
-
+    NSMutableString *sql = [NSMutableString stringWithFormat:@"select primaryKey from %@ %@",[self getTabelName],[self whereStrWithKeys:keys values:values]];
     NSObject *obj = [[[self class] findWithSql:sql withParameters:values] firstObject];
-    if (obj.isNoEmpty) {
-        self.isInDB = YES;
-        self.primaryKey = obj.primaryKey;
+    return obj.primaryKey;
+}
+
+- (BOOL)checkExistWithKeys:(NSArray<NSString *> *)keys values:(NSArray *)values
+{
+    NSInteger key = [[self class] modelExistDBWithKeys:keys values:values];
+    BOOL rs = NO;
+    if (key) {
+        self.isInDB = rs = YES;
+        self.primaryKey = key;
     }
+    
+    return rs;
 }
 
 - (BOOL)save
 {
     BOOL rs = NO;
     if ([HZDBManager open]) {
+        
         if (!self.isInDB) {
             rs = [self insert];
         }else {
@@ -195,6 +201,19 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     return NO;
 }
 
++ (BOOL)deleteWithKeys:(NSArray <NSString *> *)keys values:(NSArray *)values
+{
+    if (!keys.isNoEmpty || !values.isNoEmpty) return NO;
+    if ([HZDBManager open]) {
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ %@", [self getTabelName],[self whereStrWithKeys:keys values:values]];
+        BOOL rs = [HZDBManager executeUpdate:sql withParams:values];
+        [HZDBManager close];
+        return rs;
+    }
+    
+    return NO;
+}
+
 + (BOOL)deleteAll
 {
     if ([HZDBManager open]) {
@@ -202,6 +221,27 @@ NSString *const kPrimaryKeyName = @"primaryKey";
         BOOL rs = [HZDBManager executeUpdate:sql withParams:nil];
         [HZDBManager close];
         return rs;
+    }
+    
+    return NO;
+}
+
++ (BOOL)saveArray:(NSArray *)modelArray
+{
+    if (!modelArray.isNoEmpty) return NO;
+    
+    if ([HZDBManager open]) {
+        [HZDBManager beginTransactionWithBlock:^BOOL(HZDatabaseManager * _Nonnull db) {
+            for (NSObject *obj in modelArray) {
+                if (![obj save]) {
+                    return NO;
+                }
+            }
+            return YES;
+        }];
+
+        [HZDBManager close];
+        return YES;
     }
     
     return NO;
@@ -274,11 +314,16 @@ NSString *const kPrimaryKeyName = @"primaryKey";
     return modelArray;
 }
 
-+ (NSArray *)findByColumn:(NSString *)column value:(id)value
+
+
++ (NSArray *)findByColumns:(NSArray *)columns values:(NSArray *)values
 {
-    if (!column.isNoEmpty || value == nil) return nil;
+    if (!columns.isNoEmpty || !values.isNoEmpty) return nil;
     
-    return [self findWithSql:[NSString stringWithFormat:@"SELECT * FROM %@ where %@ = ?",[self getTabelName],column] withParameters:@[value]];
+    NSMutableString *sql = [NSMutableString stringWithFormat:@"select * from %@ %@",[self getTabelName],[self whereStrWithKeys:columns values:values]];
+
+    
+    return [self findWithSql:sql withParameters:values];
 }
 
 + (NSArray *)findAll
@@ -301,10 +346,26 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 
 + (id)getNewValueForProperty:(NSString *)name withOriginValue:(id)originValue { return originValue; }
 
++ (NSArray *)getUniqueKeys { return nil; }
+
 #pragma mark - Property
 - (BOOL)isInDB
 {
     NSNumber *isInDB = objc_getAssociatedObject(self, &kIsInDBKey);
+    if (!isInDB) {
+        NSArray *keys = [[self class] getUniqueKeys];
+        if (keys.isNoEmpty) {
+            NSMutableArray *values = [NSMutableArray arrayWithCapacity:keys.count];
+            NSDictionary *columnPropertDic = [[self class] getColumnNames];
+            [keys enumerateObjectsUsingBlock:^(NSString  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSString *property = [columnPropertDic objectForKey:obj];
+                id value = [self valueForKey:property];
+                if (value) [values addObject:value];
+            }];
+            
+            return [self checkExistWithKeys:keys values:values];
+        }
+    }
     return [isInDB boolValue];
 }
 

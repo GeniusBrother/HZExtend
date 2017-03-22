@@ -68,4 +68,49 @@
     self.contentInset = insets;
 }
 
+- (UIImage *)imageRepresentation
+{
+    CGFloat scale = [UIScreen mainScreen].scale;
+    
+    CGSize boundsSize = self.bounds.size;
+    CGFloat boundsWidth = boundsSize.width;
+    CGFloat boundsHeight = boundsSize.height;
+    
+    CGSize contentSize = self.contentSize;
+    CGFloat contentHeight = contentSize.height;
+    CGPoint offset = self.contentOffset;
+    
+    [self setContentOffset:CGPointMake(0, 0)];
+    NSMutableArray *images = [NSMutableArray array];
+    while (contentHeight > 0) {
+        UIGraphicsBeginImageContextWithOptions(boundsSize, NO, 0.0);
+        [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        [images addObject:image];
+        
+        CGFloat offsetY = self.contentOffset.y;
+        [self setContentOffset:CGPointMake(0, offsetY + boundsHeight)];
+        
+        contentHeight -= boundsHeight;
+    }
+    
+    self.contentOffset = offset;
+    
+    CGSize imageSize = CGSizeMake(contentSize.width * scale,
+                                  contentSize.height * scale);
+    UIGraphicsBeginImageContext(imageSize);
+    [images enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL *stop) {
+        [image drawInRect:CGRectMake(0,
+                                     scale * boundsHeight * idx,
+                                     scale * boundsWidth,
+                                     scale * boundsHeight)];
+    }];
+    
+    UIImage *fullImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return fullImage;
+    
+}
+
 @end

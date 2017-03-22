@@ -31,7 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
 //判断date是否为明天之内
 - (BOOL)isInTomorrow;
 
-//判断date是否为今年之内
+//判断date是否为本周之内
+- (BOOL)isInThisWeek;
+
+//判断date是否为本月之内
+- (BOOL)isInThisMonth;
+
+//判断date是否为本年之内
 - (BOOL)isInThisYear;
 
 /**
