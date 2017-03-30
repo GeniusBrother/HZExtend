@@ -29,3 +29,4 @@
 #import "NSDate+HZExtend.h"
 #import "UIScrollView+HZExtend.h"
 #import "HZNavigationController.h"
+#import "UIView+Helper.h"

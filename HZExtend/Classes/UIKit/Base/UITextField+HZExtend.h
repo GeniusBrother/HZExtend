@@ -10,6 +10,6 @@
 
 @interface UITextField (HZExtend)
 
-- (void)setPlaceholderTextColor:(UIColor *)color
+- (void)setPlaceholderTextColor:(UIColor *)color;
 
 @end

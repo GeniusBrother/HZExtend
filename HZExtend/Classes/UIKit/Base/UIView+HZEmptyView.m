@@ -69,4 +69,5 @@ static const char EMPTY_CONTENT_VIEW = '\0';
         [self didChangeValueForKey:@"emptyContentView"];
     }
 }
+
 @end
