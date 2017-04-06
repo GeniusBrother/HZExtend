@@ -41,4 +41,6 @@ typedef NS_ENUM(NSInteger, HZResizeOption) {
  *  @return UIImage实例,如果找不到该图片则返回nil
  */
 + (UIImage *)imageWithName:(NSString *)name;
+
+- (UIImage *)imageByScalingToMaxSize;
 @end

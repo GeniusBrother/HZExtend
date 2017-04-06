@@ -87,7 +87,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
  */
 + (instancetype)uploadTaskWithPath:(NSString *)path
                               params:(nullable NSMutableDictionary<NSString *, id> *)params
-                            delegate:(id<HZSessionTaskDelegate>)delegate
+                            delegate:(nullable id<HZSessionTaskDelegate>)delegate
                       taskIdentifier:(NSString *)taskIdentifier;
 
 /** 任务的唯一标识 */

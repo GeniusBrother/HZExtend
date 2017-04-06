@@ -51,6 +51,7 @@ static const CGFloat kNavBarDefaultSpace = 16.0f;
  *	@param buttonName  默认按钮图片的名称
  *  @param offset 离屏幕左边的水平位移,若传入nil,则默认为16
  */
+- (void)addLeftButtonWithName:(NSString *)buttonName;
 - (void)addLeftButtonWithName:(NSString *)buttonName offset:(nullable NSNumber *)offset;
 
 

@@ -100,6 +100,11 @@
     self.rightCustomView = customView;
 }
 
+- (void)addLeftButtonWithName:(NSString *)buttonName
+{
+    [self addLeftButtonWithName:buttonName offset:nil];
+}
+
 - (void)addLeftButtonWithName:(NSString *)buttonName offset:(nullable NSNumber *)offset
 {
     if (!buttonName.isNoEmpty) return;
