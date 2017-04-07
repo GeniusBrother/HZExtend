@@ -28,10 +28,10 @@
 //使用在Ctrl里viewModel的回调方法里，将HZViewModel装换成自身的viewModel类型,
 #define HZNETWORK_CONVERT_VIEWMODEL(ClassForToViewModel) ClassForToViewModel *selfViewModel = (ClassForToViewModel *)viewModel
 
-extern NSString *const kHZFileMimeType = @"mimeType";
-extern NSString *const kHZFileName = @"fileName";
-extern NSString *const kHZFileFormName = @"formName";
-extern NSString *const kHZFileData = @"fileData";
-extern NSString *const kHZFileURL = @"fileURL";
+extern NSString *const kHZFileMimeType;
+extern NSString *const kHZFileName;
+extern NSString *const kHZFileFormName;
+extern NSString *const kHZFileData;
+extern NSString *const kHZFileURL;
 
 #endif /* HZNetworkConst_h */
