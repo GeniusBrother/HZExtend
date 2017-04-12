@@ -13,4 +13,6 @@
 /** 是否开启侧滑,默认为YES */
 @property(nonatomic, assign) BOOL swipeEnable;
 
+@property(nonatomic, assign) BOOL edgeRecognize;
+
 @end

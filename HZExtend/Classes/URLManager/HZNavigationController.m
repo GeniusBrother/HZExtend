@@ -7,6 +7,7 @@
 //
 
 #import "HZNavigationController.h"
+#import "HZMacro.h"
 @interface HZNavigationController ()<UIGestureRecognizerDelegate,UINavigationControllerDelegate>
 
 @property(nonatomic, strong) UIPanGestureRecognizer *pan;
@@ -54,7 +55,14 @@
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    return (self.viewControllers.count > 1) && ![[self valueForKey:@"_isTransitioning"] boolValue] && self.swipeEnable;
+    BOOL rs = (self.viewControllers.count > 1) && ![[self valueForKey:@"_isTransitioning"] boolValue] && self.swipeEnable;
+    if (rs) {
+        if (self.edgeRecognize) {
+            CGPoint point = [gestureRecognizer locationInView:self.view];
+            return CGRectContainsPoint(CGRectMake(0, 0, 100,HZDeviceHeight) , point);
+        }
+    }
+    return rs;
 }
 
 #pragma mark - UINavigationControllerDelegate
