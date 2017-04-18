@@ -1,8 +1,8 @@
-##HZExtend##
-####本项目交流群:32272635
-####欢迎有兴趣的有好的想法的同学参与到项目中来，如果有问题请大家加入群中留言或者issue我，或者发邮件给我zuohong_xie@163.com
+## HZExtend ##
+#### 本项目交流群:32272635
+#### 欢迎有兴趣的有好的想法的同学参与到项目中来，如果有问题请大家加入群中留言或者issue我，或者发邮件给我zuohong_xie@163.com
 
-##本项目特点##
+## 本项目特点 ##
 ```bash
 1.解放VC:基于MVVM的思想，将数据相关的业务逻辑交给到ViewModel处理从而减少控制器的压力，降低代码耦合.
 2.网络请求:基于AFN自定义了贴切业务逻辑的网络请求框架.
@@ -12,47 +12,47 @@
 6.一些常用的基础类扩展.
 ```
 
-##使用##
-####添加
+## 使用 ##
+#### 添加
 ```ruby
 CocoaPods:pod 'HZExtend', '~> 0.5.4'
 ```
 
-####安装CocoaPodspod后可傻瓜式添加任何开源框架,免于一些基础配置
+#### 安装CocoaPodspod后可傻瓜式添加任何开源框架,免于一些基础配置
 [CocoaPods的安装教程,群Q32272635我手把手教你安装](http://code4app.com/article/cocoapods-install-usage)
 
-####没用过Pods同学注意了应该使用该文件来打开项目
+#### 没用过Pods同学注意了应该使用该文件来打开项目
 ![](Resource/podsError.png)
 
-##其它资源##
+## 其它资源 ##
 * [简书论坛](http://www.jianshu.com/collection/ba017346481d)
 
 
-##一.MVVM&网络请求##
+## 一.MVVM&网络请求 ##
 基本思路:网络请求基于HZSessionTask、HZNetwork(任务执行器)、HZNetworkConfig组成
 
-####配置接口的共同URL、状态码路径,消息路径以及正确的状态码:
+#### 配置接口的共同URL、状态码路径,消息路径以及正确的状态码:
 ```objective-c
   [[HZNetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
 ```
 ![](https://dn-impluse.qbox.me/24833/A98E9B1750666D91E88D21AFDC5ABFA4.jpg)<br/>
 
-####后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)
+#### 后台返回的数据无状态码路径(此时不会判断业务逻辑是否成功)
 ```objective-c
   [[HZNetworkConfig sharedConfig] setupBaseURL:@"http://v5.api.xxx" userAgent:@"IOS"];
 ```
 
-####配置全局请求头
+#### 配置全局请求头
 ```objective-c
   [[HZNetworkConfig sharedConfig] addDefaultHeaderFields:@{@"key":@"value"}];
 ```
 
-####网络状态
+#### 网络状态
 ```objective-c
   [HZNetworkConfig sharedConfig].reachable  //程序刚启动时有0.02的网络状态延迟判断。故请求应在0.02s后再发出
 ```
 
-####HZSessionTask
+#### HZSessionTask
 ```objective-c
   @interface FrameworkViewModel : HZViewModel
   
@@ -129,13 +129,13 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   @end
 ```
 
-##二.数据模型##
+## 二.数据模型 ##
 基本思路:模型的字段与表字段一一对应
-####继承HZModel然后初始化以Friend为例:
+#### 继承HZModel然后初始化以Friend为例:
 ```objective-c
   Friend *friend = [Friend modelWithDic:@"name":@"xzh3",@"age":@20,@"email":@"6540"];
 ```
-####基本的数据库操作:
+#### 基本的数据库操作:
 ```objective-c
   [Friend open];  //任何数据库操作都应先打开数据库，然后再关闭
   [Friend close];
@@ -146,7 +146,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   }
   NSInteger count = [Friend longForQuery:@"select count(*) from Friend"];   //查询整数型的数据如count
 ```
-####元组数据操作:
+#### 元组数据操作:
 ```objective-c
   /***************************************增删改***************************************/
   [Friend safeSave];  //safe代表执行之前先open数据库，执行完毕后再close数据库
@@ -164,7 +164,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   }
 ```
 
-####数据库操作前后的回调，交由子类重写:
+#### 数据库操作前后的回调，交由子类重写:
 ```objective-c
   - (void)loadModel;  //初始化配置(成员变量，或数组对象类设置)
   - (void)beforeSave;
@@ -174,10 +174,10 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   - (void)beforeDeleteSelf;
   - (void)afterDeleteSelf;
 ```
-##三.URLManager##
+## 三.URLManager ##
 基本思路:由`UIViewController+HZURLManager`(将URL转化成控制器),`HZURLNavigation`(跳转),`HZURLManageConfig`(参数配置),`HZURLManager`(结合创建和跳转,推荐直接使用这个类)
 
-####参数配置
+#### 参数配置
 ```objective-c
   //URL:类名
   [HZURLManageConfig sharedConfig].config = @{
@@ -189,7 +189,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   [HZURLManageConfig sharedConfig].classOfWebViewCtrl = @"HZWebViewController";
 ```
 
-####HZURLManager
+#### HZURLManager
 ```objective-c
   /***************************************push***************************************/
   [HZURLManager pushViewControllerWithString:@"hz://Subject?k=v" animated:YES];
@@ -203,8 +203,8 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   /***************************************Dismiss***************************************/
   [HZURLManager dismissCurrentAnimated:YES];
 ```
-##四.控制器##
-####HZNavigationController
+## 四.控制器 ##
+#### HZNavigationController
 自定义侧滑手势,可以从任意位置触发侧滑,而自带的侧滑只能在边缘位置触发.
 ```objective-c
   /**
@@ -217,7 +217,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   */
   @property(nonatomic, assign) NSUInteger countOfNoPanChild;
 ```
-####HZViewController
+#### HZViewController
 框架的模板控制器,推荐继承该控制器
 ```objective-c
   /**
@@ -225,7 +225,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   */
   @property(nonatomic, strong, readonly) HZNavigationController *nav;
 ```
-####HZWebViewController
+#### HZWebViewController
 框架的默认网页控制器,加载网页时推荐加载该控制器
 ```objective-c
   //初始化
@@ -241,9 +241,9 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   -(void)webViewIsFail;       //加载失败调用
 ```
 
-##五.HUD提示##
+## 五.HUD提示 ##
 基本思路:1.添加到vc.view上,通过创建时key可以获得  2.添加到window.view上
-####vc.view类型
+#### vc.view类型
 ```objective-c
   /***************************************请求场景***************************************/
   等待:[self showIndicatorWithText:@"请求中" forKey:@"request"];      
@@ -255,7 +255,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   [self showFailWithText:@"失败"];       //失败时使用
   [self showMessage:@"只显示文字"];      //仅需要文字提示时使用
 ```
-####window.view类型
+#### window.view类型
 ```objective-c
   /***************************************请求场景***************************************/
   [self showWindowIndicatorWithText:@"请求中"];   //等待时使用
@@ -267,8 +267,8 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   失败:[self showWindowFailWithText:@"失败"];
   仅文字:[self showWindowMessage:@"只显示文字"];
 ```
-##六.扩展类##
-####HZSystem.h
+## 六.扩展类 ##
+#### HZSystem.h
 ```objective-c
   /***************************************判断系统版本***************************************/
   + (BOOL)isIOS6Later;    //包括IOS6,下同
@@ -293,7 +293,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   /***************************************手机型号信息***************************************/
   + (NSString *)platform;
 ```
-####UIView+HZExtend.h
+#### UIView+HZExtend.h
 ```objective-c
   /***************************************快捷设置Frame***************************************/
   //左上角长为100的正方形
@@ -328,7 +328,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   //其它更快捷的方法详见UIView+HZExtend.h
 ```
 
-####UIImageView+HZExtend.h
+#### UIImageView+HZExtend.h
 ```objective-c
   /***************************************快捷设置图片***************************************/
   /*
@@ -338,7 +338,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   */
   - (void)safeSetImageWithURL:(NSString *)url placeholder:(UIImage *)image;
 ```
-####UIColor+HZExtend.h
+#### UIColor+HZExtend.h
 ```objective-c
 /***************************************快捷设置颜色***************************************/
   UIColor *whiteColor = [UIColor colorForHex:0xFFFFFF];
@@ -348,13 +348,13 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   UIColor *alphaBlackColor = RGBA(0,0,0,0.5);
 ```
 
-####NSArray+HZExtend.h
+#### NSArray+HZExtend.h
 ```objective-c
   //若越界则返回nil
   - (id)objectAtSafeIndex:(NSInteger)index;
 ```
 
-####NSDictionary+HZExtend.h
+#### NSDictionary+HZExtend.h
 ```objective-c
   /**
   *  @{ @“person”:@{@"name":@"GeniusBrotherHZExtend"}}
@@ -368,7 +368,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
   - (id)objectForKeyPath:(NSString *)path  otherwise:(NSObject *)other;
 ```
 
-####NSMutableArray+HZExtend.h
+#### NSMutableArray+HZExtend.h
 ```objective-c
   /**
   *  若下标越界时,则什么也不做
@@ -386,7 +386,7 @@ CocoaPods:pod 'HZExtend', '~> 0.5.4'
 
 ```
 
-####NSString+HZExtend.h
+#### NSString+HZExtend.h
 ```objective-c
   /**
   *  以md5算法加密
