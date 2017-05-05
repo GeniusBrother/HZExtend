@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 //判断date是否为本年之内
 - (BOOL)isInThisYear;
 
+
++ (NSUInteger)timeStamp;
+
 /**
  *  获取今天date
  */

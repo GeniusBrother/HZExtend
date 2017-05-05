@@ -300,7 +300,7 @@ NSString *const kPrimaryKeyName = @"primaryKey";
                     if (propertyName.isNoEmpty) {
                         id convertedValue =  [self getNewValueForProperty:propertyName withOriginValue:value];
                         NSAssert(convertedValue, @"HZORM 装换的值不能为nil");
-                        if (convertedValue) [obj setValue:convertedValue forKey:propertyName];
+                        if (convertedValue && ![convertedValue isKindOfClass:[NSNull class]]) [obj setValue:convertedValue forKey:propertyName];
                     }
                 }
             }];

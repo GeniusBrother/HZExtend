@@ -71,6 +71,11 @@
     return [formatter dateFromString:fomatterStr];
 }
 
++ (NSUInteger)timeStamp
+{
+    return [[[NSDate alloc] init] timeStamp];
+}
+
 - (NSString *)formatterDateString
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
