@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "HZExtend" 
-  s.version      = "0.5.4"    
+  s.version      = "0.5.5"    
   s.summary      = "MVVM, Powerful IOS Extension"
   s.description  = <<-DESC
                    MVVM, Powerful IOS Extension，available Network、Model、MMVM、URLManager、database
@@ -19,9 +19,9 @@ Pod::Spec.new do |s|
 
   s.dependency 'AFNetworking','~>3.1.0'
   s.dependency 'MBProgressHUD'
-  s.dependency 'FMDB'
-  s.dependency 'FMDBMigrationManager'
-  s.dependency 'MJExtension'
+  s.dependency 'FMDB', '~>2.7.0'
+  s.dependency 'FMDBMigrationManager', '~>1.4.0'
+  s.dependency 'MJExtension','~>3.0.13'
   s.dependency 'TMCache'
   s.dependency 'SDWebImage', '~> 3.8.2'
   s.dependency 'MJRefresh', '~> 3.1.0'
