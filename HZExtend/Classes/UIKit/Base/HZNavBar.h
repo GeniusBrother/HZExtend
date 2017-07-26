@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+typedef void(^HZNavBarActionBlock)(UIView *actionView);
+
 static const CGFloat kNavBarDefaultSpace = 16.0f;
 
 @interface HZNavBar : UIView
@@ -26,10 +28,12 @@ static const CGFloat kNavBarDefaultSpace = 16.0f;
  */
 + (instancetype)navBarWithTitle:(NSString *)title;
 
+
+- (void)addLeftCustomView:(UIView *)leftCustomView callback:(nullable HZNavBarActionBlock)callBack;
+- (void)addRightCustomView:(UIView *)rightCustomView callback:(nullable HZNavBarActionBlock)callBack;
+
 - (void)addLeftCustomView:(UIView *)leftCustomView;
-
 - (void)addCenterCustomView:(UIView *)centerCustomView;
-
 - (void)addRightCustomView:(UIView *)rightCustomView;
 
 

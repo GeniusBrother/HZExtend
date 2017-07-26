@@ -15,7 +15,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^HZSessionTaskDidCompletedBlock)(HZSessionTask *task);
+typedef void(^HZSessionTaskDidCompletedBlock)(HZSessionTask * __nullable task);
 typedef void(^HZSessionTaskSendingBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskDidCancelBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskUploadProgressBlock)(HZSessionTask *task, NSProgress *progress);

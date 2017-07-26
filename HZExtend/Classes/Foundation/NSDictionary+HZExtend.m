@@ -54,7 +54,7 @@
 {
     id value = [self objectForKey:key];
     
-    if ([value isKindOfClass:[NSNumber class]]) {
+    if ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]]) {
         return [value integerValue];
     }else {
         return 0;

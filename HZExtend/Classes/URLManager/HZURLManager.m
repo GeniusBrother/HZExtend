@@ -32,6 +32,15 @@ singleton_m
     return self;
 }
 
++ (void)dismissCurrentAnimated:(BOOL)animated
+{
+    [HZURLNavigation dismissCurrentAnimated:animated];
+}
+
+@end
+
+
+@implementation HZURLManager (URLManagerDeprecated)
 
 #pragma mark - push
 + (void)pushViewControllerWithString:(NSString *)urlstring animated:(BOOL)animated
@@ -40,7 +49,7 @@ singleton_m
     
     UIViewController *viewController = [UIViewController viewControllerWithString:urlstring];
     if (viewController)
-    [HZURLNavigation pushViewController:viewController animated:animated];
+        [HZURLNavigation pushViewController:viewController animated:animated];
 }
 
 + (void)pushViewControllerWithString:(NSString *)urlstring queryDic:(NSDictionary *)query animated:(BOOL)animated
@@ -49,7 +58,7 @@ singleton_m
     
     UIViewController *viewController = [UIViewController viewControllerWithString:urlstring queryDic:query];
     if (viewController)
-    [HZURLNavigation pushViewController:viewController animated:animated];
+        [HZURLNavigation pushViewController:viewController animated:animated];
 }
 
 + (void)pushViewController:(UIViewController *)ctrl animated:(BOOL)animated
@@ -64,7 +73,7 @@ singleton_m
     
     UIViewController *viewController = [UIViewController viewControllerWithString:urlstring];
     if (viewController)
-    [HZURLNavigation presentViewController:viewController animated:animated completion:completion];
+        [HZURLNavigation presentViewController:viewController animated:animated completion:completion];
 }
 
 + (void)presentViewControllerWithString:(NSString *)urlstring queryDic:(NSDictionary *)query animated:(BOOL)animated completion:(void (^ _Nullable)(void))completion
@@ -73,7 +82,7 @@ singleton_m
     
     UIViewController *viewController = [UIViewController viewControllerWithString:urlstring queryDic:query];
     if (viewController)
-    [HZURLNavigation presentViewController:viewController animated:animated completion:completion];
+        [HZURLNavigation presentViewController:viewController animated:animated completion:completion];
 }
 
 + (void)presentViewController:(UIViewController *)ctrl animated:(BOOL)animated completion:(void (^)(void))completion
@@ -81,11 +90,5 @@ singleton_m
     [HZURLNavigation presentViewController:ctrl animated:animated completion:completion];
 }
 
-
-#pragma mark - Dismiss
-+ (void)dismissCurrentAnimated:(BOOL)animated
-{
-    [HZURLNavigation dismissCurrentAnimated:animated];
-}
 
 @end

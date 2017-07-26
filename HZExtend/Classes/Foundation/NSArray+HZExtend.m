@@ -12,7 +12,7 @@
 
 - (id)objectAtSafeIndex:(NSInteger)index
 {
-    if (index >(self.count-1) || index < 0)
+    if (self.count == 0 || index == NSNotFound || (index >(self.count-1)) || index < 0)
     {
         HZLog(@"out of bound");
         return nil;

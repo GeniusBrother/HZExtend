@@ -19,6 +19,7 @@
 //常用数值
 #define HZTabBarHeight 49.0f
 #define HZNavBarHeight 64.0f
+#define HZStatusBarHeight 20.0f
 
 //引用
 #define HZWeakObj(Obj) __weak typeof(Obj) weak##_##Obj = Obj

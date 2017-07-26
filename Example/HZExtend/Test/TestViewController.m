@@ -35,9 +35,6 @@ static NSInteger h = 1;
     [btn addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     [btn setBackgroundColor:[UIColor purpleColor]];
     [self.view addSubview:btn];
-    
-
-
 }
 
 - (void)click:(UIButton *)sender

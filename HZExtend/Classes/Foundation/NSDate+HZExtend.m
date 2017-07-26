@@ -76,10 +76,10 @@
     return [[[NSDate alloc] init] timeStamp];
 }
 
-- (NSString *)formatterDateString
+- (NSString *)formatterDateStringWithSeparator:(NSString *)separator
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
+    [formatter setDateFormat:[NSString stringWithFormat:@"yyyy%@MM%@dd",separator,separator]];
     return [formatter stringFromDate:self];
 }
 

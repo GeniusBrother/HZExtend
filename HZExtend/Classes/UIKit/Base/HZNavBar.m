@@ -14,12 +14,16 @@
 #import <Masonry/Masonry.h>
 #import "HZNavLeftContainerView.h"
 #import "HZNavRightContainerView.h"
+#import "UIView+HZAction.h"
 @interface HZNavBar ()
 
 @property(nonatomic, weak) UILabel *titleLabel;
 @property(nonatomic, weak) UIView *leftCustomView;
 @property(nonatomic, weak) UIView *centerCustomView;
 @property(nonatomic, weak) UIView *rightCustomView;
+
+@property(nonatomic, copy) HZNavBarActionBlock leftCallback;
+@property(nonatomic, copy) HZNavBarActionBlock rightCallback;
 
 
 @end
@@ -59,14 +63,54 @@
 
 
 #pragma mark - Public Method
-- (void)addLeftCustomView:(UIView *)customView
+- (void)addRightCustomView:(UIView *)rightCustomView callback:(nullable HZNavBarActionBlock)callBack
 {
-    if (!customView) return;
+    if (!rightCustomView) return;
+    [self.rightCustomView removeFromSuperview];
+    
+    [self addSubview:rightCustomView];
+    self.rightCustomView = rightCustomView;
+    
+    
+    if (callBack) {
+        if ([rightCustomView isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)rightCustomView;
+            [btn addTarget:self action:@selector(rightClick:) forControlEvents:UIControlEventTouchUpInside];
+        }else {
+            [rightCustomView tapPeformBlock:^(UIView *view) {
+                callBack(view);
+            }];
+        }
+    }
+    self.rightCallback = callBack;
+}
+
+- (void)addLeftCustomView:(UIView *)leftCustomView callback:(nullable HZNavBarActionBlock)callBack
+{
+    if (!leftCustomView) return;
     
     [self.leftCustomView removeFromSuperview];
     
-    [self addSubview:customView];
-    self.leftCustomView = customView;
+    [self addSubview:leftCustomView];
+    self.leftCustomView = leftCustomView;
+    
+    if (callBack) {
+        if ([leftCustomView isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)leftCustomView;
+            [btn addTarget:self action:@selector(leftClick:) forControlEvents:UIControlEventTouchUpInside];
+        }else {
+            [leftCustomView tapPeformBlock:^(UIView *view) {
+                callBack(view);
+            }];
+        }
+    }
+    
+    self.leftCallback = callBack;
+}
+
+- (void)addLeftCustomView:(UIView *)customView
+{
+    [self addLeftCustomView:customView callback:nil];
 }
 
 - (void)addCenterCustomView:(UIView *)customView
@@ -81,13 +125,24 @@
 
 - (void)addRightCustomView:(UIView *)customView
 {
-    if (!customView) return;
-    
-    [self.rightCustomView removeFromSuperview];
-
-    [self addSubview:customView];
-    self.rightCustomView = customView;
+    [self addRightCustomView:customView callback:nil];
 }
+
+#pragma mark - Action
+- (void)leftClick:(UIButton *)btn
+{
+    if (self.leftCallback) {
+        self.leftCallback(btn);
+    }
+}
+
+- (void)rightClick:(UIButton *)btn
+{
+    if (self.rightCallback) {
+        self.rightCallback(btn);
+    }
+}
+
 
 #pragma mark - Lazy Load
 - (UILabel *)titleLabel

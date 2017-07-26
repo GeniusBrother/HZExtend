@@ -12,6 +12,11 @@
 
 @property(nonatomic, weak, readonly) UIView *lineView;
 
+- (void)addLineViewWithColor:(UIColor *)lineColor
+                      height:(CGFloat)height
+                      bottom:(BOOL)isBottom
+                        left:(CGFloat)leftSpace
+                       right:(CGFloat)rightSpace;
 
 - (void)addBottomLineViewWithColor:(UIColor *)lineColor
                             height:(CGFloat)height
@@ -29,4 +34,5 @@
 
 - (void)addDefalutBottomLineView;
 
+- (void)addCorner:(UIRectCorner)postions radius:(CGFloat)radius;
 @end

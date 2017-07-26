@@ -14,9 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSDate (HZExtend)
 
-//获取格式化字日期符串 2017-01-01
-@property(nonatomic, readonly) NSString *formatterDateString;
-
 //获取格式化字时间符串 08:08
 @property(nonatomic, readonly) NSString *formatterTimeString;
 
@@ -40,7 +37,10 @@ NS_ASSUME_NONNULL_BEGIN
 //判断date是否为本年之内
 - (BOOL)isInThisYear;
 
+//获取格式化字日期符串 如2017-01-01
+- (NSString *)formatterDateStringWithSeparator:(NSString *)separator;
 
+//获取当前时间戳
 + (NSUInteger)timeStamp;
 
 /**

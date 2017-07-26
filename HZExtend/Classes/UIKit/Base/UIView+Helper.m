@@ -13,6 +13,18 @@
 static const char kLineView = '\0';
 
 @implementation UIView (Helper)
+
+#pragma mark - Corner
+- (void)addCorner:(UIRectCorner)postions radius:(CGFloat)radius
+{
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:postions cornerRadii:CGSizeMake(radius, radius)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
+}
+
+#pragma mark - Line
 - (void)addTopLineViewWithColor:(UIColor *)lineColor
 {
     [self addTopLineViewWithColor:lineColor height:0.5];
@@ -32,7 +44,7 @@ static const char kLineView = '\0';
                          height:(CGFloat)height
                           space:(CGFloat)space
 {
-    [self addLineViewWithColor:lineColor height:height bottom:NO space:space];
+    [self addLineViewWithColor:lineColor height:height bottom:NO left:space right:space];
 }
 
 - (void)addBottomLineViewWithColor:(UIColor *)lineColor height:(CGFloat)height
@@ -44,13 +56,14 @@ static const char kLineView = '\0';
                             height:(CGFloat)height
                              space:(CGFloat)space
 {
-    [self addLineViewWithColor:lineColor height:height bottom:YES space:space];
+    [self addLineViewWithColor:lineColor height:height bottom:YES left:space right:space];
 }
 
 - (void)addLineViewWithColor:(UIColor *)lineColor
                       height:(CGFloat)height
                       bottom:(BOOL)isBottom
-                       space:(CGFloat)space
+                        left:(CGFloat)leftSpace
+                       right:(CGFloat)rightSpace
 {
     
     UIView *lineView = [[UIView alloc] init];
@@ -58,8 +71,8 @@ static const char kLineView = '\0';
     [self addSubview:lineView];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@(height));
-        make.left.equalTo(@(space));
-        make.right.equalTo(@(-space));
+        make.left.equalTo(@(leftSpace));
+        make.right.equalTo(@(-rightSpace));
         if (isBottom) {
             make.bottom.equalTo(lineView.superview);
         }else {

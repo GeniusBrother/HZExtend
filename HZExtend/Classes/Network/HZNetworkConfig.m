@@ -95,4 +95,5 @@ singleton_m
         [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":userAgent}];
     }
 }
+
 @end
