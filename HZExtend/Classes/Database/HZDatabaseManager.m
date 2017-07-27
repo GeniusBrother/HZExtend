@@ -137,7 +137,7 @@ singleton_m
     [self checkConnection];
     if (!sql.isNoEmpty) {
         NSAssert(NO, @"%s SQL语句为空",__FUNCTION__);
-        return nil;
+        return NO;
     }
 
     return [self.database executeStatements:sql withResultBlock:block];

@@ -340,7 +340,7 @@ NSString *const kPrimaryKeyName = @"primaryKey";
 - (void)sucessDelete {}
 
 #pragma mark - Override
-+ (NSString *)getTabelName {}
++ (NSString *)getTabelName { return @"";}
 
 + (NSDictionary *)getColumnNames { return nil; }
 

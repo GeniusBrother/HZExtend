@@ -14,21 +14,21 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - FMDB (2.6.2):
-    - FMDB/standard (= 2.6.2)
-  - FMDB/standard (2.6.2)
+  - FMDB (2.7.2):
+    - FMDB/standard (= 2.7.2)
+  - FMDB/standard (2.7.2)
   - FMDBMigrationManager (1.4.1):
     - FMDBMigrationManager/System (= 1.4.1)
   - FMDBMigrationManager/System (1.4.1):
     - FMDB/standard (>= 2.3)
-  - HZExtend (0.5.4):
+  - HZExtend (0.5.5):
     - AFNetworking (~> 3.1.0)
-    - FMDB
-    - FMDBMigrationManager
+    - FMDB (~> 2.7.0)
+    - FMDBMigrationManager (~> 1.4.0)
     - MBProgressHUD
-    - MJExtension
+    - MJExtension (~> 3.0.13)
     - MJRefresh (~> 3.1.0)
-    - SDWebImage
+    - SDWebImage (~> 3.8.2)
     - TMCache
   - Kiwi (2.4.0)
   - Masonry (1.0.2)
@@ -51,9 +51,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
+  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
   FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
-  HZExtend: 3f798b31e42252ebfb66faf2688fa2d7b8debc32
+  HZExtend: 5106eb36020c59b3df7dc62767478511deedd9ee
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
@@ -64,4 +64,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bd6332a6cd12bde54d4933fa6b3e05b043ab780f
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.2.0

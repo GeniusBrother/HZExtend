@@ -179,7 +179,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状�
  *
  *	@param handler  将要执行请求任务时调用,如果error不为nil,说明请求被拦截
  */
-- (void)startWithHandler:(void(^)(HZSessionTask *task, NSError  * _Nullable error))handler;
+- (void)startWithHandler:(nullable void(^)(HZSessionTask *task, NSError  * _Nullable error))handler;
 
 /**
  *	开始上传请求

@@ -11,7 +11,6 @@
 #import "UIView+HZExtend.h"
 #import "NSObject+HZExtend.h"
 #import "HZURLManager.h"
-#import <Masonry/Masonry.h>
 #import "HZNavLeftContainerView.h"
 #import "HZNavRightContainerView.h"
 #import "UIView+HZAction.h"
@@ -59,7 +58,6 @@
 {
     self.backgroundColor = [UIColor whiteColor];
 }
-
 
 
 #pragma mark - Public Method
@@ -155,11 +153,9 @@
         titleLabel.numberOfLines = 1;
         [self addCenterCustomView:titleLabel];
         _titleLabel = titleLabel;
-        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(@0);
-            make.top.equalTo(@20);
-            make.height.equalTo(@44);
-        }];
+        titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addConstraints:@[[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0],[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:20]]];
+        [titleLabel addConstraint:[NSLayoutConstraint constraintWithItem:titleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:44]];
     }
     return _titleLabel;
 }

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  负责跳转,获得当前viewCtrl&navgationController
@@ -22,7 +23,7 @@
 /**
  *  获得当前的navgationCtrl
  */
-+ (UINavigationController *)currentNavigationViewController;
++ (nullable UINavigationController *)currentNavigationViewController;
 
 /**
  *  将viewController push到当前的导航控制器,若当前导航控制器为nil则什么也不做
@@ -47,3 +48,5 @@
 + (void)dismissCurrentAnimated:(BOOL)animated;
 
 @end
+
+NS_ASSUME_NONNULL_END

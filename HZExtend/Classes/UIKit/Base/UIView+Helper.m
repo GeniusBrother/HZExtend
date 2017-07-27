@@ -7,7 +7,6 @@
 //
 
 #import "UIView+Helper.h"
-#import <Masonry/Masonry.h>
 #import "UIColor+HZExtend.h"
 #import <objc/runtime.h>
 static const char kLineView = '\0';
@@ -69,16 +68,20 @@ static const char kLineView = '\0';
     UIView *lineView = [[UIView alloc] init];
     lineView.backgroundColor = lineColor;
     [self addSubview:lineView];
-    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@(height));
-        make.left.equalTo(@(leftSpace));
-        make.right.equalTo(@(-rightSpace));
-        if (isBottom) {
-            make.bottom.equalTo(lineView.superview);
-        }else {
-            make.top.equalTo(@0);
-        }
-    }];
+    
+    //lineView
+    [lineView addConstraint:[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:height]];
+    
+    //superView
+    NSMutableArray *constrains = [NSMutableArray arrayWithArray:@[[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1 constant:leftSpace],[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1 constant:-rightSpace]]];
+    
+    if (isBottom) {
+        [constrains addObject:[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1 constant:0]];
+    }else {
+        [constrains addObject:[NSLayoutConstraint constraintWithItem:lineView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1 constant:0]];
+    }
+    
+    [self addConstraints:constrains];
     [self setLineView:lineView];
 }
 

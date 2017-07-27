@@ -10,7 +10,7 @@
 #import "NSDate+HZExtend.h"
 @implementation HZTimeTool
 
-+ (NSTimeInterval)getFirstDayOfWeek:(NSTimeInterval)timestamp
++ (long long)getFirstDayOfWeek:(NSTimeInterval)timestamp
 {
     NSDate *now = [NSDate dateWithTimeIntervalSince1970:timestamp];
     NSDateComponents *comps = [CURRENT_CALENDAR components:NSCalendarUnitWeekday fromDate:now];

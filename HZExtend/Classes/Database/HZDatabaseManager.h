@@ -11,8 +11,11 @@
 #import "HZSingleton.h"
 
 #define HZDBManager [HZDatabaseManager sharedManager]
-typedef int(^HZDBExecuteStatementsCallbackBlock)(NSDictionary *resultsDictionary);
+
 NS_ASSUME_NONNULL_BEGIN
+
+typedef int(^HZDBExecuteStatementsCallbackBlock)(NSDictionary *resultsDictionary);
+
 
 @interface HZDatabaseManager : NSObject
 singleton_h(Manager)

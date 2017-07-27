@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "NSObject+HZExtend.h"
 
-typedef NSComparisonResult	(^NSMutableArrayCompareBlock)(id left, id right);
 NS_ASSUME_NONNULL_BEGIN
+
+typedef NSComparisonResult	(^NSMutableArrayCompareBlock)(id left, id right);
+
 
 @interface NSMutableArray (HZExtend)
 

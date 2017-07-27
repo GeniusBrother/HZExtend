@@ -8,7 +8,6 @@
 
 #import "UIView+HZEmptyView.h"
 #import <objc/runtime.h>
-#import <Masonry/Masonry.h>
 static const char EMPTY_CONTENT_VIEW = '\0';
 @interface UIView ()
 
@@ -24,9 +23,7 @@ static const char EMPTY_CONTENT_VIEW = '\0';
     [self.emptyContentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     [self.safeEmptyContentView addSubview:view];
-    [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(@0);
-    }];
+    [self.safeEmptyContentView addConstraints:@[[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.safeEmptyContentView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0],[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.safeEmptyContentView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]]];
 }
 
 - (void)hz_removeEmptyView
@@ -44,9 +41,7 @@ static const char EMPTY_CONTENT_VIEW = '\0';
         emptyContentView = [[UIView alloc] initWithFrame:CGRectZero];
         //        emptyContentView.backgroundColor = [UIColor redColor];
         [self addSubview:emptyContentView];
-        [emptyContentView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(@0);
-        }];
+    [self.safeEmptyContentView addConstraints:@[[NSLayoutConstraint constraintWithItem:emptyContentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1 constant:0],[NSLayoutConstraint constraintWithItem:emptyContentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]]];
         [self setEmptyContentView:emptyContentView];
     }
     
