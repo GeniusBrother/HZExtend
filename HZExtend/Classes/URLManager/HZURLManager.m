@@ -32,11 +32,6 @@ singleton_m
     return self;
 }
 
-+ (void)dismissCurrentAnimated:(BOOL)animated
-{
-    [HZURLNavigation dismissCurrentAnimated:animated];
-}
-
 @end
 
 
@@ -90,5 +85,10 @@ singleton_m
     [HZURLNavigation presentViewController:ctrl animated:animated completion:completion];
 }
 
+
++ (void)dismissCurrentAnimated:(BOOL)animated
+{
+    [HZURLNavigation dismissCurrentAnimated:animated];
+}
 
 @end

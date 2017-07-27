@@ -1,15 +1,13 @@
 //
 //  ViewController.h
-//  HZExtend-Demo
+//  HZExtend
 //
-//  Created by xzh on 16/2/13.
-//  Copyright © 2016年 xzh. All rights reserved.
+//  Created by xzh on 2017/7/27.
+//  Copyright © 2017年 GeniusBrother. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
 
-
 @end
-
