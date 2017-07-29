@@ -12,7 +12,9 @@
 		289676751D69913800A2C62D /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 289676731D69913800A2C62D /* success@2x.png */; };
 		289676781D69A38C00A2C62D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 289676761D69A38C00A2C62D /* LaunchScreen.storyboard */; };
 		28E29F451F2A0528009F3A34 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E29F441F2A0528009F3A34 /* ViewController.m */; };
-		28E29F471F2A05BB009F3A34 /* URLConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28E29F461F2A05BB009F3A34 /* URLConfig.plist */; };
+		28E29F471F2A05BB009F3A34 /* URL-Controller-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28E29F461F2A05BB009F3A34 /* URL-Controller-Config.plist */; };
+		28E29F491F2AB89F009F3A34 /* URL-Method-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28E29F481F2AB89F009F3A34 /* URL-Method-Config.plist */; };
+		28E29F4F1F2AB9F3009F3A34 /* HZShareURLHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 28E29F4E1F2AB9F3009F3A34 /* HZShareURLHandler.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -46,7 +48,10 @@
 		289676771D69A38C00A2C62D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = HZExtend/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		28E29F431F2A0528009F3A34 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		28E29F441F2A0528009F3A34 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		28E29F461F2A05BB009F3A34 /* URLConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = URLConfig.plist; sourceTree = "<group>"; };
+		28E29F461F2A05BB009F3A34 /* URL-Controller-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "URL-Controller-Config.plist"; sourceTree = "<group>"; };
+		28E29F481F2AB89F009F3A34 /* URL-Method-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "URL-Method-Config.plist"; sourceTree = "<group>"; };
+		28E29F4D1F2AB9F3009F3A34 /* HZShareURLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZShareURLHandler.h; sourceTree = "<group>"; };
+		28E29F4E1F2AB9F3009F3A34 /* HZShareURLHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZShareURLHandler.m; sourceTree = "<group>"; };
 		3957D90FEDFB896F566815B2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* HZExtend_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HZExtend_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -111,6 +116,7 @@
 		28E29F3E1F2A0510009F3A34 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				28E29F4A1F2AB92F009F3A34 /* URLHandler */,
 				28E29F3F1F2A0510009F3A34 /* Conrtoller */,
 				28E29F401F2A0510009F3A34 /* Model */,
 				28E29F411F2A0510009F3A34 /* View */,
@@ -147,6 +153,15 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		28E29F4A1F2AB92F009F3A34 /* URLHandler */ = {
+			isa = PBXGroup;
+			children = (
+				28E29F4D1F2AB9F3009F3A34 /* HZShareURLHandler.h */,
+				28E29F4E1F2AB9F3009F3A34 /* HZShareURLHandler.m */,
+			);
+			path = URLHandler;
 			sourceTree = "<group>";
 		};
 		6003F581195388D10070C39A = {
@@ -205,7 +220,8 @@
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				6003F599195388D20070C39A /* main.m */,
 				6003F59B195388D20070C39A /* HZExtend-Prefix.pch */,
-				28E29F461F2A05BB009F3A34 /* URLConfig.plist */,
+				28E29F461F2A05BB009F3A34 /* URL-Controller-Config.plist */,
+				28E29F481F2AB89F009F3A34 /* URL-Method-Config.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -340,8 +356,9 @@
 				289676751D69913800A2C62D /* success@2x.png in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				289676781D69A38C00A2C62D /* LaunchScreen.storyboard in Resources */,
-				28E29F471F2A05BB009F3A34 /* URLConfig.plist in Resources */,
+				28E29F471F2A05BB009F3A34 /* URL-Controller-Config.plist in Resources */,
 				289676741D69913800A2C62D /* error@2x.png in Resources */,
+				28E29F491F2AB89F009F3A34 /* URL-Method-Config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28E29F4F1F2AB9F3009F3A34 /* HZShareURLHandler.m in Sources */,
 				28E29F451F2A0528009F3A34 /* ViewController.m in Sources */,
 				6003F59E195388D20070C39A /* HZAppDelegate.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,

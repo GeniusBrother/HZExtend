@@ -4,8 +4,6 @@
 <dict>
 	<key>http</key>
 	<dict/>
-	<key>shareKit.hz/doShare</key>
-	<string>@HZShareURLHandler</string>
 	<key>New item</key>
 	<string></string>
 </dict>

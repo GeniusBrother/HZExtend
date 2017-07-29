@@ -59,6 +59,7 @@
 #import "HZRefreshHeaderView.h"
 #import "HZErrorViewController.h"
 #import "HZNavigationController.h"
+#import "HZURLHandler.h"
 #import "HZURLManageConfig.h"
 #import "HZURLManager.h"
 #import "HZURLNavigation.h"

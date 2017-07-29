@@ -20,25 +20,26 @@ NS_ASSUME_NONNULL_BEGIN
 singleton_h(Manager)
 
 /**
- *	加载URL配置
+ *	加载URLController和URLMethod配置
  *
- *	@param path plist文件的路径
+ *	@param ctrlPath URL-Controller-Config.plist文件的路径
+ *  @param methodPath URL-Method-Config.plist文件的路径
  */
-- (void)loadURLConfigWithPath:(NSString *)path;
+- (void)loadURLCtrlConfig:(NSString *)ctrlPath urlMethodConfig:(NSString *)methodPath;
 
 /**
  *	添加重写规则
  *
  *	@param rule 重写规则,规则形式见文档
  */
-- (void)addRewriteRule:(NSDictionary *)rule;
+- (void)addRewriteRules:(NSArray *)rule;
 
 /**
  *	调用模块方法
  *
  *	@param url  与模块方法相对应的URL
  */
-- (id)handleURL:(NSString *)url withTarget:(id)target withParams:(id)parmas;
+- (id)handleURL:(NSString *)url withTarget:(id)target withParams:(nullable id)parmas;
 
 /**
  *	跳转到指定界面
@@ -51,16 +52,16 @@ singleton_h(Manager)
  */
 - (void)redirectToURL:(NSString *)url
              animated:(BOOL)animated
-               parmas:(NSDictionary *)parmas
-              options:(NSDictionary *)options
-           completion:(HZVoidBlock)completion;
+               parmas:(nullable NSDictionary *)parmas
+              options:(nullable NSDictionary *)options
+           completion:(nullable HZVoidBlock)completion;
 
 /**
  *	跳转到指定界面
  *
  *  以push的方式进行跳转
  */
-- (void)redirectToURL:(NSString *)url animated:(BOOL)animated params:(NSDictionary *)params;
+- (void)redirectToURL:(NSString *)url animated:(BOOL)animated params:(nullable NSDictionary *)params;
 - (void)redirectToURL:(NSString *)url animated:(BOOL)animated;
 
 

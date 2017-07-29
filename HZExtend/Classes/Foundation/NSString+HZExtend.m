@@ -17,13 +17,6 @@
     if (self.length == 0) return @"";
     
     return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    
-    /*
-    NSString *encodedValue = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(nil,
-                                                                                                  (CFStringRef)string, nil,
-                                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8));
-    return encodedValue;
-     */
 }
 
 - (NSString *)urlDecode
@@ -67,9 +60,6 @@
 
 - (NSString *)keyValues
 {
-    NSString *scheme = self.scheme;
-    if (!scheme.isNoEmpty) return @"";
-    
     NSRange range = [self rangeOfString:@"?"];
     if (range.length == 0) return @"";
     
@@ -154,14 +144,14 @@
         {
             key = [self valueFromKeyValue:pair atIndex:0];
             obj = [self valueFromKeyValue:pair atIndex:1];
-            [queryDic setObject:obj forKey:key];
+            [queryDic setObject:[obj urlDecode] forKey:key];
         }
     }
     else if (pairArray.count == 1)
     {
         key = [self valueFromKeyValue:keysValues atIndex:0];
         obj = [self valueFromKeyValue:keysValues atIndex:1];
-        [queryDic setObject:obj forKey:key];
+        [queryDic setObject:[obj urlDecode] forKey:key];
     }
     
     return queryDic;
