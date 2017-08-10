@@ -56,20 +56,11 @@
 
 - (void)test
 {
-    [URL_MANAGERN loadURLCtrlConfig:@"" urlMethodConfig:[[NSBundle mainBundle] pathForResource:@"URL-Method-Config" ofType:@"plist"]];
+    [URL_MANAGERN loadURLCtrlConfig:[[NSBundle mainBundle] pathForResource:@"URL-Controller-Config" ofType:@"plist"] urlMethodConfig:[[NSBundle mainBundle] pathForResource:@"URL-Method-Config" ofType:@"plist"]];
+
+    [URL_MANAGERN addRewriteRules:@[@{@"match":@"(?:https://)?www.hz.com/articles/(\\d)\\?(.*)",@"target":@"hz://page.hz/article?$query&id=$1"}]];
     
-    NSRegularExpression *rx = [NSRegularExpression regularExpressionWithPattern:@"(\\d)+(.)+?\\2" options:0 error:0];
-    
-    NSRegularExpression *replaceRx = [NSRegularExpression regularExpressionWithPattern:@"[$](\\d)+|[$]query" options:0 error:NULL];
-    
-    NSLog(@"%d",replaceRx.numberOfCaptureGroups);
-    
-    
-    NSString *searchStr = @"1aab";
-//    NSTextCheckingResult *result = [rx firstMatchInString:searchStr options:0 range:];
-    [rx enumerateMatchesInString:searchStr options:0 range:NSMakeRange(0, searchStr.length) usingBlock:^(NSTextCheckingResult * _Nullable result, NSMatchingFlags flags, BOOL * _Nonnull stop) {
-        NSLog(@"%@",[searchStr substringWithRange:[result rangeAtIndex:1]]);
-    }];
+    [URL_MANAGERN redirectToURL:@"https://www.hz.com/articles/3?start=1&offset=20" animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

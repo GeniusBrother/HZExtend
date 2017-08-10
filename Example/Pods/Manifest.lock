@@ -21,23 +21,22 @@ PODS:
     - FMDBMigrationManager/System (= 1.4.1)
   - FMDBMigrationManager/System (1.4.1):
     - FMDB/standard (>= 2.3)
-  - HZExtend (0.5.5):
+  - HZExtend (0.6.0):
     - AFNetworking (~> 3.1.0)
     - FMDB (~> 2.7.0)
     - FMDBMigrationManager (~> 1.4.0)
-    - MBProgressHUD
+    - HZFoundation
+    - HZURLManager
     - MJExtension (~> 3.0.13)
     - MJRefresh (~> 3.1.0)
-    - SDWebImage (~> 3.8.2)
     - TMCache
+  - HZFoundation (0.1.1)
+  - HZURLManager (0.1.0):
+    - HZFoundation
   - Kiwi (2.4.0)
   - Masonry (1.0.2)
-  - MBProgressHUD (1.0.0)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.12)
-  - SDWebImage (3.8.2):
-    - SDWebImage/Core (= 3.8.2)
-  - SDWebImage/Core (3.8.2)
   - TMCache (2.1.0)
 
 DEPENDENCIES:
@@ -53,15 +52,15 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
   FMDBMigrationManager: d52007f328ea0665e8985ca8a33500707aef084f
-  HZExtend: 5106eb36020c59b3df7dc62767478511deedd9ee
+  HZExtend: d45c048d08f53d7c14f0331698116e6f07615035
+  HZFoundation: f9c3d8f2e8adca7a2001ddae1567419ac1821443
+  HZURLManager: 4c31e7c5998e4aabefffcb75c6a1c8713f3cb88f
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
-  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
 
-PODFILE CHECKSUM: bd6332a6cd12bde54d4933fa6b3e05b043ab780f
+PODFILE CHECKSUM: afc3f350d5ef1e3fd1f5f60426f995069824839c
 
 COCOAPODS: 1.2.0

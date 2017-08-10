@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>http</key>
+	<key>hz</key>
 	<dict/>
-	<key>New item</key>
-	<string></string>
+	<key>page.hz/ariticle</key>
+	<string>ViewController</string>
 </dict>
 </plist>

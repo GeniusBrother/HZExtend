@@ -1,0 +1,6 @@
+framework module HZURLManager {
+  umbrella header "HZURLManager-umbrella.h"
+
+  export *
+  module * { export * }
+}
