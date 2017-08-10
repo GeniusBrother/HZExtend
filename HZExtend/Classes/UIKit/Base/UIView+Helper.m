@@ -66,6 +66,7 @@ static const char kLineView = '\0';
 {
     
     UIView *lineView = [[UIView alloc] init];
+    lineView.translatesAutoresizingMaskIntoConstraints = NO;
     lineView.backgroundColor = lineColor;
     [self addSubview:lineView];
     
