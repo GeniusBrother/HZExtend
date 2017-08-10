@@ -41,7 +41,7 @@ static const char EMPTY_CONTENT_VIEW = '\0';
         emptyContentView = [[UIView alloc] initWithFrame:CGRectZero];
         //        emptyContentView.backgroundColor = [UIColor redColor];
         [self addSubview:emptyContentView];
-    [self.safeEmptyContentView addConstraints:@[[NSLayoutConstraint constraintWithItem:emptyContentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1 constant:0],[NSLayoutConstraint constraintWithItem:emptyContentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]]];
+        [self addConstraints:@[[NSLayoutConstraint constraintWithItem:emptyContentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1 constant:0],[NSLayoutConstraint constraintWithItem:emptyContentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]]];
         [self setEmptyContentView:emptyContentView];
     }
     
