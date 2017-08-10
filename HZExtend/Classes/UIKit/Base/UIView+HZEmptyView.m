@@ -23,7 +23,7 @@ static const char EMPTY_CONTENT_VIEW = '\0';
     [self.emptyContentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     [self.safeEmptyContentView addSubview:view];
-    [self.safeEmptyContentView addConstraints:@[[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.safeEmptyContentView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0],[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.safeEmptyContentView attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]]];
+    [self.safeEmptyContentView addConstraints:@[[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.safeEmptyContentView attribute:NSLayoutAttributeTop multiplier:1 constant:0],[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.safeEmptyContentView attribute:NSLayoutAttributeLeft multiplier:1 constant:0],[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.safeEmptyContentView attribute:NSLayoutAttributeBottom multiplier:1 constant:0],[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.safeEmptyContentView attribute:NSLayoutAttributeRight multiplier:1 constant:0]]];
 }
 
 - (void)hz_removeEmptyView
