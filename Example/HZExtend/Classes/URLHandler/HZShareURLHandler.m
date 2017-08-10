@@ -8,7 +8,7 @@
 
 #import "HZShareURLHandler.h"
 #import <HZExtend/HZExtend.h>
-#import <HZExtend/HZURLHandler.h>
+
 @interface HZShareURLHandler ()<HZURLHandler>
 
 
@@ -23,7 +23,7 @@
  *  
  *  @return nil
  */
-- (id)handleURL:(NSString *)url withTarget:(id)target withParams:(id)params
+- (id)handleURL:(NSURL *)url withTarget:(id)target withParams:(id)params
 {
     NSDictionary *query = url.queryDic;
     [query enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {

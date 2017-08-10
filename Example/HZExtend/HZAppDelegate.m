@@ -9,10 +9,9 @@
 #import "HZAppDelegate.h"
 #import "HZNetworkConfig.h"
 #import "AFNetworkReachabilityManager.h"
-#import "HZURLManageConfig.h"
-#import "HZNavigationController.h"
+#import <HZExtend/HZExtend.h>
 #import "ViewController.h"
-#import <HZExtend/HZNavigationController.h>
+
 @implementation HZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -56,9 +55,9 @@
 
 - (void)test
 {
-    [URL_MANAGERN loadURLCtrlConfig:[[NSBundle mainBundle] pathForResource:@"URL-Controller-Config" ofType:@"plist"] urlMethodConfig:[[NSBundle mainBundle] pathForResource:@"URL-Method-Config" ofType:@"plist"]];
+    [[HZURLManagerConfig sharedConfig] loadURLCtrlConfig:[[NSBundle mainBundle] pathForResource:@"URL-Controller-Config" ofType:@"plist"] urlMethodConfig:[[NSBundle mainBundle] pathForResource:@"URL-Method-Config" ofType:@"plist"]];
 
-    [URL_MANAGERN addRewriteRules:@[@{@"match":@"(?:https://)?www.hz.com/articles/(\\d)\\?(.*)",@"target":@"hz://page.hz/article?$query&id=$1"}]];
+    [[HZURLManagerConfig sharedConfig] addRewriteRules:@[@{@"match":@"(?:https://)?www.hz.com/articles/(\\d)\\?(.*)",@"target":@"hz://page.hz/article?$query&id=$1"}]];
     
     [URL_MANAGERN redirectToURL:@"https://www.hz.com/articles/3?start=1&offset=20" animated:YES];
 }

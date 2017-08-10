@@ -27,27 +27,6 @@
   "dependencies": {
     "AFNetworking": [
       "~>3.1.0"
-    ],
-    "FMDB": [
-      "~>2.7.0"
-    ],
-    "FMDBMigrationManager": [
-      "~>1.4.0"
-    ],
-    "MJExtension": [
-      "~>3.0.13"
-    ],
-    "TMCache": [
-
-    ],
-    "MJRefresh": [
-      "~> 3.1.0"
-    ],
-    "HZURLManager": [
-
-    ],
-    "HZFoundation": [
-
     ]
   }
 }

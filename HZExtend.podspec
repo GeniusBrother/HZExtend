@@ -18,15 +18,6 @@ Pod::Spec.new do |s|
   s.source_files = 'HZExtend/Classes/**/*.{h,m}'
 
   s.dependency 'AFNetworking','~>3.1.0'
-  s.dependency 'FMDB', '~>2.7.0'
-  s.dependency 'FMDBMigrationManager', '~>1.4.0'
-  s.dependency 'MJExtension','~>3.0.13'
-  s.dependency 'TMCache'
-  s.dependency 'MJRefresh', '~> 3.1.0'
-  s.dependency 'HZURLManager'
-  s.dependency 'HZFoundation'
-
-
   # s.resource_bundles = {
   #   'HZNetwork' => ['HZExtend/Assets/*.png']
   # }
