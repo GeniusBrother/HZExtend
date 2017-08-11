@@ -11,4 +11,4 @@ before_install:
 
 script:
 - set -o pipefail
-- xcodebuild clean build -workspace "$TRAVIS_XCODE_WORKSPACE"  -scheme "$TRAVIS_XCODE_SCHEME" | xcpretty
+- xcodebuild clean build -workspace Example/HZExtend.xcworkspace -scheme HZExtend-Example | xcpretty
