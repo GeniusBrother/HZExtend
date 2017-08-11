@@ -1,0 +1,14 @@
+language: objective-c
+osx_image: xcode8
+xcode_workspace: Example/HZExtend.xcworkspace
+xcode_scheme: HZExtend-Example
+
+before_install:
+- env
+- xcodebuild -version
+- xcodebuild -showsdks
+- xcpretty --version
+
+script:
+- set -o pipefail
+- xcodebuild clean build -workspace "$TRAVIS_XCODE_WORKSPACE"  -scheme "$TRAVIS_XCODE_SCHEME" | xcpretty
