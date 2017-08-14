@@ -55,14 +55,14 @@ static id _instance;
 }
 
 #pragma mark - Public Method
-- (id)handleURL:(NSString *)url withTarget:(id)target withParams:(nullable id)parmas
+- (id)handleURL:(NSString *)url withParams:(nullable id)parmas
 {
     if (!([url isKindOfClass:[NSString class]] && url.length > 0)) return nil;
     
     NSURL *formatedURL = [self formatedURL:url];
     id<HZURLHandler> handler = [NSObject urlHandlerForURL:formatedURL];
     if (handler) {
-        return [handler handleURL:formatedURL.absoluteString withTarget:target withParams:parmas];
+        return [handler handleURL:formatedURL withParams:parmas];
     }
     
     return nil;

@@ -23,7 +23,7 @@
 @property(nonatomic, readonly) NSArray *rewriteRule;
 
 /**
- The default name of Controller corresponding to the http(s) URL.
+  Configs the default Controller Class for Http(s) URL.
  */
 @property(nonatomic, strong) NSString *classOfWebViewCtrl;
 

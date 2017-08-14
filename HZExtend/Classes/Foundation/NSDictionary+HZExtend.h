@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param keyPath A key path of the form relationship.property (with one or more relationships); for example “department.name” or “department.manager.lastName”.
  @param def Returns def if no object is found.
  */
-- (NSInteger)integerValueForKeyPath:(NSString *)keyPath default:(NSInteger)def;
+- (NSInteger)integerValueForKeyPath:(NSString *)keyPath def:(NSInteger)def;
 
 /**
  Returns the double value specified by the given keyPath. return def if no value is found.
@@ -45,8 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param keyPath A key path of the form relationship.property (with one or more relationships); for example “department.name” or “department.manager.lastName”.
  @param def Returns def if no object is found.
  */
-- (double)doubleValueForKeyPath:(NSString *)keyPath default:(double)def;
-- (float)floatValueForKey:(NSString *)keyPath default:(float)def;
+- (double)doubleValueForKeyPath:(NSString *)keyPath def:(double)def;
+- (float)floatValueForKey:(NSString *)keyPath def:(float)def;
 
 /**
  Returns the bool value specified by the given keyPath. return def if no value is found.
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param keyPath A key path of the form relationship.property (with one or more relationships); for example “department.name” or “department.manager.lastName”.
  @param def Returns def if no object is found.
  */
-- (BOOL)boolValueForKeyPath:(NSString *)keyPath default:(BOOL)def;
+- (BOOL)boolValueForKeyPath:(NSString *)keyPath def:(BOOL)def;
 
 /**
  Returns the long long value specified by the given keyPath. return def if no value is found.
@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param keyPath A key path of the form relationship.property (with one or more relationships); for example “department.name” or “department.manager.lastName”.
  @param def Returns def if no object is found.
  */
-- (long)longLongValueForKey:(NSString *)keyPath default:(long)def;
+- (long)longLongValueForKey:(NSString *)keyPath def:(long)def;
 
 
 /**

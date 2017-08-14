@@ -19,7 +19,7 @@
     NSString *host = url.host;
     NSString *path = url.path;
     NSString *scheme = url.scheme;
-    NSString *pathContainHost = [NSString stringWithFormat:@"%@://%@%@",scheme?:@"",host?:@"",path?:@""];
+    NSString *pathContainHost = [NSString stringWithFormat:@"%@%@%@",scheme?[NSString stringWithFormat:@"%@://",scheme]:@"",host?:@"",path?:@""];
     NSString *className = [config objectForKey:pathContainHost];
     if (className) {
         Class class = NSClassFromString(className);

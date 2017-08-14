@@ -7,7 +7,8 @@
 //
 
 #import "UIView+HZExtend.h"
-
+#import <objc/runtime.h>
+static const char kBlock = '\0';
 @implementation UIView (HZExtend)
 
 #pragma mark - Properties
@@ -142,7 +143,6 @@
     return nil;
 }
 
-#pragma mark - Public Method
 - (UIImage *)snapshotImageAfterScreenUpdates:(BOOL)afterUpdates
 {
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0);
@@ -150,6 +150,33 @@
     UIImage *snap = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return snap;
+}
+
+- (void)tapPeformBlock:(HZViewTapBlock)block
+{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    [self addGestureRecognizer:tap];
+    [self setBlock:block];
+}
+
+- (void)tap:(UITapGestureRecognizer *)tap
+{
+    HZViewTapBlock block = [self block];
+    if (block) {
+        block(self);
+    }
+}
+
+- (void)setBlock:(HZViewTapBlock)block
+{
+    if (block) {
+        objc_setAssociatedObject(self, &kBlock, block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
+}
+
+- (HZViewTapBlock)block
+{
+    return objc_getAssociatedObject(self, &kBlock);
 }
 
 @end

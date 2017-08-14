@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param target The object of using HZURLManager
  @param params Additional parameters passed to URLHandler
  */
-- (id)handleURL:(NSURL *)url withTarget:(id)target withParams:(nullable id)params;
+- (id)handleURL:(NSURL *)url withParams:(nullable id)params;
 
 @end
 

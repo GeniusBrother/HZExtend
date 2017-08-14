@@ -34,31 +34,27 @@ static const char kParams = '\1';
     
     /*******************根据scheme创建控制器********************/
     UIViewController *viewCtrl = nil;
-    NSDictionary *ctrlsOfScheme = [config objectForKey:scheme];
-    NSString *strClass = [ctrlsOfScheme objectForKey:[NSString stringWithFormat:@"%@%@",url.host?:@"",url.path]];
+    NSString *strClass = [config objectForKey:[NSString stringWithFormat:@"%@%@%@",scheme?[NSString stringWithFormat:@"%@://",scheme]:@"",url.host?:@"",url.path]];
     NSString *errorInfo = nil;
-    if(strClass) {    //判断配置文件里有无指定配置
+    if(!strClass) {
+        if ([scheme isEqualToString:@"http"]||[scheme isEqualToString:@"https"]) {  //判断是否配置了默认的webViewController
+            strClass= [HZURLManagerConfig sharedConfig].classOfWebViewCtrl;
+            if (!strClass) {
+                errorInfo = [NSString stringWithFormat:@"404 :) ,%@ No Register",url.absoluteString];
+            }
+        }else { //shcheme为自定义
+            errorInfo = [NSString stringWithFormat:@"404 :) ,%@ No Register",url.absoluteString];
+        }
+    }
+    
+    if (strClass) {
         Class class = NSClassFromString(strClass);
         if(NULL != class) {
             viewCtrl = [[class alloc] init];
         }else { //无该控制器
-            errorInfo = [NSString stringWithFormat:@"404 :) ,%@并无该类",strClass];
-        }
-    }else {
-        if ([scheme isEqualToString:@"http"]||[scheme isEqualToString:@"https"]) {  //判断是否配置了默认的webViewController
-            NSString *strWebCtrl = [HZURLManagerConfig sharedConfig].classOfWebViewCtrl;
-            if (strWebCtrl) {
-                Class class = NSClassFromString(strWebCtrl);
-                viewCtrl = [[class alloc] initWithURL:url];
-            }else {
-                errorInfo = [NSString stringWithFormat:@"404 :) ,%@://%@并无注册",url.scheme,url.host];
-            }
-
-        }else { //shcheme为自定义
-            errorInfo = [NSString stringWithFormat:@"404 :) ,%@://%@并无注册",url.scheme,url.host];
+            errorInfo = [NSString stringWithFormat:@"404 :) ,%@ No Registrer",strClass];
         }
     }
-    
 #ifdef DEBUG  // 调试状态
     viewCtrl = viewCtrl?:[self errorViewConrtollerWithInfo:errorInfo];
     

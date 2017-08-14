@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+typedef void(^HZViewTapBlock)(UIView *view);
 
 /**
  Provides extensions for `UIView`.
@@ -56,7 +57,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable UIImage *)snapshotImageAfterScreenUpdates:(BOOL)afterUpdates;
 
-
+/**
+ Executes block when tap receiver.
+ 
+ @param block the block to be executed when tap.
+ */
+- (void)tapPeformBlock:(HZViewTapBlock)block;
 
 @end
 

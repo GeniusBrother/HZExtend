@@ -43,10 +43,9 @@ extern NSString *const HZRedirectPresentMode;
  @discussion Before use the method, you should registe the URL in {"scheme":{"host/path":"URLHandlerName"}} format in plist file, URLHandlerName is a name of class which implement HZURLHandler protocol. Then load it through HZURLManagerConfig.
  
  @param URL The URL corresponding to the module method.
- @param target The object of using HZURLManager.
  @param params Additional parameters passed to URLHandler.
  */
-- (id)handleURL:(NSString *)URL withTarget:(id)target withParams:(nullable id)params;
+- (id)handleURL:(NSString *)URL withParams:(nullable id)params;
 
 /**
  Navigate to the controller corresponding to the URL.

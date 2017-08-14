@@ -29,6 +29,16 @@
     return obj;
 }
 
+- (NSDictionary *)entriesForKeys:(NSArray *)keys
+{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    for (id key in keys) {
+        id value = self[key];
+        if (value) dic[key] = value;
+    }
+    return dic;
+}
+
 - (NSString *)keyValueString
 {
     if (!self.isNoEmpty) return nil;
@@ -50,7 +60,7 @@
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
-- (NSInteger)integerValueForKeyPath:(NSString *)keyPath default:(NSInteger)def
+- (NSInteger)integerValueForKeyPath:(NSString *)keyPath def:(NSInteger)def
 {
     id value = [self objectForKeyPath:keyPath];
     
@@ -61,7 +71,7 @@
     }
 }
 
-- (long)longLongValueForKey:(NSString *)keyPath default:(long)def
+- (long)longLongValueForKey:(NSString *)keyPath def:(long)def
 {
     id value = [self objectForKeyPath:keyPath];
     
@@ -72,7 +82,7 @@
     }
 }
 
-- (BOOL)boolValueForKeyPath:(NSString *)keyPath default:(BOOL)def
+- (BOOL)boolValueForKeyPath:(NSString *)keyPath def:(BOOL)def
 {
     id value = [self objectForKeyPath:keyPath];
 
@@ -83,7 +93,7 @@
     }
 }
 
-- (double)doubleValueForKeyPath:(NSString *)keyPath default:(double)def
+- (double)doubleValueForKeyPath:(NSString *)keyPath def:(double)def
 {
     id value = [self objectForKeyPath:keyPath];
     
@@ -94,7 +104,7 @@
     }
 }
 
-- (float)floatValueForKey:(NSString *)keyPath default:(float)def
+- (float)floatValueForKey:(NSString *)keyPath def:(float)def
 {
     id value = [self objectForKeyPath:keyPath];
     

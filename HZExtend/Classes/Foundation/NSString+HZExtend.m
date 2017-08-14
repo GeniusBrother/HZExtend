@@ -17,6 +17,11 @@
     return [self stringByTrimmingCharactersInSet:set];
 }
 
+- (NSRange)rangeOfAll
+{
+    return NSMakeRange(0, self.length);
+}
+
 #pragma mark - URL
 - (NSString *)urlEncode
 {
