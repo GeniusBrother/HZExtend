@@ -19,10 +19,6 @@ Contact
 #### QQ Group:32272635
 #### Email:zuohong_xie@163.com
 
-Demo
-==============
-![preview](Source/preview.gif)
-
 Installation
 ==============
 ### CocoaPods
