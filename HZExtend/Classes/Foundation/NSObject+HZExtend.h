@@ -1,20 +1,45 @@
 //
-//  NSObject+HzExtend.h
-//  ZHFramework
+//  NSObject+HZExtend.h
+//  HZFoundation <https://github.com/GeniusBrother/HZFoundation>
 //
-//  Created by xzh. on 15/7/26.
-//  Copyright (c) 2015年 xzh. All rights reserved.
+//  Created by GeniusBrother on 15/7/26.
+//  Copyright (c) 2015 GeniusBrother. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
-@interface NSObject (HZExtend)
 /**
- *  判断为非空,既非NSNull且长度(字符串)或者count(集合)>0
+ Provides extensions method for `NSObject`.
+ */
+@interface NSObject (HZExtend)
+
+/**
+ Returns a BOOL value tells if the object is no empty.
+ NSArray/NString/NSDictionary/NSData
+ 
  */
 - (BOOL)isNoEmpty;
 
+/**
+ Swap two instance method's implementation in one class.
+ 
+ @param originalSel   Selector 1.
+ @param newSel        Selector 2.
+ @return              YES if swizzling succeed, otherwise, NO.
+ */
++ (BOOL)swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel;
+
+
+/**
+ Swap two class method's implementation in one class.
+ 
+ @param originalSel   Selector 1.
+ @param newSel        Selector 2.
+ @return              YES if swizzling succeed, otherwise, NO.
+ */
++ (BOOL)swizzleClassMethod:(SEL)originalSel with:(SEL)newSel;
+
 @end
+
 NS_ASSUME_NONNULL_END

@@ -1,9 +1,9 @@
 //
 //  HZNetworkConst.h
-//  Pods
+//  HZNetwork
 //
-//  Created by xzh on 16/9/25.
-//
+//  Created by xzh. on 2016/9/25.
+//  Copyright (c) 2016年 xzh. All rights reserved.
 //
 
 #ifndef HZNetworkConst_h
@@ -24,9 +24,6 @@
     @"error: %@\n" \
     @"------ END --------------------------------\n" \
     @"\n"
-
-//使用在Ctrl里viewModel的回调方法里，将HZViewModel装换成自身的viewModel类型,
-#define HZNETWORK_CONVERT_VIEWMODEL(ClassForToViewModel) ClassForToViewModel *selfViewModel = (ClassForToViewModel *)viewModel
 
 extern NSString *const kHZFileMimeType;
 extern NSString *const kHZFileName;

@@ -1,6 +1,6 @@
 //
-//  SessionTask.h
-//  ZHFramework
+//  HZSessionTask.h
+//  HZNetwork
 //
 //  Created by xzh. on 15/8/17.
 //  Copyright (c) 2015年 xzh. All rights reserved.
@@ -15,183 +15,235 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^HZSessionTaskDidCompletedBlock)(HZSessionTask * __nullable task);
-typedef void(^HZSessionTaskSendingBlock)(HZSessionTask *task);
+typedef void(^HZSessionTaskDidCompletedBlock)(HZSessionTask *task);
+typedef void(^HZSessionTaskDidSendBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskDidCancelBlock)(HZSessionTask *task);
 typedef void(^HZSessionTaskUploadProgressBlock)(HZSessionTask *task, NSProgress *progress);
-typedef NS_ENUM(NSUInteger, HZSessionTaskState) {   //请求状态
-    HZSessionTaskStateRunable = 0,                  //可运行
-    HZSessionTaskStateRunning = 1,                  //请求中
-    HZSessionTaskStateCancel = 2,                   //请求取消
-    HZSessionTaskStateSuccess = 3,                  //请求成功
-    HZSessionTaskStateFail = 4,                     //请求失败(业务错误||连接失败)
+typedef NS_ENUM(NSUInteger, HZSessionTaskState) {   //The execution state of the task.
+    HZSessionTaskStateRunable = 0,                  //Runable.
+    HZSessionTaskStateRunning = 1,                  //In execution.
+    HZSessionTaskStateCancel = 2,                   //Task cancled.
+    HZSessionTaskStateSuccess = 3,                  //Task is successful.
+    HZSessionTaskStateFail = 4,                     //Task failed.
 };
 
-typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //缓存导入状态
-    HZSessionTaskCacheImportStateNone = 0,          //未导入过缓存状态,为初始状态
-    HZSessionTaskCacheImportStateSuccess = 1,       //缓存导入成功
-    HZSessionTaskCacheImportStateFail = 2,          //缓存导入失败状态,可能原因为没有缓存或已经导入过缓存
+typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing state of cache.
+    HZSessionTaskCacheImportStateNone = 0,          //Not imported, initial state.
+    HZSessionTaskCacheImportStateSuccess = 1,       //The cache is imported successfully.
+    HZSessionTaskCacheImportStateFail = 2,          //The cache is imported failed. May no cache exists or already impored cache.
 };
 
 
 @protocol HZSessionTaskDelegate<NSObject>
 
 /**
- *  task请求完成后调用,此时请求状态可能为:HZSessionTaskStateSuccess 或 HZSessionTaskStateFail
+ Calls after completion of task.
+ 
+ @discussion At this point, the state of task may be HZSessionTaskStateSuccess or HZSessionTaskStateFail.
  */
 - (void)taskDidCompleted:(HZSessionTask *)task;
 
 /**
- *  task进入请求中调用 此时请求状态为:SessionTaskStateRunning
+ Calls after task is send.
+ 
+ @discussion At this point, the state of task is SessionTaskStateRunning.
+ 
+ Befor the method is called, the task has already loaded cache data. So you can use `responseObject` property to get cache data.
  */
-- (void)taskSending:(HZSessionTask *)task;
+- (void)taskDidSend:(HZSessionTask *)task;
 
 /**
- *  task被取消时调用 此时请求状态为:HZSessionTaskStateCancel
+ Calls after task is cancled.
+ 
+ @discussion At this point, the state of task is HZSessionTaskStateCancel.
  */
 - (void)taskDidCancel:(HZSessionTask *)task;
 
 /**
- *  task将要请求时调用,返回不为空,则拦截请求
+ Calls when the task is to be executed.
+ 
+ @params message Sets the value and find it by 'error' property.
+ @return YES if the task should be stop or NO if allow.
  */
-- (NSString *)taskShouldPerform:(HZSessionTask *)task;
+- (BOOL)taskShouldStop:(HZSessionTask *)task stopMessage:(NSString *_Nullable __autoreleasing *_Nullable)message;
 
 @end
 
-@interface HZSessionTask : NSObject
 /**
- *	创建请求任务
- *
- *	@param method  请求类型 目前只支持GET/POST
- *  @param path  URL中的path
- *  @param params  请求参数
- *  @param delegate  代理
- *  @param taskIdentifier 任务标识,必须指定,推荐用把所有的path放到一个文件里用作标识
- *  @param pathKeys 路径参数数组
+ HZSessionTask represents the specific request task. You can use it to config parameters for request and get response data from it.
+ */
+@interface HZSessionTask : NSObject
+
+/**
+ Creates and returns a task.
+
+ @param method The request method, currently only GET/POST is supported.
+ @param path The path of URL. e.g /GeniusBrother/HZExtend
+ @param params The parameters for http query string.
+ @param delegate The task's delegate object. You can get execution state of task by it.
+ @param taskIdentifier The UUID of task.
+ @param pathValues An array consists of path parameters.
+ 
+ @discussion If set the pathValues not empty, the path value will be appended to path. Like URL https://github.com/GeniusBrother/HZExtend/value1/value2/...
+ 
+ @return new instance of `HZSessionTask` with specified http parameters.
  */
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
-                        params:(nullable NSMutableDictionary<NSString *, id> *)params
+                        params:(nullable NSDictionary<NSString *, id> *)params
                       delegate:(nullable id<HZSessionTaskDelegate>)delegate
                 taskIdentifier:(nullable NSString *)taskIdentifier;
 
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
-                        params:(nullable NSMutableDictionary<NSString *, id> *)params
-                      pathKeys:(NSArray<NSString *> *)keys
+                        pathValues:(NSArray<NSString *> *)pathValues
                       delegate:(nullable id<HZSessionTaskDelegate>)delegate
                 taskIdentifier:(nullable NSString *)taskIdentifier;
 
 /**
- *	创建上传请求任务
+ Creates and returns a task.
+ 
+ @param method The request method, currently only GET/POST is supported.
+ @param URLString The URL for http. e.g https://github.com/GeniusBrother/HZExtend
+ @param delegate The task's delegate object. You can get execution state of task by it.
+ @param taskIdentifier The UUID of task.
+ 
+ @return new instance of `HZSessionTask` with specified http parameters.
+ */
++ (instancetype)taskWithMethod:(NSString *)method
+                     URLString:(NSString *)URLString
+                      delegate:(nullable id<HZSessionTaskDelegate>)delegate
+                taskIdentifier:(NSString *)taskIdentifier;
+
+/**
+ Creates and returns a upload task.
+ 
+ @param path The path of URL.
+ @param params The parameters for http query string.
+ @param delegate The task's delegate object. You can get execution state of task by it.
+ @param taskIdentifier The UUID of task.
+
+ @return new instance of `HZSessionTask` with specified http parameters.
  */
 + (instancetype)uploadTaskWithPath:(NSString *)path
                               params:(nullable NSMutableDictionary<NSString *, id> *)params
                             delegate:(nullable id<HZSessionTaskDelegate>)delegate
                       taskIdentifier:(NSString *)taskIdentifier;
 
-/** 任务的唯一标识 */
+/** UUID */
 @property(nonatomic, copy, readonly) NSString *taskIdentifier;
 
-/** 请求状态 */
+/** execution state. */
 @property(nonatomic, assign, readonly) HZSessionTaskState state;
 
-/** 缓存导入状态 */
+/** Importing state of cache. */
 @property(nonatomic, assign, readonly) HZSessionTaskCacheImportState cacheImportState;
 
-/** 是否为第一次执行 */
+/** Boolean value that indicates whether the task is executed for the first time. */
 @property(nonatomic, assign, readonly) BOOL isFirstRequest;
 
-
+/** The task's delegate object. You can get execution state of task by it. */
 @property(nonatomic, weak) id<HZSessionTaskDelegate> delegate;
 
-/** task完成时调用 */
+/** A block to be executed after completion of task. */
 @property(nonatomic, copy) HZSessionTaskDidCompletedBlock taskDidCompletedBlock;
 
-/** task进入请求中调用 */
-@property(nonatomic, copy) HZSessionTaskSendingBlock taskSendingBlock;
+/** A block to be executed after sending task. */
+@property(nonatomic, copy) HZSessionTaskDidSendBlock taskDidSendBlock;
 
-/** task取消请求时调用 */
+/** A block to be executed after task is cancled. */
 @property(nonatomic, copy) HZSessionTaskDidCancelBlock taskDidCancelBlock;
 
-/** 上传过程中会调用 */
+/** A block to be executed when the upload progress is updated. */
 @property(nonatomic, copy) HZSessionTaskUploadProgressBlock uploadProgressBlock;
 
-/** 不设置则每个session默认为HZNetworkConfig的baseURL为基本的路径 */
+/**
+ The base URL of http URL. e.g https://www.github.com
+ 
+ @discussion Sets the baseURL config of `HZNetworkConfig` to base URL if it not sets.
+ */
 @property(nullable, nonatomic, copy) NSString *baseURL;
 
-/** URL中的path */
+/** The path of http URL. e.g /GeniusBrother/HZExtend */
 @property(nonatomic, copy) NSString *path;
 
-/** 请求参数 */
+/** The parameters for http. */
 @property(nonatomic, strong) NSMutableDictionary<NSString *, id> *params;
 
-/** 文件参数 */
+/** The parameters for file when uploading file. */
 @property(nullable, nonatomic, strong) NSMutableDictionary<NSString *, id> *fileParams;
 
-/** 请求方法 */
+/** The method for http. */
 @property(nonatomic, copy, readonly) NSString *method;
 
-/** 请求头 */
+/** The http header field. */
 @property(nullable, nonatomic, readonly) NSDictionary <NSString *, NSString *> *requestHeader;
 
-/** pathKeys不为空则URL为http://abc/a/value1/value2/...的格式。pathkeys=@[key1,key2....] value1,value2通过params设置*/
-@property(nullable, nonatomic, copy) NSArray *pathkeys;
+/** 
+ The patheValues will be appended to path.
+ 
+ For example, pathValues = @[value1,value2...], the URL like https://github.com/GeniusBrother/HZExtend/value1/value2/...
+ */
+@property(nullable, nonatomic, strong) NSMutableArray<NSString *> *pathValues;
 
-/** 是否对正确返回数据缓存 默认为为YES,HZUploadSessionTask默认为NO */
+/** 
+ Boolean value that indicates whether the task should cache response data.
+ The default value is equal to [HZNetoworkConfig sharedConfig].taskShouldCache.
+ */
 @property(nonatomic, assign, getter=isCached) BOOL cached;
 
-/** 设置每次只导入缓存一次，默认为YES,分页时应设置成NO来解决上拉加载来导入缓存 */
+/**
+ If `YES`, only import cache once when task is executed more than once.
+ The default value is `YES`.
+ */
 @property(nonatomic, assign) BOOL importCacheOnce;
 
-/** 服务器返回的json对象 */
-@property(nullable, nonatomic, strong, readonly) NSDictionary *responseObject;
+/** The response data from remote. */
+@property(nullable, nonatomic, strong, readonly) id responseObject;
 
+/** The error of task. */
 @property(nullable, nonatomic, strong, readonly) NSError *error;
 
-/** 服务器反馈消息 */
+/** 
+ The tip message for task.
+ You should config key path of message that in response by HZNetworkConfig. see `HZNetworkConfig` for more information.
+ */
 @property(nullable, nonatomic, copy, readonly) NSString *message;
 
-/** 请求的绝对路径 */
-@property(nonatomic, copy, readonly) NSString *absoluteURL;
+/** The absoluteURL of http. */
+@property(nonatomic, copy) NSString *absoluteURL;
+
+/** The target URL for http. */
+@property(nonatomic, readonly) NSString *requestPath;
 
 /**
- *	设置请求头，或者在HZNetworkConfig设置通用的请求头
+ Sets the value of the given HTTP header field.
+ 
+ @param value the header field value.
+ @param key the header field name.
  */
 - (void)setValue:(NSString *)value forHeaderField:(NSString *)key;
 
-
 /**
- *	开始请求
- *
- *	@param completionCallBack  task完成时的回调
- *	@param sendingCallBack  task进入请求中状态时回调
- *	@param lostCallBack task无法连接时的回调
- *	@param uploadCallBack task上传过程中的回调
+ Peforms Task.
+ 
+ @param completion The block to be executed after completion of task.
+ @param didSend The block to be executed after sending task
  */
 - (void)start;
 - (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion;
-- (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
-                    sendingCallBack:(nullable HZSessionTaskSendingBlock)sendingCallBack;
+- (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion
+                    didSend:(nullable HZSessionTaskDidSendBlock)didSend;
 
 /**
- *	开始请求
- *
- *	@param handler  将要执行请求任务时调用,如果error不为nil,说明请求被拦截
+ Peforms Task with handler.
+ 
+ @param handler The block to be executed before peforming task. The task will be intercepted if error not nil.
  */
 - (void)startWithHandler:(nullable void(^)(HZSessionTask *task, NSError  * _Nullable error))handler;
 
 /**
- *	开始上传请求
- *  上传请求任务请用该方法启动
- *	@param completionCallBack  task完成时的回调
- *  @param uploadCallBack task上传过程中的回调
- */
-- (void)startUploadWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
-                     uploadCallBack:(HZSessionTaskUploadProgressBlock)uploadCallBack;
-
-/**
- *	取消请求任务
+ Cancles task.
  */
 - (void)cancel;
 

@@ -1,29 +1,40 @@
 //
-//  NetworkConfig.m
-//  ZHFramework
+//  HZNetworkConfig.m
+//  HZNetwork
 //
-//  Created by xzh on 16/1/9.
-//  Copyright © 2016年 xzh. All rights reserved.
+//  Created by xzh. on 16/1/9.
+//  Copyright (c) 2016年 xzh. All rights reserved.
 //
 
 #import "HZNetworkConfig.h"
 #import "AFNetworking.h"
-#import "NSDictionary+HZExtend.h"
-#import "NSString+HZExtend.h"
-#import "HZNetwork.h"
-NSString *const kNetworkPage = @"page";
-NSString *const kNetworkPageSize = @"pageSize";
+#import "HZNetworkAction.h"
 
 @interface HZNetworkConfig ()
 
 @property(nonatomic, copy) NSMutableDictionary *headerFields;
 @property(nonatomic, copy) NSString *userAgent;
+@property(nonatomic, strong) id<HZNetworkCache> cacheHandler;
 
 @end
 
 @implementation HZNetworkConfig
 #pragma mark - Initialization
-singleton_m
+static id _instance;
++ (id)allocWithZone:(struct _NSZone *)zone
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [super allocWithZone:zone];
+    });
+    return _instance;
+}
+
++ (id)copyWithZone:(struct _NSZone *)zone
+{
+    return _instance;
+}
+
 + (instancetype)sharedConfig
 {
     static dispatch_once_t onceToken;
@@ -66,18 +77,18 @@ singleton_m
     _rightCode = rightCode;
     self.userAgent = userAgent;
     
-    if (userAgent.isNoEmpty) {
+    if ([userAgent isKindOfClass:[NSString class]] && userAgent.length > 0) {
         [self addDefaultHeaderFields:@{@"User-Agent":userAgent}];
     }
 }
 
 - (void)addDefaultHeaderFields:(NSDictionary *)headerFields
 {
-    if (headerFields.isNoEmpty) {
+    if ([headerFields isKindOfClass:[NSDictionary class]] && headerFields.count > 0) {
         [self.headerFields addEntriesFromDictionary:headerFields];
         self.userAgent = [self.headerFields objectForKey:@"User-Agent"];
         
-        [[HZNetwork sharedNetwork] configDefaultRequestHeader:headerFields];
+        [[HZNetworkAction sharedAction] configDefaultRequestHeader:headerFields];
     }
 }
 
@@ -86,12 +97,17 @@ singleton_m
     return self.headerFields;
 }
 
+- (void)registerCacheHandler:(id<HZNetworkCache>)cacheHandler
+{
+    self.cacheHandler = cacheHandler;
+}
+
 #pragma mark - Setter
 - (void)setUserAgent:(NSString *)userAgent
 {
     _userAgent = userAgent;
     
-    if (userAgent.isNoEmpty) {
+    if ([userAgent isKindOfClass:[NSString class]] && userAgent.length > 0) {
         [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":userAgent}];
     }
 }

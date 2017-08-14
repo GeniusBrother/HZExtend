@@ -1,10 +1,11 @@
 //
-//  HZNetworkConst1.m
-//  Pods
+//  HZNetworkConst.m
+//  HZNetwork
 //
-//  Created by xzh on 2017/4/6.
+//  Created by xzh. on 2016/9/25.
+//  Copyright (c) 2016年 xzh. All rights reserved.
 //
-//
+
 #import <Foundation/Foundation.h>
 
 NSString *const kHZFileMimeType = @"mimeType";

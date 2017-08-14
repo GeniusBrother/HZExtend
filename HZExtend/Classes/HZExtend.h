@@ -1,33 +1,16 @@
 //
-//  Extend.m
-//  ZHFramework
+//  HZExtend.h
+//  Pods
 //
-//  Created by xzh. on 15/7/20.
-//  Copyright (c) 2015年 xzh. All rights reserved.
+//  Created by xzh on 2017/8/10.
+//
 //
 
-#import "NSString+HZExtend.h"
-#import "NSDictionary+HZExtend.h"
-#import "NSArray+HZExtend.h"
-#import "NSData+HZExtend.h"
-#import "NSMutableArray+HZExtend.h"
-#import "NSURL+HZExtend.h"
-#import "HZSystem.h"
-#import "HZViewModel.h"
-#import "NSObject+HZORM.h"
-#import "UIColor+HZExtend.h"
-#import "UIImageView+HZExtend.h"
-#import "UIView+HZExtend.h"
-#import "UIViewController+HZHUD.h"
+#ifndef HZExtend_h
+#define HZExtend_h
+
+#import "HZFoundation.h"
 #import "HZURLManager.h"
-#import "HZMacro.h"
-#import "HZFit.h"
-#import "UIImage+HZExtend.h"
-#import "UIView+HZAction.h"
-#import "UIView+HZEmptyView.h"
-#import "UIResponder+HZAction.h"
-#import "NSDate+HZExtend.h"
-#import "UIScrollView+HZExtend.h"
-#import "HZNavigationController.h"
-#import "UIView+Helper.h"
-#import "HZCommonHeader.h"
+#import "HZNetwork.h"
+
+#endif /* HZExtend_h */

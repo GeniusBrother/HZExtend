@@ -9,16 +9,13 @@
 #import "HZAppDelegate.h"
 #import "HZNetworkConfig.h"
 #import "AFNetworkReachabilityManager.h"
-#import "HZURLManageConfig.h"
-#import "HZNavigationController.h"
-#import "ExampleItemViewController.h"
-#import "TestViewController.h"
+#import <HZExtend/HZExtend.h>
 #import "ViewController.h"
-#import <HZExtend/HZNavigationController.h>
-#import "SubjectViewModel.h"
+
 @implementation HZAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
@@ -38,18 +35,17 @@
                 break;
         }
     }];
-    
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     [[HZNetworkConfig sharedConfig] setupBaseURL:@"http://v4.api.maichong.me" codeKeyPath:@"code" msgKeyPath:@"msg" userAgent:@"IOS" rightCode:0];
     
-    [HZURLManageConfig sharedConfig].config = @{
-                                                @"hz://network":@"ViewController",
-                                                @"hz://urlmanager":@"URLViewController",
-                                                @"hz://urlItem":@"URLItemViewController"
-                                                };
+//    [HZURLManageConfig sharedConfig].config = @{
+//                                                @"hz://network":@"ViewController",
+//                                                @"hz://urlmanager":@"URLViewController",
+//                                                @"hz://urlItem":@"URLItemViewController"
+//                                                };
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[TestViewController alloc] init]];
+    self.window.rootViewController = [[HZNavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [self test];
@@ -59,7 +55,11 @@
 
 - (void)test
 {
+    [[HZURLManagerConfig sharedConfig] loadURLCtrlConfig:[[NSBundle mainBundle] pathForResource:@"URL-Controller-Config" ofType:@"plist"] urlMethodConfig:[[NSBundle mainBundle] pathForResource:@"URL-Method-Config" ofType:@"plist"]];
 
+    [[HZURLManagerConfig sharedConfig] addRewriteRules:@[@{@"match":@"(?:https://)?www.hz.com/articles/(\\d)\\?(.*)",@"target":@"hz://page.hz/article?$query&id=$1"}]];
+    
+    [URL_MANAGERN redirectToURL:@"https://www.hz.com/articles/3?start=1&offset=20" animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

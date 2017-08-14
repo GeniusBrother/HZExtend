@@ -1,13 +1,13 @@
 //
 //  HZNetworkConfig.h
-//  ZHFramework
+//  HZNetwork
 //
-//  Created by xzh on 16/1/9.
-//  Copyright © 2016年 xzh. All rights reserved.
+//  Created by xzh. on 16/1/9.
+//  Copyright (c) 2016年 xzh. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "HZSingleton.h"
+#import "HZNetworkCache.h"
 typedef NS_ENUM(NSUInteger, HZSSLPinningMode) {
     HZSSLPinningModeNone,       //验证返回的证书是否由受信任的机构颁发
     HZSSLPinningModePublicKey,  //验证返回的证书的公钥是否与本地的副本一致
@@ -16,62 +16,67 @@ typedef NS_ENUM(NSUInteger, HZSSLPinningMode) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString *const kNetworkPage;
-extern NSString *const kNetworkPageSize;
-
-@interface HZNetworkConfig : NSObject
-singleton_h(Config)
-
 /**
- *  公共的相同URL部分
+ Provides config for HZNetwork.
  */
+@interface HZNetworkConfig : NSObject
+
+/** The default base URL for 'HZSessiontask'.*/
 @property(nonatomic, copy, readonly) NSString *baseURL;
 
-/**
- *  状态码路径,供task取得数据
- */
+/** The path of status code which is used by 'HZSessiontask' to get status code from response data.*/
 @property(nullable, nonatomic, copy, readonly) NSString *codeKeyPath;
 
-/**
- *  消息码路径,供task取得数据
- */
+/** The path of tip message which is used by 'HZSessiontask' to get tip message from response data. */
 @property(nullable, nonatomic, copy, readonly) NSString *msgKeyPath;
 
-/**
- *  客户端标识，用于设置请求头
- */
+/** Sets the default User-Agent for http. */
 @property(nullable, nonatomic, copy, readonly) NSString *userAgent;
 
-/**
- *  正确的状态码
- */
+/** The value of success code. it is used to determine whether the task is successful. */
 @property(nonatomic, assign, readonly) NSUInteger rightCode;
 
-/**
- *  默认的公共请求头
- */
+/** The default http header field. */
 @property(nonatomic, copy, readonly) NSDictionary<NSString *, NSString *> *defaultHeaderFields;
 
-/** 是否允许信任非信任机构的证书，默认为NO */
+/**  Whether or not to trust servers with an invalid or expired SSL certificates. Defaults to `NO`. */
 @property(nonatomic, assign) BOOL allowInvalidCertificates;
 
-/** 验证证书方式，默认为HZSSLPinningModeNone */
+/** 
+ The criteria by which server trust should be evaluated against the pinned SSL certificates. Defaults to `HZSSLPinningModeNone`.
+ */
 @property(nonatomic, assign) HZSSLPinningMode SSLPinningMode;
 
-/** 网络无法连接,默认提示的文案 */
+/** The tip message when network can't connect.*/
 @property(nonatomic, copy) NSString *networkLostErrorMsg;
 
+/** The handler is used to set/get cache data for 'HZSessiontask'. */
+@property(nonatomic, strong, readonly) id<HZNetworkCache> cacheHandler;
+
+/** 
+ Sets the default cache behavior of task.
+ You also can specify it for task alone.
+ */
+@property(nonatomic, assign) BOOL taskShouldCache;
+
 /**
- *  配置公共参数
- *  只设置共同URL等
+ Returns global HZNetworkConfig instance.
+ 
+ @return HZNetworkConfig shared instance
+ */
++ (instancetype)sharedConfig;
+
+/**
+ Configs data.
+ 
+ @param baseURL The default base URL for 'HZSessiontask'.
+ @param userAgent the default User-Agent for http.
+ @param codeKeyPath The path of status code which is used by 'HZSessiontask' to get status code from response data.
+ @param msgKeyPath The path of tip message which is used by 'HZSessiontask' to get tip message from response data.
+ @param rightCode The value of success code.
  */
 - (void)setupBaseURL:(NSString *)baseURL
            userAgent:(nullable NSString *)userAgent;
-
-/**
- *  配置公共参数
- *  有状态码、消息码路径
- */
 - (void)setupBaseURL:(NSString *)baseURL
          codeKeyPath:(nullable NSString *)codeKeyPath
           msgKeyPath:(nullable NSString *)msgKeyPath
@@ -79,9 +84,11 @@ singleton_h(Config)
            rightCode:(NSUInteger)rightCode;
 
 /**
- *  添加公共请求头
+ Adds default http header field for 'HZSessionTask'.
  */
 - (void)addDefaultHeaderFields:(NSDictionary<NSString *, NSString *> *)headerFields;
+
+- (void)registerCacheHandler:(id<HZNetworkCache>)cacheHandler;
 
 @end
 

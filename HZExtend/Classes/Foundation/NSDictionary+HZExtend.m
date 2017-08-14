@@ -1,9 +1,9 @@
 //
-//  NSDictionary+HzExtend.m
-//  ZHFramework
+//  NSDictionary+HZExtend.m
+//  HZFoundation <https://github.com/GeniusBrother/HZFoundation>
 //
-//  Created by xzh. on 15/7/26.
-//  Copyright (c) 2015年 xzh. All rights reserved.
+//  Created by GeniusBrother on 15/7/26.
+//  Copyright (c) 2015 GeniusBrother. All rights reserved.
 //
 
 #import "NSDictionary+HZExtend.h"
@@ -18,7 +18,7 @@
     return result;
 }
 
-- (id)objectForKeyPath:(NSString *)keyPath otherwise:(NSObject *)other
+- (id)objectForKeyPath:(NSString *)keyPath otherwise:(id)other
 {
     NSObject *obj = [self objectForKeyPath:keyPath];
     
@@ -29,11 +29,21 @@
     return obj;
 }
 
+- (NSDictionary *)entriesForKeys:(NSArray *)keys
+{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    for (id key in keys) {
+        id value = self[key];
+        if (value) dic[key] = value;
+    }
+    return dic;
+}
+
 - (NSString *)keyValueString
 {
     if (!self.isNoEmpty) return nil;
     
-    NSMutableString *string = [NSMutableString stringWithString:@"?"];
+    NSMutableString *string = [NSMutableString string];
     [self enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [string appendFormat:@"%@=%@&",key,obj];
     }];
@@ -50,36 +60,58 @@
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
-- (NSInteger)integerValueForKey:(NSString *)key
+- (NSInteger)integerValueForKeyPath:(NSString *)keyPath def:(NSInteger)def
 {
-    id value = [self objectForKey:key];
+    id value = [self objectForKeyPath:keyPath];
     
     if ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]]) {
         return [value integerValue];
     }else {
-        return 0;
+        return def;
     }
 }
 
-- (BOOL)boolValueForKey:(NSString *)key
+- (long)longLongValueForKey:(NSString *)keyPath def:(long)def
 {
-    id value = [self objectForKey:key];
+    id value = [self objectForKeyPath:keyPath];
+    
+    if ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]]) {
+        return [value longLongValue];
+    }else {
+        return def;
+    }
+}
+
+- (BOOL)boolValueForKeyPath:(NSString *)keyPath def:(BOOL)def
+{
+    id value = [self objectForKeyPath:keyPath];
 
     if ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]]) {
         return [value boolValue];
     }else {
-        return NO;
+        return def;
     }
 }
 
-- (double)doubleValueForKey:(NSString *)key
+- (double)doubleValueForKeyPath:(NSString *)keyPath def:(double)def
 {
-    id value = [self objectForKey:key];
+    id value = [self objectForKeyPath:keyPath];
     
     if ([value isKindOfClass:[NSNumber class]]) {
         return [value doubleValue];
     }else {
-        return 0.0;
+        return def;
+    }
+}
+
+- (float)floatValueForKey:(NSString *)keyPath def:(float)def
+{
+    id value = [self objectForKeyPath:keyPath];
+    
+    if ([value isKindOfClass:[NSNumber class]]) {
+        return [value floatValue];
+    }else {
+        return def;
     }
 }
 

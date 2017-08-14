@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   URL-Method-Config.plist
+   HZExtend
+
+   Created by xzh on 2017/7/28.
+   Copyright (c) 2017年 GeniusBrother. All rights reserved.
+-->
+<plist version="1.0">
+    <dict>
+        <key>hz://shareKit.hz/doShare</key>
+        <string>HZShareURLHandler</string>
+    </dict>
+</plist>

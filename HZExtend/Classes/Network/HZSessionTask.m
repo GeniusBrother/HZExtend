@@ -1,20 +1,16 @@
 //
-//  SessionTask.m
-//  ZHFramework
+//  HZSessionTask.m
+//  HZNetwork
 //
 //  Created by xzh. on 15/8/17.
 //  Copyright (c) 2015年 xzh. All rights reserved.
 //
 
-#import <TMCache/TMCache.h>
-
-#import "HZMacro.h"
 #import "HZNetworkConst.h"
-#import "NSString+HZExtend.h"
-#import "NSDictionary+HZExtend.h"
 #import "HZSessionTask.h"
 #import "HZNetworkConfig.h"
-#import "HZNetwork.h"
+#import "HZNetworkAction.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @interface HZSessionTask ()
 
@@ -25,7 +21,7 @@
 @property(nonatomic, copy) NSString *method;
 @property(nonatomic, strong) NSMutableDictionary <NSString *, NSString *> *mutableRequestHeader;
 
-@property(nonatomic, strong) NSDictionary *responseObject;
+@property(nonatomic, strong) id responseObject;
 @property(nonatomic, strong) NSError *error;
 @property(nonatomic, copy) NSString *message;
 @property(nonatomic, strong) NSProgress *progress;
@@ -39,30 +35,44 @@
 #pragma mark - Initialization
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
-                        params:(NSMutableDictionary *)params
+                        params:(NSDictionary *)params
                       delegate:(id<HZSessionTaskDelegate>)delegate taskIdentifier:(NSString *)taskIdentifier
 {
-    NSAssert(taskIdentifier.isNoEmpty, @"HZSessionTask:taskIdentifier必须不能为空");
+    NSAssert(taskIdentifier, @"HZSessionTask:taskIdentifier必须不能为空");
     HZSessionTask *task = [[self alloc] init];
     task.method = method;
     task.path = path;
-    task.params = params;
+    task.params = params?[NSMutableDictionary dictionaryWithDictionary:params]:nil;
     task.delegate = delegate;
     task.taskIdentifier = taskIdentifier;
-    task.cached = YES;
+    task.cached = [HZNetworkConfig sharedConfig].taskShouldCache;
     task.isUpload = NO;
     return task;
 }
 
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
-                        params:(NSMutableDictionary *)params
-                      pathKeys:(NSArray *)keys
+                    pathValues:(NSArray *)pathValues
                       delegate:(id<HZSessionTaskDelegate>)delegate
                    taskIdentifier:(NSString *)taskIdentifier
 {
-    HZSessionTask *task = [self taskWithMethod:method path:path params:params delegate:delegate taskIdentifier:taskIdentifier];
-    task.pathkeys = keys;
+    HZSessionTask *task = [self taskWithMethod:method path:path params:nil delegate:delegate taskIdentifier:taskIdentifier];
+    task.pathValues = pathValues?[NSMutableArray arrayWithArray:pathValues]:nil;
+    return task;
+}
+
++ (instancetype)taskWithMethod:(NSString *)method
+                     URLString:(NSString *)URLString
+                      delegate:(id<HZSessionTaskDelegate>)delegate
+                taskIdentifier:(NSString *)taskIdentifier
+{
+    HZSessionTask *task = [[self alloc] init];
+    task.method = method;
+    task.absoluteURL = URLString;
+    task.delegate = delegate;
+    task.taskIdentifier = taskIdentifier;
+    task.cached = [HZNetworkConfig sharedConfig].taskShouldCache;
+    
     return task;
 }
 
@@ -93,8 +103,8 @@
 #pragma mark - Public Method
 - (void)setValue:(NSString *)value forHeaderField:(NSString *)key
 {
-    BOOL resulte = !key.isNoEmpty || (value == nil);
-    HZAssertNoReturn(resulte, @"header error")
+    BOOL invalid = !(key.length > 0) || (value == nil);
+    if (invalid) return;
     
     [self.mutableRequestHeader setValue:value forKey:key];
 }
@@ -102,37 +112,37 @@
 #pragma mark - Public Method
 - (void)startWithHandler:(void (^)(HZSessionTask * _Nonnull, NSError * _Nullable))handler
 {
-    NSAssert(self.path.isNoEmpty, @"path nil");
-    HZAssertNoReturn(self.state != HZSessionTaskStateRunable, @"task has run already");
-    
-    [self resetAllOutputData];
-    NSString *cancelMsg = nil;
-    if ([self.delegate respondsToSelector:@selector(taskShouldPerform:)]) {
-        cancelMsg = [self.delegate taskShouldPerform:self];
+    if (self.state != HZSessionTaskStateRunable) {
+//        HZLog(@"%@",@"task has run already");
+        return;
     }
-    if (cancelMsg) {
-        self.error = [NSError errorWithDomain:@"com.HZNetwork" code:NSURLErrorBadURL userInfo:@{@"NSLocalizedDescription":cancelMsg}];
+    [self resetAllOutputData];
+    NSString *stopMsg = nil;
+    BOOL stop = NO;
+    if ([self.delegate respondsToSelector:@selector(taskShouldStop:stopMessage:)]) {
+        stop = [self.delegate taskShouldStop:self stopMessage:&stopMsg];
+    }
+    if (stop) {
+        self.error = [NSError errorWithDomain:@"com.HZNetwork" code:NSURLErrorBadURL userInfo:@{@"NSLocalizedDescription":stopMsg}];
         if (handler) { handler(self, self.error); }
         [self prepareToRunable];
         return;
     }
     
     if (handler) { handler(self, self.error); }
-    HZWeakObj(self);
+    __weak typeof(self) weakSelf = self;
     if (self.isUpload) {
-        [[HZNetwork sharedNetwork] performUploadTask:self progress:^(NSProgress * _Nonnull uploadProgress) {
-            HZStrongObj(self);
-            if (strong_self.uploadProgressBlock) {
-                strong_self.uploadProgressBlock(strong_self, uploadProgress);
+        [[HZNetworkAction sharedAction] performUploadTask:self progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+            if (weakSelf.uploadProgressBlock) {
+                weakSelf.uploadProgressBlock(weakSelf, uploadProgress);
             }
-        } completion:^(HZNetwork * _Nonnull performer, id  _Nullable responseObject, NSError * _Nullable error) {
-            HZStrongObj(self);
-            [strong_self taskCompletionWithResponseObject:responseObject error:error];
+        } completion:^(HZNetworkAction * _Nonnull performer, id  _Nullable responseObject, NSError * _Nullable error) {
+            [weakSelf taskCompletionWithResponseObject:responseObject error:error];
         }];
     }else {
-        [[HZNetwork sharedNetwork] performTask:self completion:^(HZNetwork * _Nonnull performer, id  _Nullable responseObject, NSError * _Nullable error) {
-            HZStrongObj(self);
-            [strong_self taskCompletionWithResponseObject:responseObject error:error];
+        [[HZNetworkAction sharedAction] performTask:self completion:^(HZNetworkAction * _Nonnull performer, id  _Nullable responseObject, NSError * _Nullable error) {
+            [weakSelf taskCompletionWithResponseObject:responseObject error:error];
         }];
     }
     self.state = HZSessionTaskStateRunning;
@@ -145,31 +155,21 @@
     [self startWithHandler:nil];
 }
 
-- (void)startWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
-                    sendingCallBack:(HZSessionTaskSendingBlock)sendingCallBack
+- (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion didSend:(HZSessionTaskDidSendBlock)didSend
 {
-    self.taskDidCompletedBlock = completionCallBack;
-    self.taskSendingBlock = sendingCallBack;
+    self.taskDidCompletedBlock = completion;
+    self.taskDidSendBlock = didSend;
     [self start];
 }
-
 
 - (void)startWithCompletion:(HZSessionTaskDidCompletedBlock)completion
 {
-    [self startWithCompletionCallBack:completion sendingCallBack:nil];
-}
-
-- (void)startUploadWithCompletionCallBack:(HZSessionTaskDidCompletedBlock)completionCallBack
-                           uploadCallBack:(HZSessionTaskUploadProgressBlock)uploadCallBack
-{
-    self.taskDidCompletedBlock = completionCallBack;
-    self.uploadProgressBlock = uploadCallBack;
-    [self start];
+    [self startWithCompletion:completion didSend:nil];
 }
 
 - (void)cancel
 {
-    [[HZNetwork sharedNetwork] cancelTask:self];
+    [[HZNetworkAction sharedAction] cancelTask:self];
     self.state = HZSessionTaskStateCancel;
     self.error = [NSError errorWithDomain:@"com.HZNetwork" code:NSURLErrorCancelled userInfo:nil];
     [self callBackTaskStatus];
@@ -201,8 +201,12 @@
     }
     //在没有导过缓存和可以多次导入缓存的情况下尝试导入缓存
     if (!self.hasImportCache || self.importCacheOnce == NO ) {
-        NSDictionary *responseObject = [[TMCache sharedCache] objectForKey:self.cacheKey];
-        if (responseObject.isNoEmpty) {
+        id<HZNetworkCache> cacheHandler = [HZNetworkConfig sharedConfig].cacheHandler;
+        id responseObject = nil;
+        if ([cacheHandler respondsToSelector:@selector(cacheForKey:)]) {
+            responseObject = [[HZNetworkConfig sharedConfig].cacheHandler cacheForKey:self.cacheKey];
+        }
+        if (responseObject) {
             self.responseObject = responseObject;
             self.cacheImportState =  HZSessionTaskCacheImportStateSuccess;
         }else {
@@ -221,7 +225,7 @@
         if (error.code == NSURLErrorNotConnectedToInternet) {
             NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:error.userInfo];
             NSString *networkLostErrorMsg = [HZNetworkConfig sharedConfig].networkLostErrorMsg;
-            if (networkLostErrorMsg.isNoEmpty) {
+            if (networkLostErrorMsg) {
                 [userInfo setObject:networkLostErrorMsg forKey:NSLocalizedDescriptionKey];
             }
             self.error = [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
@@ -229,8 +233,7 @@
             self.error = error;
         }
         self.state = HZSessionTaskStateFail;
-        
-        HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
+//        NSLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
     }else {
         self.responseObject = responseObject;
         BOOL codeRight = [self codeIsRight];
@@ -238,20 +241,24 @@
             self.state = HZSessionTaskStateSuccess;
             self.error = nil;
             //对有效数据进行缓存
-            if (self.isCached && self.cacheKey.isNoEmpty) {
-                [[TMCache sharedCache] setObject:responseObject forKey:self.cacheKey block:^(TMCache *cache, NSString *key, id object) {
-                    //HZLog(@"%@ has cached",key);
-                }];
+            if (self.isCached && self.cacheKey) {
+                id<HZNetworkCache> cacheHandler = [HZNetworkConfig sharedConfig].cacheHandler;
+                if ([cacheHandler respondsToSelector:@selector(setCache:forKey:)]) {
+                    [cacheHandler setCache:responseObject forKey:self.cacheKey];
+                }
             }
         }else {
             self.state = HZSessionTaskStateFail;
-            id error = [self.responseObject objectForKeyPath:[HZNetworkConfig sharedConfig].codeKeyPath];
             NSNumber *errorCode = @(NSURLErrorBadServerResponse);
-            if ([error isKindOfClass:[NSNumber class]]) {
-                errorCode = error;
+            NSString *codeKeyPath = [HZNetworkConfig sharedConfig].codeKeyPath;
+            if (codeKeyPath) {
+                id error = [self.responseObject valueForKeyPath:codeKeyPath];
+                if ([error isKindOfClass:[NSNumber class]]) {
+                    errorCode = error;
+                }
             }
             self.error = [NSError errorWithDomain:@"com.HZNetwork" code:errorCode.integerValue userInfo:@{@"NSLocalizedDescription":self.message}];;
-            HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
+//            HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
         }
     }
     [self callBackTaskStatus];
@@ -263,19 +270,19 @@
 {
     //没有设置状态码路径或者不需要checkCode返回YES
     NSString *codeKeyPath = [HZNetworkConfig sharedConfig].codeKeyPath;
-    if (!codeKeyPath.isNoEmpty) return YES;
+    if (!codeKeyPath) return YES;
     
-    return self.responseObject.isNoEmpty && [[self.responseObject objectForKeyPath:codeKeyPath] integerValue] == [HZNetworkConfig sharedConfig].rightCode;
+    return self.responseObject && [[self.responseObject valueForKeyPath:codeKeyPath] integerValue] == [HZNetworkConfig sharedConfig].rightCode;
 }
 
 - (void)callBackTaskStatus
 {
     if (self.state == HZSessionTaskStateRunning) {
-        if ([self.delegate respondsToSelector:@selector(taskSending:)]) {
-            [self.delegate taskSending:self];
+        if ([self.delegate respondsToSelector:@selector(taskDidSend:)]) {
+            [self.delegate taskDidSend:self];
         }
-        if (self.taskSendingBlock) {
-            self.taskSendingBlock(self);
+        if (self.taskDidSendBlock) {
+            self.taskDidSendBlock(self);
         }
     }else if(self.state == HZSessionTaskStateSuccess || self.state == HZSessionTaskStateFail) {
         if ([self.delegate respondsToSelector:@selector(taskDidCompleted:)]) {
@@ -294,14 +301,44 @@
     }
 }
 
+- (NSString *)keyValueStringWithDic:(NSDictionary *)dic
+{
+    if (!dic) return nil;
+    
+    NSMutableString *string = [NSMutableString string];
+    [dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [string appendFormat:@"%@=%@&",key,obj];
+    }];
+    
+    NSRange range = [string rangeOfString:@"&" options:NSBackwardsSearch];
+    [string deleteCharactersInRange:range];
+    
+    return string;
+}
+
+- (NSString *)md5String:(NSString *)URL
+{
+    const char *str = [URL UTF8String];
+    if (str == NULL) {
+        str = "";
+    }
+    unsigned char r[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(str, (CC_LONG)strlen(str), r);
+    NSString *MD5 = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                          r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10],
+                          r[11], r[12], r[13], r[14], r[15]];
+    
+    return MD5;
+}
+
 #pragma mark - Setter
-- (void)setResponseObject:(NSDictionary *)responseObject
+- (void)setResponseObject:(id)responseObject
 {
     _responseObject = responseObject;
     
     NSString * msgKeyPath = [HZNetworkConfig sharedConfig].msgKeyPath;
-    if (msgKeyPath.isNoEmpty) {
-        _message = [responseObject objectForKeyPath:msgKeyPath]?:@"";
+    if (msgKeyPath) {
+        _message = [responseObject valueForKeyPath:msgKeyPath]?:@"";
     }else {
         _message = @"";
     }
@@ -324,35 +361,54 @@
 
 - (NSString *)cacheKey
 {
-    NSString *cacheKey = @"";
+    NSString *identifierURL = @"";
+    NSString *headerKeyValue = [self keyValueStringWithDic:self.requestHeader];
     if([self.method caseInsensitiveCompare:@"GET"] == NSOrderedSame){
-        cacheKey = self.absoluteURL.md5;
+        identifierURL = self.absoluteURL;
     }else if ([self.method caseInsensitiveCompare:@"POST"] == NSOrderedSame){
-        cacheKey = self.params.isNoEmpty?[self.absoluteURL stringByAppendingString:self.params.keyValueString].md5:self.absoluteURL;
+        identifierURL = [self.absoluteURL stringByAppendingFormat:@"?%@",self.params?[self keyValueStringWithDic:self.params]:@""];
     }
+    
+    if (headerKeyValue) {
+        identifierURL = [identifierURL stringByAppendingString:headerKeyValue];
+    }
+    
+    NSString *cacheKey = [self md5String:identifierURL];
     return cacheKey;
 }
 
 - (NSString *)absoluteURL
 {
-    NSString *absoluteURL = @"";
-    if (self.path.isNoEmpty) {
-            NSString *baseURL = self.baseURL?:[HZNetworkConfig sharedConfig].baseURL;
-            NSAssert(baseURL, @"请设置请求任务的baseURL,推荐使用HZNetworkConfig来设置");
-            absoluteURL = [baseURL stringByAppendingString:self.path];
-            if ([self.method isEqualToString:@"GET"] && self.params.isNoEmpty) {
-                if(self.pathkeys.isNoEmpty) {
-                    NSMutableString *pathStr = [NSMutableString string];
-                    [self.pathkeys enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        [pathStr appendFormat:@"/%@",[self.params objectForKey:obj]];
-                    }];
-                    absoluteURL = [absoluteURL stringByAppendingString:pathStr];  //路径格式
-                }else {
-                    absoluteURL = [absoluteURL stringByAppendingFormat:@"%@",self.params.keyValueString]; //查询字符串格式
-                }
-            }
+    NSString *absoluteURL = self.requestPath;
+    
+    if ([self.method caseInsensitiveCompare:@"GET"] == NSOrderedSame && self.params) {
+        NSString *separator = [absoluteURL rangeOfString:@"?"].length == 0?@"?":@"&";
+        absoluteURL = [absoluteURL stringByAppendingFormat:@"%@%@",separator,[self keyValueStringWithDic:self.params]]; //查询字符串格式
     }
+    
     return absoluteURL;
+}
+
+- (NSString *)requestPath
+{
+    NSString *requestPath = @"";
+    if (_absoluteURL) {
+        requestPath = _absoluteURL;
+    }else {
+        NSString *baseURL = self.baseURL?:[HZNetworkConfig sharedConfig].baseURL;
+        NSAssert(baseURL, @"请设置baseURL 推荐使用HZNetworkConfig来设置统一baseURL");
+        requestPath = [baseURL stringByAppendingString:self.path];
+    }
+    
+    if(self.pathValues) {
+        NSMutableString *pathStr = [NSMutableString string];
+        [self.pathValues enumerateObjectsUsingBlock:^(NSString *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [pathStr appendFormat:@"/%@",[obj stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+        }];
+        requestPath = [requestPath stringByAppendingString:pathStr];  //路径格式
+    }
+    
+    return requestPath;
 }
 
 - (NSMutableDictionary<NSString *,id> *)params
@@ -361,11 +417,6 @@
         _params = [NSMutableDictionary dictionary];
     }
     return _params;
-}
-
-- (void)dealloc
-{
-    HZLog(@"%@释放了",self);
 }
 
 @end
