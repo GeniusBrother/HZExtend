@@ -46,8 +46,8 @@
 		289676721D69913800A2C62D /* error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@2x.png"; sourceTree = "<group>"; };
 		289676731D69913800A2C62D /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "success@2x.png"; sourceTree = "<group>"; };
 		289676771D69A38C00A2C62D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = HZExtend/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
-		28E29F431F2A0528009F3A34 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		28E29F441F2A0528009F3A34 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		28E29F431F2A0528009F3A34 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ../Model/ViewController.h; sourceTree = "<group>"; };
+		28E29F441F2A0528009F3A34 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ../Model/ViewController.m; sourceTree = "<group>"; };
 		28E29F461F2A05BB009F3A34 /* URL-Controller-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "URL-Controller-Config.plist"; sourceTree = "<group>"; };
 		28E29F481F2AB89F009F3A34 /* URL-Method-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "URL-Method-Config.plist"; sourceTree = "<group>"; };
 		28E29F4D1F2AB9F3009F3A34 /* HZShareURLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZShareURLHandler.h; sourceTree = "<group>"; };
@@ -128,6 +128,8 @@
 		28E29F3F1F2A0510009F3A34 /* Conrtoller */ = {
 			isa = PBXGroup;
 			children = (
+				28E29F431F2A0528009F3A34 /* ViewController.h */,
+				28E29F441F2A0528009F3A34 /* ViewController.m */,
 			);
 			path = Conrtoller;
 			sourceTree = "<group>";
@@ -135,8 +137,6 @@
 		28E29F401F2A0510009F3A34 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				28E29F431F2A0528009F3A34 /* ViewController.h */,
-				28E29F441F2A0528009F3A34 /* ViewController.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
