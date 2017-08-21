@@ -13,6 +13,7 @@ It consists of the following several independent components:
 * [HZFoundation](https://github.com/GeniusBrother/HZFoundation) — A set of useful categories for Foundation and UIKit.
 * [HZURLManager](https://github.com/GeniusBrother/HZURLManager) — URL routing library for iOS, support URL rewrite.
 * [HZNetwork](https://github.com/GeniusBrother/HZNetwork) — A useful networking framework based on AFNetworking for iOS, OS X, watchOS, and tvOS.
+* [HZORM](https://github.com/GeniusBrother/HZORM) — Provides a beautiful, simple ActiveRecord implementation to interact with the database.
 
 Contact
 ==============
