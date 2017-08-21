@@ -12,5 +12,6 @@
 #import "HZFoundation.h"
 #import "HZURLManager.h"
 #import "HZNetwork.h"
+#import "HZORM.h"
 
 #endif /* HZExtend_h */

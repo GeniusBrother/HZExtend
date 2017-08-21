@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "HZExtend" 
-  s.version      = "0.6.0"    
+  s.version      = "0.6.1"    
   s.summary      = "MVVM, Powerful IOS Extension"
   s.description  = <<-DESC
                    MVVM, Powerful IOS Extension，available Network、Model、MMVM、URLManager、database
@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
   s.source_files = 'HZExtend/Classes/**/*.{h,m}'
 
   s.dependency 'AFNetworking','~>3.1.0'
+  s.dependency 'FMDB','~>2.7.0'
   # s.resource_bundles = {
   #   'HZNetwork' => ['HZExtend/Assets/*.png']
   # }

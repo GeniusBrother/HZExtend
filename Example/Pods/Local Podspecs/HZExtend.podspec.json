@@ -27,6 +27,9 @@
   "dependencies": {
     "AFNetworking": [
       "~>3.1.0"
+    ],
+    "FMDB": [
+      "~>2.7.0"
     ]
   }
 }
