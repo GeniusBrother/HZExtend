@@ -30,6 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSURL *libraryURL;
 @property (nonatomic, readonly) NSString *libraryPath;
 
+/** The Path of "tmp" folder in this app's sandbox. */
+@property (nonatomic, readonly) NSURL *tmpURL;
+@property (nonatomic, readonly) NSString *tmpPath;
+
 /** Application's Bundle Name.*/
 @property (nullable, nonatomic, readonly) NSString *appBundleName;
 

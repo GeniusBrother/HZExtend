@@ -49,6 +49,17 @@
     return [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
 }
 
+- (NSURL *)tmpURL
+{
+    return [NSURL fileURLWithPath:[self tmpPath]];
+}
+
+- (NSString *)tmpPath
+{
+    return NSTemporaryDirectory();
+}
+
+
 - (NSString *)appBundleName
 {
     return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];
