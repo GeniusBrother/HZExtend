@@ -1,6 +1,6 @@
 {
   "name": "HZExtend",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "summary": "MVVM, Powerful IOS Extension",
   "description": "MVVM, Powerful IOS Extension，available Network、Model、MMVM、URLManager、database",
   "homepage": "https://github.com/GeniusBrother/HZExtend.git",
@@ -14,7 +14,7 @@
   "requires_arc": true,
   "source": {
     "git": "https://github.com/GeniusBrother/HZExtend.git",
-    "tag": "0.6.0"
+    "tag": "0.6.1"
   },
   "frameworks": [
     "CoreFoundation",

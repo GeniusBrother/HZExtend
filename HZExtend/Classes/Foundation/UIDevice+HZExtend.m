@@ -52,38 +52,27 @@
 #if TARGET_IPHONE_SIMULATOR
     return NO;
 #else
-    static const char * __jb_apps[] =
-    {
-        "/Application/Cydia.app",
-        "/Application/limera1n.app",
-        "/Application/greenpois0n.app",
-        "/Application/blackra1n.app",
-        "/Application/blacksn0w.app",
-        "/Application/redsn0w.app",
-        NULL
-    };
-    
-    
-    for ( int i = 0; __jb_apps[i]; ++i )
-    {
-        if ( [[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithUTF8String:__jb_apps[i]]] )
-        {
-            return YES;
-        }
+    NSArray *paths = @[@"/Applications/Cydia.app",
+                       @"/private/var/lib/apt/",
+                       @"/private/var/lib/cydia",
+                       @"/private/var/stash"];
+    for (NSString *path in paths) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) return YES;
     }
     
-    if ( [[NSFileManager defaultManager] fileExistsAtPath:@"/private/var/lib/apt/"] )
-    {
+    FILE *bash = fopen("/bin/bash", "r");
+    if (bash != NULL) {
+        fclose(bash);
         return YES;
     }
     
-    if ( 0 == system("ls"))
-    {
+    NSString *path = [NSString stringWithFormat:@"/private/%@", [NSString stringWithUUID]];
+    if ([@"HZExtend" writeToFile : path atomically : YES encoding : NSUTF8StringEncoding error : NULL]) {
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
         return YES;
     }
     
     return NO;
-    
 #endif
     
 }
