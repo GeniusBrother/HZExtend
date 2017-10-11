@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "HZExtend" 
-  s.version      = "0.6.2"    
+  s.version      = "0.6.3"    
   s.summary      = "MVVM, Powerful IOS Extension"
   s.description  = <<-DESC
                    MVVM, Powerful IOS Extension，available Network、Model、MMVM、URLManager、database
