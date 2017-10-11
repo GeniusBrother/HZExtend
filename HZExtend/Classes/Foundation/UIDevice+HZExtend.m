@@ -66,7 +66,7 @@
         return YES;
     }
     
-    NSString *path = [NSString stringWithFormat:@"/private/%@", [NSString stringWithUUID]];
+    NSString *path = [NSString stringWithFormat:@"/private/%@", @"HZExtend"];
     if ([@"HZExtend" writeToFile : path atomically : YES encoding : NSUTF8StringEncoding error : NULL]) {
         [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
         return YES;
