@@ -47,6 +47,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)urlDecode;
 
 /**
+ Returns a new string made by appending a given query keyValue string to the receiver.
+ */
+- (NSString *)urlAppendingKeyValue:(NSString *)keyValue;
+
+/**
  Converts json string to json object. return nil if an error occurs.
  NSArray/NSDictionary
  */

@@ -37,6 +37,12 @@
     return self.stringByRemovingPercentEncoding;
 }
 
+- (NSString *)urlAppendingKeyValue:(NSString *)keyValue
+{
+    NSString *separator = [self rangeOfString:@"?"].length == 0?@"?":@"&";
+    return [self stringByAppendingFormat:@"%@%@",separator,keyValue];
+}
+
 - (NSString *)md5String
 {
     NSData *value = [[NSData dataWithBytes:[self UTF8String] length:[self length]] md5Data];
