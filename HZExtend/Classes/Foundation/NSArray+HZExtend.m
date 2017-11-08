@@ -13,7 +13,6 @@
 {
     if (self.count == 0 || index == NSNotFound || (index >(self.count-1)) || index < 0)
     {
-        NSAssert(NO, @"out of bound");
         return nil;
     }
     
