@@ -20,12 +20,13 @@
 //屏幕信息
 #define HZDeviceWidth ([[UIScreen mainScreen] bounds].size.width)
 #define HZDeviceHeight ([[UIScreen mainScreen] bounds].size.height)
-#define HZIsIphoneX (HZDeviceHeight == 812)?YES:NO
+#define HZIsIphoneX ((HZDeviceHeight == 812)?YES:NO)
 
 //常用数值
-#define HZTabBarHeight (HZIsIphoneX)?49.f:83.f
-#define HZNavBarHeight (HZIsIphoneX)?88.f:64.f
-#define HZStatusBarHeight (HZIsIphoneX)?44.f:20.f
+#define HZTabBarHeight (HZIsIphoneX?83.f:49.f)
+#define HZNavBarHeight (HZIsIphoneX?88.f:64.f)
+#define HZStatusBarHeight (HZIsIphoneX?44.f:20.f)
+
 
 //引用
 #define HZWeakObj(Obj) __weak typeof(Obj) weak##_##Obj = Obj
