@@ -55,6 +55,15 @@ typedef NSComparisonResult	(^NSMutableArrayCompareBlock)(id left, id right);
 @interface NSMutableArray (HZExtend)
 
 /**
+ Inserts a given object at the end of the array.
+ 
+ @discussion The object to add to the end of the array’s content. Doing nothing if object is nil or null
+ 
+ @param object the object to be added.
+ */
+- (void)addSafeObject:(id)object;
+
+/**
  Removes the object located at index.
  
  @discussion If index is out of bounds, the method has no effect and never throw exception.

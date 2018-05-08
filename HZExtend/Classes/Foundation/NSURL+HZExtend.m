@@ -28,6 +28,12 @@
     return [self queryDicWithKeysValues:keyValues];
 }
 
+- (BOOL)isRemote
+{
+    NSString *scheme = self.scheme;
+    NSArray *remoteSchemes = @[@"http", @"https", @"ftp"];
+    return [remoteSchemes containsObject:scheme];
+}
 
 #pragma mark - Private Method
 //从k=v中获取键值

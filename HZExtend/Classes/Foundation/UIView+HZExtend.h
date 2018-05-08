@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void(^HZViewTapBlock)(UIView *view);
+typedef void(^HZViewTapBlock)(__kindof UIView *view);
 
 /**
  Provides extensions for `UIView`.

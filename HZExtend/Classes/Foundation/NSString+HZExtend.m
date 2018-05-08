@@ -25,16 +25,12 @@
 #pragma mark - URL
 - (NSString *)urlEncode
 {
-    if (self.length == 0) return @"";
-    
-    return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"-_.!*'();:@$,[]"]];
 }
 
 - (NSString *)urlDecode
 {
-    if (self.length == 0) return @"";
-    
-    return self.stringByRemovingPercentEncoding;
+    return [self stringByRemovingPercentEncoding];
 }
 
 - (NSString *)urlAppendingKeyValue:(NSString *)keyValue
@@ -45,24 +41,17 @@
 
 - (NSString *)md5String
 {
-    NSData *value = [[NSData dataWithBytes:[self UTF8String] length:[self length]] md5Data];
-    
-    char			tmp[16];
-    unsigned char *	hex = (unsigned char *)malloc( 2048 + 1 );
-    unsigned char *	bytes = (unsigned char *)[value bytes];
-    unsigned long	length = [value length];
-    
-    hex[0] = '\0';
-    
-    for ( unsigned long i = 0; i < length; ++i )
-    {
-        sprintf( tmp, "%02X", bytes[i] );
-        strcat( (char *)hex, tmp );
-    }
-    
-    NSString * result = [NSString stringWithUTF8String:(const char *)hex];
-    free( hex );
-    return result;
+    return [[self dataUsingEncoding:NSUTF8StringEncoding] md5String];
+}
+
+- (NSString *)sha1String
+{
+    return [[self dataUsingEncoding:NSUTF8StringEncoding] sha1String];
+}
+
+- (NSString *)hmacSHA1StringWithKey:(NSString *)key
+{
+    return [[self dataUsingEncoding:NSUTF8StringEncoding] hmacSHA1StringWithKey:key];
 }
 
 - (id)jsonObject

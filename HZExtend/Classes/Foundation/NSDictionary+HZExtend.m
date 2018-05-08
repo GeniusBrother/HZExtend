@@ -14,8 +14,29 @@
 {
     if (!keyPath.isNoEmpty) return nil;
     
-    NSObject *result = [self valueForKeyPath:keyPath];
-    return result;
+    NSArray * array = [keyPath componentsSeparatedByString:@"."];
+    if ( 0 == array.count ) return nil;
+    
+    NSObject * result = nil;
+    NSDictionary * dict = self;
+    
+    for (NSString * subPath in array )
+    {
+        if (0 == subPath.length) continue;
+        
+        result = [dict objectForKey:subPath];
+        
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            dict = (NSDictionary *)result;
+            continue;
+        }else if([array lastObject] == subPath){
+            return result;
+        }else {
+            return nil;
+        }
+    }
+    
+    return [result isKindOfClass:[NSNull class]]?nil:result;
 }
 
 - (id)objectForKeyPath:(NSString *)keyPath otherwise:(id)other

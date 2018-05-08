@@ -64,6 +64,13 @@
 
 @implementation NSMutableArray (HZExtend)
 
+- (void)addSafeObject:(id)object
+{
+    if (!object || [object isKindOfClass:[NSNull class]]) return;
+    
+    [self addObject:object];
+}
+
 - (void)safeRemoveObjectAtIndex:(NSInteger)index
 {
     if (index >(self.count-1) || index < 0)

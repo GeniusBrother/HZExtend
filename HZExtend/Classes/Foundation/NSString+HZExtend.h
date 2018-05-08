@@ -28,6 +28,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)md5String;
 
 /**
+ Returns a lowercase NSString for sha1 hash.
+ */
+- (nullable NSString *)sha1String;
+
+/**
+ Returns a lowercase NSString for hmac using algorithm sha1 with key.
+ @param key The hmac key.
+ */
+- (nullable NSString *)hmacSHA1StringWithKey:(NSString *)key;
+
+/**
  Returns a new UUID NSString. e.g. "C3278C30-2B3D-4E1E-7AC2-B6FFB24A07C1"
  */
 + (NSString *)UUIDString;

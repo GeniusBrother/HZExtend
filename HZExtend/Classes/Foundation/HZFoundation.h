@@ -24,6 +24,8 @@
 #import "UIResponder+HZExtend.h"
 #import "NSObject+HZKVO.h"
 #import "HZConst.h"
+#import "NSDate+HZExtend.h"
+#import "NSTimer+HZExtend.h"
 
 
 #endif /* _HZFOUNDATION_ */

@@ -23,10 +23,12 @@
 #define HZIsIphoneX ((HZDeviceHeight == 812)?YES:NO)
 
 //常用数值
-#define HZTabBarHeight (HZIsIphoneX?83.f:49.f)
+#define HZTabBarHeight (49.f+HZHomeIndicatorHeight)
 #define HZNavBarHeight (HZIsIphoneX?88.f:64.f)
 #define HZStatusBarHeight (HZIsIphoneX?44.f:20.f)
-
+#define HZNavBarContentHeight 44.f
+#define HZHomeIndicatorHeight (HZIsIphoneX?34.f:0)
+#define HZNavBarAddtionalHeight (HZIsIphoneX?24.f:0)
 
 //引用
 #define HZWeakObj(Obj) __weak typeof(Obj) weak##_##Obj = Obj

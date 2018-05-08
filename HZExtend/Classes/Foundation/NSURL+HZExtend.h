@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** Returns absoluteString but not contain the part of query. */
 @property(nonatomic, readonly) NSString *allPath;
 
+/** Boolean value that indicates whether the resource from remote. */
+@property(nonatomic, readonly) BOOL isRemote;
+
 /**
  Return a Dictionary which contains query params
  */
