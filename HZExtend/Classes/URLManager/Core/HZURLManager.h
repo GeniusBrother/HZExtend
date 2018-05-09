@@ -30,14 +30,6 @@ extern NSString *const HZRedirectPresentMode;
 @interface HZURLManager : NSObject
 
 /**
- Returns global HZURLManager instance.
- 
- @return HZURLManager shared instance
- */
-+ (instancetype)sharedManager;
-
-
-/**
  Calls module method specified by the given URL.
  
  @discussion Before use the method, you should registe the URL in {"scheme":{"host/path":"URLHandlerName"}} format in plist file, URLHandlerName is a name of class which implement HZURLHandler protocol. Then load it through HZURLManagerConfig.
@@ -45,7 +37,7 @@ extern NSString *const HZRedirectPresentMode;
  @param URL The URL corresponding to the module method.
  @param params Additional parameters passed to URLHandler.
  */
-- (id)handleURL:(NSString *)URL withParams:(nullable id)params;
++ (id)handleURL:(NSString *)URL withParams:(nullable id)params;
 
 /**
  Navigate to the controller corresponding to the URL.
@@ -56,10 +48,10 @@ extern NSString *const HZRedirectPresentMode;
  @param animated Specify YES to animate the transition or NO if you do not want the transition to be animated.
  @param parmas Additional parameters passed to Controller. You can get the parmas by `pramas`  property see `UIViewController+HZURLManager.h` for more information.
 
- @param options Specify HZRedirectPresentMode equal YES to transition by present way.
+ @param options Specify HZRedirectPresentMode equal YES to transition by present way or default is push way.
  @param completion The block to execute after the presentation finishes.
  */
-- (void)redirectToURL:(NSString *)URL
++ (void)redirectToURL:(NSString *)URL
              animated:(BOOL)animated
                parmas:(nullable NSDictionary *)parmas
               options:(nullable NSDictionary *)options
@@ -68,9 +60,13 @@ extern NSString *const HZRedirectPresentMode;
 /**
  Navigate to the controller corresponding to the URL by push way.
  */
-- (void)redirectToURL:(NSString *)URL animated:(BOOL)animated params:(nullable NSDictionary *)params;
-- (void)redirectToURL:(NSString *)URL animated:(BOOL)animated;
++ (void)pushToURL:(NSString *)URL animated:(BOOL)animated params:(nullable NSDictionary *)params;
++ (void)pushToURL:(NSString *)URL animated:(BOOL)animated;
 
+
++ (void)pushViewController:(UIViewController *)ctrl animated:(BOOL)animated;
++ (void)presentViewController:(UIViewController *)ctrl animated:(BOOL)animated completion:(nullable void (^)(void))completion;
++ (void)dismissCurrentAnimated:(BOOL)animated;
 
 @end
 
@@ -78,11 +74,8 @@ extern NSString *const HZRedirectPresentMode;
 
 + (void)pushViewControllerWithString:(NSString *)urlstring animated:(BOOL)animated __deprecated_msg("请使用- (void)redirectToURL:animated:");
 + (void)pushViewControllerWithString:(NSString *)urlstring queryDic:(NSDictionary *)query animated:(BOOL)animated __deprecated_msg("- (void)redirectToURL:animated:params");
-+ (void)pushViewController:(UIViewController *)ctrl animated:(BOOL)animated __deprecated_msg("请通过HZURLNavigation实现");
 + (void)presentViewControllerWithString:(NSString *)urlstring animated:(BOOL)animated completion:(nullable void (^)(void))completion __deprecated_msg("请使用- (void)redirectToURL:animated:params:options:completion");
 + (void)presentViewControllerWithString:( NSString *)urlstring queryDic:(NSDictionary *)query animated:(BOOL)animated completion:(nullable void (^)(void))completion __deprecated_msg("请使用- (void)redirectToURL:animated:params:options:completion");
-+ (void)presentViewController:(UIViewController *)ctrl animated:(BOOL)animated completion:(nullable void (^)(void))completion __deprecated_msg("请通过HZURLNavigation实现");
-+ (void)dismissCurrentAnimated:(BOOL)animated __deprecated_msg("请通过HZURLNavigation实现");
 @end
 
 

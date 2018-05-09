@@ -23,11 +23,6 @@
 @property(nonatomic, readonly) NSArray *rewriteRule;
 
 /**
-  Configs the default Controller Class for Http(s) URL.
- */
-@property(nonatomic, strong) NSString *classOfWebViewCtrl;
-
-/**
  A Boolean value indicating whether the toolbar at the bottom of the screen is hidden when the view controller is pushed through URLManager on to a navigation controller. Default is YES.
  */
 @property(nonatomic, assign) BOOL hideBottomWhenPushed;

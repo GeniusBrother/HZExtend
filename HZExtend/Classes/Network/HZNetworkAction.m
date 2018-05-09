@@ -73,8 +73,7 @@ static id _instance;
     
     //设置默认的请求头
     [requestHeaders enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
-        NSString *urlEncode = [obj stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-        [self.sessionManager.requestSerializer setValue:urlEncode forHTTPHeaderField:key];
+        [self.sessionManager.requestSerializer setValue:obj forHTTPHeaderField:key];
     }];
     
 }
@@ -82,11 +81,9 @@ static id _instance;
 - (void)performTask:(HZSessionTask *)task completion:(nonnull void (^)(HZNetworkAction * _Nonnull, id _Nullable, NSError * _Nullable))completion
 {
     NSString *method = task.method?:@"GET";
-    if ([method caseInsensitiveCompare:@"GET"] == NSOrderedSame) {
-        [self GET:task completion:completion];
-    }else if ([method caseInsensitiveCompare:@"POST"] == NSOrderedSame) {
-        [self POST:task completion:completion];
-    }
+    NSURLSessionDataTask *dataTask = [self dataTaskWithMethod:method URLString:task.requestPath params:task.params task:task completion:completion];
+    [dataTask resume];
+    [self.dataTasks setObject:dataTask forKey:task.taskIdentifier];
 }
 
 - (void)performUploadTask:(HZSessionTask *)sessionTask progress:(void (^)(NSProgress *uploadProgress))uploadProgressBlock completion:(nonnull void (^)(HZNetworkAction * _Nonnull, id _Nullable, NSError * _Nullable))completion
@@ -102,7 +99,7 @@ static id _instance;
     NSString *formName = [fileDic objectForKey:kHZFileFormName];
     
     NSError *serializationError = nil;
-    NSMutableURLRequest *request = [self.sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:sessionTask.absoluteURL parameters:sessionTask.params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    NSMutableURLRequest *request = [self.sessionManager.requestSerializer multipartFormRequestWithMethod:@"POST" URLString:sessionTask.requestPath parameters:sessionTask.params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         if (fileData) {
             [formData appendPartWithFileData:fileData name:formName fileName:fileName mimeType:mineType];
         }else {
@@ -146,24 +143,6 @@ static id _instance;
 }
 
 #pragma mark - Private Method
-//开始GET请求
-- (void)GET:(HZSessionTask *)sessionTask completion:(void(^)(HZNetworkAction *performer, id __nullable responseObject, NSError * __nullable error))completion;
-{
-    //创建请求
-    NSURLSessionDataTask *dataTask = [self dataTaskWithMethod:@"GET" URLString:sessionTask.requestPath params:sessionTask.params task:sessionTask completion:completion];
-    [dataTask resume];
-    [self.dataTasks setObject:dataTask forKey:sessionTask.taskIdentifier];
-}
-
-//开始POST请求
-- (void)POST:(HZSessionTask *)sessionTask completion:(void(^)(HZNetworkAction *performer, id __nullable responseObject, NSError * __nullable error))completion;
-{
-    NSString *URLString = sessionTask.absoluteURL;
-    NSURLSessionDataTask *dataTask = [self dataTaskWithMethod:@"POST" URLString:URLString params:sessionTask.params task:sessionTask completion:completion];
-    [dataTask resume];
-    [self.dataTasks setObject:dataTask forKey:sessionTask.taskIdentifier];
-}
-
 //创建NSURLSessionTask
 - (NSURLSessionDataTask *)dataTaskWithMethod:(NSString *)method URLString:(NSString *)URLString params:(NSDictionary *)params task:(HZSessionTask *)sessionTask completion:(void(^)(HZNetworkAction *performer, id __nullable responseObject, NSError * __nullable error))completion;
 {

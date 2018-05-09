@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "HZNetworkConfig.h"
 #import "HZNetworkConst.h"
-
+#import "HZSessionTaskDelegate.h"
 @class HZSessionTask;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -33,42 +33,6 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
     HZSessionTaskCacheImportStateFail = 2,          //The cache is imported failed. May no cache exists or already impored cache.
 };
 
-
-@protocol HZSessionTaskDelegate<NSObject>
-
-/**
- Calls after completion of task.
- 
- @discussion At this point, the state of task may be HZSessionTaskStateSuccess or HZSessionTaskStateFail.
- */
-- (void)taskDidCompleted:(HZSessionTask *)task;
-
-/**
- Calls after task is send.
- 
- @discussion At this point, the state of task is SessionTaskStateRunning.
- 
- Befor the method is called, the task has already loaded cache data. So you can use `responseObject` property to get cache data.
- */
-- (void)taskDidSend:(HZSessionTask *)task;
-
-/**
- Calls after task is cancled.
- 
- @discussion At this point, the state of task is HZSessionTaskStateCancel.
- */
-- (void)taskDidCancel:(HZSessionTask *)task;
-
-/**
- Calls when the task is to be executed.
- 
- @params message Sets the value and find it by 'error' property.
- @return YES if the task should be stop or NO if allow.
- */
-- (BOOL)taskShouldStop:(HZSessionTask *)task stopMessage:(NSString *_Nullable __autoreleasing *_Nullable)message;
-
-@end
-
 /**
  HZSessionTask represents the specific request task. You can use it to config parameters for request and get response data from it.
  */
@@ -76,15 +40,12 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
 
 /**
  Creates and returns a task.
-
+ 
  @param method The request method, currently only GET/POST is supported.
  @param path The path of URL. e.g /GeniusBrother/HZExtend
  @param params The parameters for http query string.
  @param delegate The task's delegate object. You can get execution state of task by it.
  @param taskIdentifier The UUID of task.
- @param pathValues An array consists of path parameters.
- 
- @discussion If set the pathValues not empty, the path value will be appended to path. Like URL https://github.com/GeniusBrother/HZExtend/value1/value2/...
  
  @return new instance of `HZSessionTask` with specified http parameters.
  */
@@ -94,9 +55,22 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
                       delegate:(nullable id<HZSessionTaskDelegate>)delegate
                 taskIdentifier:(nullable NSString *)taskIdentifier;
 
+/**
+ Creates and returns a task.
+ 
+ @param method The request method, currently only GET/POST is supported.
+ @param path The path of URL. e.g /user/:uid/book/:bookId
+ @param delegate The task's delegate object. You can get execution state of task by it.
+ @param taskIdentifier The UUID of task.
+ @param pathValues An array consists of path parameters.
+ 
+ @discussion If set the pathValues not empty, the path value will be appended to path. Like URL https://example.com/user/13/book/1005
+ 
+ @return new instance of `HZSessionTask` with specified http parameters.
+ */
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
-                        pathValues:(NSArray<NSString *> *)pathValues
+                    pathValues:(nullable NSArray<NSString *> *)pathValues
                       delegate:(nullable id<HZSessionTaskDelegate>)delegate
                 taskIdentifier:(nullable NSString *)taskIdentifier;
 
@@ -104,16 +78,17 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
  Creates and returns a task.
  
  @param method The request method, currently only GET/POST is supported.
- @param URLString The URL for http. e.g https://github.com/GeniusBrother/HZExtend
+ @param URLString The URL for http execpt query string. e.g https://github.com/GeniusBrother/HZExtend
  @param delegate The task's delegate object. You can get execution state of task by it.
  @param taskIdentifier The UUID of task.
  
- @return new instance of `HZSessionTask` with specified http parameters.
+ @return new instance of `HZSessionTask` with specified http parameters or nil if URLString is invalid.
  */
-+ (instancetype)taskWithMethod:(NSString *)method
-                     URLString:(NSString *)URLString
-                      delegate:(nullable id<HZSessionTaskDelegate>)delegate
-                taskIdentifier:(NSString *)taskIdentifier;
++ (nullable instancetype)taskWithMethod:(NSString *)method
+                              URLString:(NSString *)URLString
+                                 params:(nullable NSDictionary<NSString *, id> *)params
+                               delegate:(nullable id<HZSessionTaskDelegate>)delegate
+                         taskIdentifier:(NSString *)taskIdentifier;
 
 /**
  Creates and returns a upload task.

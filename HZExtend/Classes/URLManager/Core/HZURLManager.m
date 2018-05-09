@@ -17,58 +17,21 @@ NSString *const HZRedirectPresentMode = @"HZRedirectPresentMode";
 @end
 
 @implementation HZURLManager
-#pragma mark - Initialization
-static id _instance;
-+ (id)allocWithZone:(struct _NSZone *)zone
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [super allocWithZone:zone];
-    });
-    return _instance;
-}
-
-+ (id)copyWithZone:(struct _NSZone *)zone
-{
-    return _instance;
-}
-
-+ (instancetype)sharedManager
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [[self alloc] init];
-    });
-    return _instance;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            
-        });
-    }
-    return self;
-}
-
 #pragma mark - Public Method
-- (id)handleURL:(NSString *)url withParams:(nullable id)parmas
++ (id)handleURL:(NSString *)url withParams:(nullable id)parmas
 {
     if (!([url isKindOfClass:[NSString class]] && url.length > 0)) return nil;
     
     NSURL *formatedURL = [self formatedURL:url];
     id<HZURLHandler> handler = [NSObject urlHandlerForURL:formatedURL];
-    if (handler) {
+    if ([handler respondsToSelector:@selector(handleURL:withParams:)]) {
         return [handler handleURL:formatedURL withParams:parmas];
     }
     
     return nil;
 }
 
-- (void)redirectToURL:(NSString *)url
++ (void)redirectToURL:(NSString *)url
              animated:(BOOL)animated
                parmas:(nullable NSDictionary *)parmas
               options:(nullable NSDictionary *)options
@@ -84,19 +47,34 @@ static id _instance;
     }
 }
 
-- (void)redirectToURL:(NSString *)url animated:(BOOL)animated
++ (void)pushToURL:(NSString *)url animated:(BOOL)animated
 {
     [self redirectToURL:url animated:animated parmas:nil options:nil completion:nil];
 }
 
-- (void)redirectToURL:(NSString *)url animated:(BOOL)animated params:(nullable NSDictionary *)params
++ (void)pushToURL:(NSString *)url animated:(BOOL)animated params:(nullable NSDictionary *)params
 {
     [self redirectToURL:url animated:animated parmas:params options:nil completion:nil];
 }
 
++ (void)pushViewController:(UIViewController *)ctrl animated:(BOOL)animated
+{
+    [HZURLNavigation pushViewController:ctrl animated:animated];
+}
+
++ (void)presentViewController:(UIViewController *)ctrl animated:(BOOL)animated completion:(void (^)(void))completion
+{
+    [HZURLNavigation presentViewController:ctrl animated:animated completion:completion];
+}
+
++ (void)dismissCurrentAnimated:(BOOL)animated
+{
+    [HZURLNavigation dismissCurrentAnimated:animated];
+}
+
 #pragma mark - Private Method
 //格式化URL
-- (NSURL *)formatedURL:(NSString *)url
++ (NSURL *)formatedURL:(NSString *)url
 {
     if (!url) return nil;
     
@@ -130,10 +108,7 @@ static id _instance;
         [HZURLNavigation pushViewController:viewController animated:animated];
 }
 
-+ (void)pushViewController:(UIViewController *)ctrl animated:(BOOL)animated
-{
-    [HZURLNavigation pushViewController:ctrl animated:animated];
-}
+
 
 #pragma mark - Present
 + (void)presentViewControllerWithString:(NSString *)urlstring animated:(BOOL)animated completion:(void (^ _Nullable)(void))completion
@@ -152,16 +127,6 @@ static id _instance;
     UIViewController *viewController = [UIViewController viewControllerForURL:[NSURL URLWithString:urlstring] params:query];
     if (viewController)
         [HZURLNavigation presentViewController:viewController animated:animated completion:completion];
-}
-
-+ (void)presentViewController:(UIViewController *)ctrl animated:(BOOL)animated completion:(void (^)(void))completion
-{
-    [HZURLNavigation presentViewController:ctrl animated:animated completion:completion];
-}
-
-+ (void)dismissCurrentAnimated:(BOOL)animated
-{
-    [HZURLNavigation dismissCurrentAnimated:animated];
 }
 
 @end

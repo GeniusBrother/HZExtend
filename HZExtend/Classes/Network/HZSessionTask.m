@@ -10,8 +10,8 @@
 #import "HZSessionTask.h"
 #import "HZNetworkConfig.h"
 #import "HZNetworkAction.h"
-#import <CommonCrypto/CommonDigest.h>
-
+#import "NSString+URL.h"
+#import "NSDictionary+Helper.h"
 @interface HZSessionTask ()
 
 @property(nonatomic, copy) NSString *taskIdentifier;
@@ -54,30 +54,32 @@
                           path:(NSString *)path
                     pathValues:(NSArray *)pathValues
                       delegate:(id<HZSessionTaskDelegate>)delegate
-                   taskIdentifier:(NSString *)taskIdentifier
+                taskIdentifier:(NSString *)taskIdentifier
 {
     HZSessionTask *task = [self taskWithMethod:method path:path params:nil delegate:delegate taskIdentifier:taskIdentifier];
     task.pathValues = pathValues?[NSMutableArray arrayWithArray:pathValues]:nil;
     return task;
 }
 
-+ (instancetype)taskWithMethod:(NSString *)method
-                     URLString:(NSString *)URLString
-                      delegate:(id<HZSessionTaskDelegate>)delegate
-                taskIdentifier:(NSString *)taskIdentifier
++ (nullable instancetype)taskWithMethod:(NSString *)method
+                              URLString:(NSString *)URLString
+                                 params:(nullable NSDictionary<NSString *,id> *)params
+                               delegate:(id<HZSessionTaskDelegate>)delegate
+                         taskIdentifier:(NSString *)taskIdentifier
 {
-    HZSessionTask *task = [[self alloc] init];
-    task.method = method;
-    task.absoluteURL = URLString;
-    task.delegate = delegate;
-    task.taskIdentifier = taskIdentifier;
-    task.cached = [HZNetworkConfig sharedConfig].taskShouldCache;
+    NSURL *url = [NSURL URLWithString:URLString];
+    if (!url) return nil;
+    
+    NSString *path = url.path;
+    NSString *baseURL = [NSString stringWithFormat:@"%@://%@%@",url.scheme,url.host,url.port?[NSString stringWithFormat:@":%@",url.port]:@""];
+    HZSessionTask *task = [self taskWithMethod:method path:path params:params delegate:delegate taskIdentifier:taskIdentifier];
+    task.baseURL = baseURL;
     
     return task;
 }
 
 + (instancetype)uploadTaskWithPath:(NSString *)path
-                            params:(NSMutableDictionary<NSString *,id> *)params
+                            params:(NSDictionary<NSString *,id> *)params
                           delegate:(id<HZSessionTaskDelegate>)delegate
                     taskIdentifier:(NSString *)taskIdentifier
 {
@@ -233,7 +235,9 @@
             self.error = error;
         }
         self.state = HZSessionTaskStateFail;
-//        NSLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
+#if DEBUG
+        NSLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,[self.params hzn_jsonString],self.message);
+#endif
     }else {
         self.responseObject = responseObject;
         BOOL codeRight = [self codeIsRight];
@@ -258,7 +262,9 @@
                 }
             }
             self.error = [NSError errorWithDomain:@"com.HZNetwork" code:errorCode.integerValue userInfo:@{@"NSLocalizedDescription":self.message}];;
-//            HZLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,self.message);
+#if DEBUG
+            NSLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,[self.params hzn_jsonString],self.message);
+#endif
         }
     }
     [self callBackTaskStatus];
@@ -316,21 +322,6 @@
     return string;
 }
 
-- (NSString *)md5String:(NSString *)URL
-{
-    const char *str = [URL UTF8String];
-    if (str == NULL) {
-        str = "";
-    }
-    unsigned char r[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(str, (CC_LONG)strlen(str), r);
-    NSString *MD5 = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-                          r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10],
-                          r[11], r[12], r[13], r[14], r[15]];
-    
-    return MD5;
-}
-
 #pragma mark - Setter
 - (void)setResponseObject:(id)responseObject
 {
@@ -373,7 +364,7 @@
         identifierURL = [identifierURL stringByAppendingString:headerKeyValue];
     }
     
-    NSString *cacheKey = [self md5String:identifierURL];
+    NSString *cacheKey = [identifierURL hzn_md5String];
     return cacheKey;
 }
 
@@ -381,7 +372,7 @@
 {
     NSString *absoluteURL = self.requestPath;
     
-    if ([self.method caseInsensitiveCompare:@"GET"] == NSOrderedSame && self.params) {
+    if ([self.method caseInsensitiveCompare:@"GET"] == NSOrderedSame && self.params.count > 0) {
         NSString *separator = [absoluteURL rangeOfString:@"?"].length == 0?@"?":@"&";
         absoluteURL = [absoluteURL stringByAppendingFormat:@"%@%@",separator,[self keyValueStringWithDic:self.params]]; //查询字符串格式
     }
@@ -391,21 +382,26 @@
 
 - (NSString *)requestPath
 {
-    NSString *requestPath = @"";
-    if (_absoluteURL) {
-        requestPath = _absoluteURL;
-    }else {
-        NSString *baseURL = self.baseURL?:[HZNetworkConfig sharedConfig].baseURL;
-        NSAssert(baseURL, @"请设置baseURL 推荐使用HZNetworkConfig来设置统一baseURL");
-        requestPath = [baseURL stringByAppendingString:self.path];
-    }
+    NSString *baseURL = self.baseURL?:[HZNetworkConfig sharedConfig].baseURL;
+    NSAssert(baseURL, @"请设置baseURL 推荐使用HZNetworkConfig来设置统一baseURL");
     
-    if(self.pathValues) {
-        NSMutableString *pathStr = [NSMutableString string];
-        [self.pathValues enumerateObjectsUsingBlock:^(NSString *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [pathStr appendFormat:@"/%@",[obj stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
-        }];
-        requestPath = [requestPath stringByAppendingString:pathStr];  //路径格式
+    NSString *requestPath = baseURL;
+    if (self.path) requestPath = [requestPath stringByAppendingString:self.path];
+    
+    if(self.pathValues && self.path) {
+        NSRegularExpression *reg = [NSRegularExpression regularExpressionWithPattern:@":\\w+" options:0 error:nil];
+        NSArray* matches = [reg matchesInString:requestPath options:0 range:NSMakeRange(0, requestPath.length)];
+        if (matches.count == self.pathValues.count) {
+            for (NSInteger idx = matches.count - 1; idx>=0; idx--) {
+                id replaceValue = [self.pathValues objectAtIndex:idx];
+                if ([replaceValue isKindOfClass:[NSString class]]) replaceValue = [(NSString *)replaceValue hzn_urlEncode];
+                
+                NSTextCheckingResult* result = matches[idx];
+                requestPath = [requestPath stringByReplacingCharactersInRange:result.range withString:[NSString stringWithFormat:@"%@",replaceValue]];
+            }
+        }else {
+            NSAssert(NO, @"Missing path value");
+        }
     }
     
     return requestPath;

@@ -24,28 +24,18 @@ static const char kParams = '\1';
 #pragma mark Core
 + (UIViewController *)viewControllerForURL:(NSURL *)url params:(NSDictionary *)params
 {
-    NSDictionary *config = [HZURLManagerConfig sharedConfig].urlControllerConfig;
-    NSAssert(config, @"请先配置URL-Ctrl-Config");
+    NSDictionary *urlControllerConfig = [HZURLManagerConfig sharedConfig].urlControllerConfig;
+    NSAssert(urlControllerConfig, @"请先配置URL-Ctrl-Config");
     
     NSString *scheme = url.scheme;
-    
-    
-    if (!url || !config) return nil;
+    NSDictionary *config = [urlControllerConfig objectForKey:scheme];
+    NSAssert(config, @"scheme所对应的配置不存在");
     
     /*******************根据scheme创建控制器********************/
     UIViewController *viewCtrl = nil;
-    NSString *strClass = [config objectForKey:[NSString stringWithFormat:@"%@%@%@",scheme?[NSString stringWithFormat:@"%@://",scheme]:@"",url.host?:@"",url.path]];
+    NSString *strClass = [config objectForKey:[NSString stringWithFormat:@"%@%@",url.host?:@"",url.path]];
     NSString *errorInfo = nil;
-    if(!strClass) {
-        if ([scheme isEqualToString:@"http"]||[scheme isEqualToString:@"https"]) {  //判断是否配置了默认的webViewController
-            strClass= [HZURLManagerConfig sharedConfig].classOfWebViewCtrl;
-            if (!strClass) {
-                errorInfo = [NSString stringWithFormat:@"404 :) ,%@ No Register",url.absoluteString];
-            }
-        }else { //shcheme为自定义
-            errorInfo = [NSString stringWithFormat:@"404 :) ,%@ No Register",url.absoluteString];
-        }
-    }
+
     
     if (strClass) {
         Class class = NSClassFromString(strClass);
@@ -54,6 +44,8 @@ static const char kParams = '\1';
         }else { //无该控制器
             errorInfo = [NSString stringWithFormat:@"404 :) ,%@ No Registrer",strClass];
         }
+    }else {
+        errorInfo = [NSString stringWithFormat:@"404 :) ,%@ No Register", url.absoluteString];
     }
 #ifdef DEBUG  // 调试状态
     viewCtrl = viewCtrl?:[self errorViewConrtollerWithInfo:errorInfo];

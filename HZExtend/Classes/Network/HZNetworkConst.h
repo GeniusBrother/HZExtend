@@ -13,6 +13,7 @@
     @"\n\n" \
     @"------ BEGIN HZNetwork Response Error------\n" \
     @"URL: %@\n" \
+    @"param: %@\n"\
     @"response: %@\n" \
     @"------ END --------------------------------\n" \
     @"\n"
