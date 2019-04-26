@@ -1,8 +1,8 @@
 //
 //  NSString+URL.h
-//  HZExtend
+//  AFNetworking
 //
-//  Created by xzh on 2018/5/8.
+//  Created by xzh on 2017/12/21.
 //
 
 #import <Foundation/Foundation.h>

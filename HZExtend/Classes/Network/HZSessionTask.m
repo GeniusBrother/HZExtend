@@ -10,8 +10,9 @@
 #import "HZSessionTask.h"
 #import "HZNetworkConfig.h"
 #import "HZNetworkAction.h"
-#import "NSString+URL.h"
 #import "NSDictionary+Helper.h"
+#import "NSString+URL.h"
+
 @interface HZSessionTask ()
 
 @property(nonatomic, copy) NSString *taskIdentifier;
@@ -54,7 +55,7 @@
                           path:(NSString *)path
                     pathValues:(NSArray *)pathValues
                       delegate:(id<HZSessionTaskDelegate>)delegate
-                taskIdentifier:(NSString *)taskIdentifier
+                   taskIdentifier:(NSString *)taskIdentifier
 {
     HZSessionTask *task = [self taskWithMethod:method path:path params:nil delegate:delegate taskIdentifier:taskIdentifier];
     task.pathValues = pathValues?[NSMutableArray arrayWithArray:pathValues]:nil;
@@ -261,9 +262,9 @@
                     errorCode = error;
                 }
             }
-            self.error = [NSError errorWithDomain:@"com.HZNetwork" code:errorCode.integerValue userInfo:@{@"NSLocalizedDescription":self.message}];;
+            self.error = [NSError errorWithDomain:@"com.HZNetwork" code:errorCode.integerValue userInfo:@{@"NSLocalizedDescription":self.message}];
 #if DEBUG
-            NSLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,[self.params hzn_jsonString],self.message);
+    NSLog(HZ_RESPONSE_LOG_FORMAT,self.absoluteURL,[self.params hzn_jsonString],self.message);
 #endif
         }
     }
@@ -309,7 +310,7 @@
 
 - (NSString *)keyValueStringWithDic:(NSDictionary *)dic
 {
-    if (!dic) return nil;
+    if (!(![dic isKindOfClass:[NSNull class]] && dic.count > 0)) return nil;
     
     NSMutableString *string = [NSMutableString string];
     [dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -321,6 +322,7 @@
     
     return string;
 }
+
 
 #pragma mark - Setter
 - (void)setResponseObject:(id)responseObject
@@ -395,12 +397,12 @@
             for (NSInteger idx = matches.count - 1; idx>=0; idx--) {
                 id replaceValue = [self.pathValues objectAtIndex:idx];
                 if ([replaceValue isKindOfClass:[NSString class]]) replaceValue = [(NSString *)replaceValue hzn_urlEncode];
-                
+                    
                 NSTextCheckingResult* result = matches[idx];
                 requestPath = [requestPath stringByReplacingCharactersInRange:result.range withString:[NSString stringWithFormat:@"%@",replaceValue]];
             }
         }else {
-            NSAssert(NO, @"Missing path value");
+           NSAssert(NO, @"Missing path value");
         }
     }
     

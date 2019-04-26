@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
 
 /**
  Creates and returns a task.
- 
+
  @param method The request method, currently only GET/POST is supported.
  @param path The path of URL. e.g /GeniusBrother/HZExtend
  @param params The parameters for http query string.
@@ -70,7 +70,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
  */
 + (instancetype)taskWithMethod:(NSString *)method
                           path:(NSString *)path
-                    pathValues:(nullable NSArray<NSString *> *)pathValues
+                        pathValues:(nullable NSArray<NSString *> *)pathValues
                       delegate:(nullable id<HZSessionTaskDelegate>)delegate
                 taskIdentifier:(nullable NSString *)taskIdentifier;
 
@@ -85,10 +85,10 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
  @return new instance of `HZSessionTask` with specified http parameters or nil if URLString is invalid.
  */
 + (nullable instancetype)taskWithMethod:(NSString *)method
-                              URLString:(NSString *)URLString
-                                 params:(nullable NSDictionary<NSString *, id> *)params
-                               delegate:(nullable id<HZSessionTaskDelegate>)delegate
-                         taskIdentifier:(NSString *)taskIdentifier;
+                     URLString:(NSString *)URLString
+                        params:(nullable NSDictionary<NSString *, id> *)params
+                      delegate:(nullable id<HZSessionTaskDelegate>)delegate
+                taskIdentifier:(NSString *)taskIdentifier;
 
 /**
  Creates and returns a upload task.
@@ -101,7 +101,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
  @return new instance of `HZSessionTask` with specified http parameters.
  */
 + (instancetype)uploadTaskWithPath:(NSString *)path
-                              params:(nullable NSMutableDictionary<NSString *, id> *)params
+                              params:(nullable NSDictionary<NSString *, id> *)params
                             delegate:(nullable id<HZSessionTaskDelegate>)delegate
                       taskIdentifier:(NSString *)taskIdentifier;
 
@@ -155,9 +155,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
 @property(nullable, nonatomic, readonly) NSDictionary <NSString *, NSString *> *requestHeader;
 
 /** 
- The patheValues will be appended to path.
- 
- For example, pathValues = @[value1,value2...], the URL like https://github.com/GeniusBrother/HZExtend/value1/value2/...
+ The patheValues will replace path parameter
  */
 @property(nullable, nonatomic, strong) NSMutableArray<NSString *> *pathValues;
 
@@ -168,7 +166,7 @@ typedef NS_ENUM(NSUInteger, HZSessionTaskCacheImportState) {  //The importing st
 @property(nonatomic, assign, getter=isCached) BOOL cached;
 
 /**
- If `YES`, only import cache once when task is executed more than once.
+ If `YES`, only import cache once when task is executed more than once or import cache everytime.
  The default value is `YES`.
  */
 @property(nonatomic, assign) BOOL importCacheOnce;

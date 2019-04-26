@@ -278,7 +278,6 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				CE78C730B3549C5570D6CD0E /* [CP] Embed Pods Frameworks */,
-				AD61EA152A86B1FF0AAE2BF3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -298,7 +297,6 @@
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
 				F60BED642FA1269958995B9E /* [CP] Embed Pods Frameworks */,
-				E6455175E9466C8EB07A7837 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -409,28 +407,13 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AD61EA152A86B1FF0AAE2BF3 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend_Example/Pods-HZExtend_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		CE78C730B3549C5570D6CD0E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend_Example/Pods-HZExtend_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-HZExtend_Example/Pods-HZExtend_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/HZExtend/HZExtend.framework",
@@ -445,22 +428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend_Example/Pods-HZExtend_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E6455175E9466C8EB07A7837 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend_Tests/Pods-HZExtend_Tests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HZExtend_Example/Pods-HZExtend_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F60BED642FA1269958995B9E /* [CP] Embed Pods Frameworks */ = {
@@ -469,7 +437,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend_Tests/Pods-HZExtend_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-HZExtend_Tests/Pods-HZExtend_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Kiwi/Kiwi.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -478,7 +446,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HZExtend_Tests/Pods-HZExtend_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HZExtend_Tests/Pods-HZExtend_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

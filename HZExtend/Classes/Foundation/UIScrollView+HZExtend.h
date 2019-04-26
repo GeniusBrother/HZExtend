@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSInteger, HZScrollDirection) {
     HZScrollDirectionNone,
     HZScrollDirectionBack,
@@ -41,7 +42,6 @@ typedef NS_ENUM(NSInteger, HZScrollViewContentExpand) {
 - (UIImage *)imageRepresentation;
 
 - (void)didScrollWithExpand:(HZScrollViewContentExpand)expand;
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -59,9 +59,10 @@ static id _instance;
 {   
     _dataTasks = [NSMutableDictionary dictionary];
     _sessionManager = [AFHTTPSessionManager manager];
-    
-    //设置证书验证方式配置模型
-    AFSecurityPolicy *securityConfigModel = [AFSecurityPolicy policyWithPinningMode:[HZNetworkConfig sharedConfig].SSLPinningMode];
+    _sessionManager.responseSerializer.acceptableContentTypes =  [_sessionManager.responseSerializer.acceptableContentTypes  setByAddingObjectsFromArray:@[@"text/html", @"text/plain"]];
+    NSSet *certs = [AFSecurityPolicy certificatesInBundle:[NSBundle mainBundle]];
+    AFSecurityPolicy *securityConfigModel = [AFSecurityPolicy policyWithPinningMode:[HZNetworkConfig sharedConfig].SSLPinningMode withPinnedCertificates:certs];
+    securityConfigModel.validatesDomainName = [HZNetworkConfig sharedConfig].validatesDomainName;
     securityConfigModel.allowInvalidCertificates = [HZNetworkConfig sharedConfig].allowInvalidCertificates;
     self.sessionManager.securityPolicy = securityConfigModel;
 }

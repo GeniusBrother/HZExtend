@@ -42,8 +42,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**  Whether or not to trust servers with an invalid or expired SSL certificates. Defaults to `NO`. */
 @property(nonatomic, assign) BOOL allowInvalidCertificates;
 
+/**
+ Whether or not to validate the domain name in the certificate's CN field. Defaults to `YES`.
+ */
+@property (nonatomic, assign) BOOL validatesDomainName;
+
 /** 
- The criteria by which server trust should be evaluated against the pinned SSL certificates. Defaults to `HZSSLPinningModeNone`.
+ The criteria by which server trust should be evaluated against the pinned SSL certificates. Defaults to `HZSSLPinningModeNone`, recommends HZSSLPinningModeCertificate.
  */
 @property(nonatomic, assign) HZSSLPinningMode SSLPinningMode;
 

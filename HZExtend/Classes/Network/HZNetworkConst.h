@@ -18,14 +18,6 @@
     @"------ END --------------------------------\n" \
     @"\n"
 
-#define HZ_REQUEST_LOG_FORMAT \
-    @"\n\n" \
-    @"------ BEGIN HZNetwork Request Error-------\n" \
-    @"URL: %@\n" \
-    @"error: %@\n" \
-    @"------ END --------------------------------\n" \
-    @"\n"
-
 extern NSString *const kHZFileMimeType;
 extern NSString *const kHZFileName;
 extern NSString *const kHZFileFormName;

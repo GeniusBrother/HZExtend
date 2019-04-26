@@ -154,6 +154,7 @@ static const char kBlock = '\0';
 
 - (void)tapPeformBlock:(HZViewTapBlock)block
 {
+    self.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self addGestureRecognizer:tap];
     [self setBlock:block];
@@ -178,6 +179,7 @@ static const char kBlock = '\0';
 {
     return objc_getAssociatedObject(self, &kBlock);
 }
+
 
 @end
 
@@ -242,6 +244,15 @@ static const char kBlock = '\0';
 {
     [self checkHierarchySameWithContrastView:view];
     self.left = view.right+offset;
+}
+
+- (NSLayoutConstraint *)constraintForAttribute:(NSLayoutAttribute)attribute
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"firstAttribute = %d && firstItem = %@",attribute, self];
+    NSArray *constrains = (attribute == NSLayoutAttributeWidth || attribute == NSLayoutAttributeHeight)?self.constraints : [self.superview constraints];
+    NSArray *matchedConstraints = [constrains filteredArrayUsingPredicate:predicate];
+    if (matchedConstraints.count == 0) return nil;
+    return matchedConstraints.firstObject;
 }
 
 

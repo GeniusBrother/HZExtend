@@ -292,7 +292,10 @@
     NSMutableArray *insertSqls = [NSMutableArray arrayWithCapacity:objArray.count];
     [objArray enumerateObjectsUsingBlock:^(NSObject  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         //construct sql and params.
-        NSArray *propertyNames = [metaObj.columnMap dictionaryWithValuesForKeys:columns].allValues;
+        NSMutableArray *propertyNames = [NSMutableArray arrayWithCapacity:columns.count];
+        for (NSString *column in columns) {
+            [propertyNames addObject:[metaObj.columnMap objectForKey:column]];
+        }
         NSArray *validDBValues = [obj validDBValuesForPropertys:propertyNames];
         NSMutableArray *parameterList = [NSMutableArray arrayWithCapacity:validDBValues.count];
         [validDBValues enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

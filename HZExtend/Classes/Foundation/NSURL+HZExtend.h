@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSDictionary *)queryDic;
 
 
+
 @end
 
 NS_ASSUME_NONNULL_END

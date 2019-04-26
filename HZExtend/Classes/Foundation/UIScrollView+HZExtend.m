@@ -12,6 +12,7 @@ static const char kLastContentOffset = '\0';
 static const char kDirection = '\0';
 @implementation UIScrollView (HZExtend)
 
+#pragma mark - Data
 - (CGFloat)contentWidth
 {
     return self.contentSize.width;
@@ -164,7 +165,6 @@ static const char kDirection = '\0';
     
 }
 
-
 #pragma mark - Observer
 - (void)didScrollWithExpand:(HZScrollViewContentExpand)expand
 {
@@ -175,7 +175,7 @@ static const char kDirection = '\0';
     }else if (offsetDistance < self.lastContentOffset  && self.direction != HZScrollDirectionBack) {  //back
         self.direction = HZScrollDirectionBack;
     }
-    
+
     self.lastContentOffset = offsetDistance;
 }
 

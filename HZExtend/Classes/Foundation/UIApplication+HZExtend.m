@@ -59,7 +59,6 @@
     return NSTemporaryDirectory();
 }
 
-
 - (NSString *)appBundleName
 {
     return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleName"];

@@ -26,8 +26,8 @@
 #define HZTabBarHeight (49.f+HZHomeIndicatorHeight)
 #define HZNavBarHeight (HZIsIphoneX?88.f:64.f)
 #define HZStatusBarHeight (HZIsIphoneX?44.f:20.f)
-#define HZNavBarContentHeight 44.f
 #define HZHomeIndicatorHeight (HZIsIphoneX?34.f:0)
+#define HZNavBarContentHeight 44.f
 #define HZNavBarAddtionalHeight (HZIsIphoneX?24.f:0)
 
 //引用

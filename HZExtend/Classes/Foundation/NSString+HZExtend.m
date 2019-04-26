@@ -49,11 +49,6 @@
     return [[self dataUsingEncoding:NSUTF8StringEncoding] sha1String];
 }
 
-- (NSString *)hmacSHA1StringWithKey:(NSString *)key
-{
-    return [[self dataUsingEncoding:NSUTF8StringEncoding] hmacSHA1StringWithKey:key];
-}
-
 - (id)jsonObject
 {
     return [NSJSONSerialization JSONObjectWithData:[self dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
